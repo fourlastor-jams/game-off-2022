@@ -1,0 +1,36 @@
+name: Releases
+
+on:
+  push:
+    tags:
+      - v*
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Setup Godot
+        if: steps.cache-godot.outputs.cache-hit != 'true'
+        run: |
+          mkdir -p tmp
+          mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
+          mkdir -p godot
+          wget -O tmp/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_x11_64.zip
+          unzip tmp/godot.zip -d godot
+          wget -O tmp/templates.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_export_templates.tpz
+          unzip tmp/templates.zip -d tmp
+          mv -r tmp/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
+      - name: Export godot
+        run: godot/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64 --export "HTML5" html.zip
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            html.zip
