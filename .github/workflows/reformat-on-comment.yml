@@ -10,7 +10,15 @@ jobs:
     if: ${{ github.event.issue.pull_request && contains(github.event.comment.body, 'trigger format') }}
     runs-on: ubuntu-latest
     steps:
+    - id: 'get-branch'
+      run: echo ::set-output name=branch::$(gh pr view $PR_NO --repo $REPO --json headRefName --jq '.headRefName')
+      env:
+        REPO: ${{ github.repository }}
+        PR_NO: ${{ github.event.issue.number }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     - uses: actions/checkout@v3
+      with:
+        ref: ${{ steps.get-branch.outputs.branch }}
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
@@ -23,5 +31,5 @@ jobs:
       run: |
         git config --global user.name 'Autoformat Bot'
         git config --global user.email 'fourlastor@users.noreply.github.com'
-        git commit -am 'Apply code formatting'
+        git commit -am 'Code formatting'
         git push
