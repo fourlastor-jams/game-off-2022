@@ -3,12 +3,11 @@
 
 name: .NET auto-format
 
-on:
-  issue_comment:                                     
-    types: [created, edited, deleted]
+on: issue_comment
 
 jobs:
   build:
+    if: ${{ github.event.issue.pull_request }}
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
