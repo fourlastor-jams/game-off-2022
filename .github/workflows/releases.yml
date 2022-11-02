@@ -27,7 +27,7 @@ jobs:
           unzip -q tmp/templates.zip -d tmp
           mv tmp/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
       - name: Export godot
-        run: godot/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64 --export "HTML5" html.zip
+        run: godot/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64 --no-window --export "HTML5" html.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
