@@ -23,5 +23,5 @@ jobs:
       run: |
         git config --global user.name 'Autoformat Bot'
         git config --global user.email 'fourlastor@users.noreply.github.com'
-        git commit -am 'Code formatting'
+        git commit -am 'Apply code formatting'
         git push
