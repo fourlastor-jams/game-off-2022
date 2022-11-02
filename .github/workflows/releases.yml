@@ -35,7 +35,6 @@ jobs:
           wget -q -O /tmp/godot/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_linux_headless_64.zip
           unzip -q /tmp/godot/godot.zip -d godot
       - name: Download Godot templates
-        if: steps.cache-godot-templates.outputs.cache-hit != 'true'
         run: |
           mkdir -p /tmp/godot-templates
           mkdir -p godot-templates
