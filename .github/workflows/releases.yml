@@ -25,7 +25,7 @@ jobs:
         id: cache-godot-templates
         uses: actions/cache@v3
         with:
-          path: $HOME/.local/share/godot/templates/
+          path: godot-templates
           key: godot-templates-3.5.1
       - name: Setup Godot
         if: steps.cache-godot.outputs.cache-hit != 'true'
@@ -34,14 +34,16 @@ jobs:
           mkdir -p godot
           wget -q -O /tmp/godot/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_linux_headless_64.zip
           unzip -q /tmp/godot/godot.zip -d godot
-      - name: Setup Godot templates
+      - name: Download Godot templates
         if: steps.cache-godot-templates.outputs.cache-hit != 'true'
         run: |
           mkdir -p /tmp/godot-templates
+          mkdir -p godot-templates
           mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
           wget -q -O /tmp/godot-templates/templates.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_export_templates.tpz
-          unzip -q /tmp/godot-templates/templates.zip -d /tmp/godot-templates
-          mv /tmp/godot-templates/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
+          unzip -q /tmp/godot-templates/templates.zip -d godot-templates
+      - name: Install Godot templates
+        run: mv godot-templates/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
       - name: Export godot
         run: godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 --no-window --export "HTML5" html.zip
       - name: Release
