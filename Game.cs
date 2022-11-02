@@ -1,4 +1,4 @@
-using Godot;
+ using Godot;
 using System;
 
 public class Game : Node2D
@@ -10,7 +10,7 @@ public class Game : Node2D
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
-        GD.Print("Badly formatted");
+        GD.Print("Not badly formatted");
     }
 
     //  // Called every frame. 'delta' is the elapsed time since the previous frame.
