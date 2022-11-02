@@ -1,0 +1,29 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET auto-format
+
+on:
+  issue_comment:                                     
+    types: [created, edited, deleted]
+
+jobs:
+  build:
+    if: contains(github.event.comment.html_url, '/pull/') && contains(github.event.comment.body, 'trigger format')
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore
+    - name: Check formatting
+      run: dotnet format game-off-2022.sln
+    - name: Commit changes
+        run: |
+          git config --global user.name 'Autoformat Bot'
+          git config --global user.email 'fourlastor@users.noreply.github.com'
+          git commit -am 'Code formatting'
+          git push
