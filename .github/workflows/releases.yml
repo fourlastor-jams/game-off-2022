@@ -14,7 +14,7 @@ jobs:
         run:  |
           echo "deb https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
           sudo apt-get update
-          sudo apt-get install -y mono-deve mono-dbg
+          sudo apt-get install -y mono-devel mono-dbg
       - uses: actions/checkout@v3
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
