@@ -46,6 +46,7 @@ jobs:
       - name: Install Godot
         run: |
           mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 /usr/local/bin/godot
+          mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/GodotSharp /usr/local/bin/GodotSharp
       - name: Install Godot templates
         run: |
           mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
