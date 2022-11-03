@@ -42,7 +42,7 @@ jobs:
           mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
           cp -r godot-templates/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
       - name: Export godot
-        run: godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 --verbose --no-window --export "HTML5" html.zip
+        run: godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 --verbose --export "HTML5" html.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
