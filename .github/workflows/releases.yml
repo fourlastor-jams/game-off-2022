@@ -55,3 +55,7 @@ jobs:
         with:
           files: |
             html.zip
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mono-logs
+          path: /home/runner/.local/share/godot/mono/mono_logs/
