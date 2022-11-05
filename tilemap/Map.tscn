@@ -20,3 +20,4 @@ tile_data = PoolIntArray( -917510, 1, 196609, -917509, 1, 196610, -917508, 1, 5,
 
 [node name="Player" parent="YSort" instance=ExtResource( 3 )]
 position = Vector2( 80, 80 )
+shouldSlide = false
