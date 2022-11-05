@@ -8,6 +8,9 @@ public class Player : KinematicBody2D
     // private int a = 2;
     // private string b = "text";
 
+    [Export] private float speed = 500f;
+    [Export] private bool shouldSlide = false;
+
     private List<string> directions = new List<string> { };
 
     // Called when the node enters the scene tree for the first time.
@@ -27,38 +30,19 @@ public class Player : KinematicBody2D
     {
         base._PhysicsProcess(delta);
 
-        if (Input.IsActionPressed("ui_down"))
+        var input = new Vector2(
+            Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left"),
+            Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up")
+        );
+        var direction = input.Normalized();
+        var movement = speed * direction;
+        if (shouldSlide)
         {
-            directions.Add("down");
-            // move player down
+            MoveAndSlide(movement);
         }
         else
         {
-            directions.Remove("down");
-        }
-        if (Input.IsActionPressed("ui_up"))
-        {
-            directions.Add("up");
-        }
-        else
-        {
-            directions.Remove("up");
-        }
-        if (Input.IsActionPressed("ui_left"))
-        {
-            directions.Add("left");
-        }
-        else
-        {
-            directions.Remove("left");
-        }
-        if (Input.IsActionPressed("ui_right"))
-        {
-            directions.Add("right");
-        }
-        else
-        {
-            directions.Remove("right");
+            MoveAndCollide(movement);
         }
     }
 }
