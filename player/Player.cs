@@ -7,6 +7,7 @@ public class Player : KinematicBody2D
     [Export] private bool shouldSlide = false;
 
     private bool isRunning = false;
+    private bool teste = false;
 
     public override void _PhysicsProcess(float delta)
     {
