@@ -4,8 +4,11 @@ using Godot;
 
 public class Player : KinematicBody2D
 {
-    [Export] private float speed = 500f;
+    [Export] private float speed = 150f;
+    [Export] private float runningSpeed = 250f;
     [Export] private bool shouldSlide = false;
+
+    private bool isRunning = false;
 
     // Called when the node enters the scene tree for the first time.
     public override void _Ready()
@@ -24,12 +27,15 @@ public class Player : KinematicBody2D
     {
         base._PhysicsProcess(delta);
 
+        isRunning = Input.IsActionPressed("run");
+
         var input = new Vector2(
             Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left"),
             Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up")
         );
         var direction = input.Normalized();
-        var movement = speed * direction;
+        var movement = (isRunning ? runningSpeed : speed) * direction;
+
         if (shouldSlide)
         {
             MoveAndSlide(movement);
