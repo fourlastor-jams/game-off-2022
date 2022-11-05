@@ -16,6 +16,9 @@ so it the code is automatically formatted on each commit. In the repo's dir run:
 
 ```sh
 echo '#!/bin/sh
-dotnet format game-off-2022.sln --include $(git diff --name-only --cached)' > .git/hooks/pre-commit\
+set -eo pipefail
+FILES=$(git diff --name-only --cached)
+dotnet format game-off-2022.sln --include $FILES
+git add $FILES' > .git/hooks/pre-commit\
 chmod +x .git/hooks/pre-commit
 ```
