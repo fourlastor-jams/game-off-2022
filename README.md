@@ -4,7 +4,9 @@ Repository for our [Game Off 2022](https://itch.io/jam/game-off-2022) jam entry.
 
 ## Setup with VSCode
 
-- Install [Mono]()
+Note: both Mono and .NET SDK links refer to Apple Silicon versions, but you can install others.
+
+- Install [Mono](https://www.mono-project.com/download/stable/#download-mac)
 - Install [.NET Core SDK](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/sdk-6.0.402-macos-arm64-installer?journey=vs-code)
 - Install the [VSCode C# Plugin](https://marketplace.visualstudio.com/items?itemName=ms-dotnettools.csharp)
 - Install the [VSCode C# Gogot Plugin](https://marketplace.visualstudio.com/items?itemName=neikeq.godot-csharp-vscode)
