@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public class Player : KinematicBody2D
@@ -18,11 +19,6 @@ public class Player : KinematicBody2D
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
-    }
-
-    public void ChangeDirection(Vector2 newDirection)
-    {
-        facingDirection = newDirection;
     }
 
     public override void _PhysicsProcess(float delta)
@@ -56,6 +52,11 @@ public class Player : KinematicBody2D
         {
             MoveAndCollide(movement);
         }
+
+        facingDirection = new Vector2(
+            x: Mathf.Sign(movement.x),
+            y: Mathf.Sign(movement.y)
+        );
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
