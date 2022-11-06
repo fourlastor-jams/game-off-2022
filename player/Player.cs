@@ -6,15 +6,32 @@ public class Player : KinematicBody2D
     [Export] private float runningSpeed = 250f;
     [Export] private bool shouldSlide = false;
 
+    [Signal] public delegate void OnAction(Vector2 direction);
+
     private AnimationTree animationTree;
     private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning = false;
+    private Vector2 facingDirection = Vector2.One;
 
     public override void _Ready()
     {
         base._Ready();
-        animationTree = (AnimationTree)GetNode("AnimationTree");
+        animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+    }
+
+    public override void _UnhandledInput(InputEvent @event)
+    {
+        base._UnhandledInput(@event);
+        if (Input.IsActionJustPressed("ui_select"))
+        {
+            EmitSignal(nameof(OnAction), facingDirection);
+        }
+    }
+
+    public void ChangeDirection(Vector2 newDirection)
+    {
+        facingDirection = newDirection;
     }
 
     public override void _PhysicsProcess(float delta)
