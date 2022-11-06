@@ -49,7 +49,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ Vector2( 0, -1 ) ],
+"args": [ Vector2( 0, 1 ) ],
 "method": "ChangeDirection"
 } ]
 }
@@ -142,7 +142,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ Vector2( 0, 1 ) ],
+"args": [ Vector2( 0, -1 ) ],
 "method": "ChangeDirection"
 } ]
 }
@@ -173,7 +173,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ Vector2( 0, -1 ) ],
+"args": [ Vector2( 0, 1 ) ],
 "method": "ChangeDirection"
 } ]
 }
@@ -266,7 +266,7 @@ tracks/1/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
-"args": [ Vector2( 0, 1 ) ],
+"args": [ Vector2( 0, -1 ) ],
 "method": "ChangeDirection"
 } ]
 }
@@ -348,7 +348,6 @@ texture = ExtResource( 3 )
 centered = false
 hframes = 4
 vframes = 4
-frame = 11
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 9 )
