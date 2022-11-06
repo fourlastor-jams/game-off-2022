@@ -215,7 +215,7 @@ switch_mode = 1
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 519, 107 )
 states/Walk/node = SubResource( 39 )
-states/Walk/position = Vector2( 701.5, 139.5 )
+states/Walk/position = Vector2( 700.833, 139.5 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ) ]
 start_node = "Idle"
 
@@ -258,4 +258,4 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 27 )
 parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
-parameters/Walk/blend_position = Vector2( -0.001845, 0.922815 )
+parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
