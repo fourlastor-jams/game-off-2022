@@ -83,3 +83,5 @@ export.cfg
 .mono/
 data_*/
 
+# macOS stuff
+.DS_Store

@@ -1,3 +1,4 @@
+using System;
 using Godot;
 
 public class Player : KinematicBody2D
@@ -6,7 +7,19 @@ public class Player : KinematicBody2D
     [Export] private float runningSpeed = 250f;
     [Export] private bool shouldSlide = false;
 
+    [Signal] public delegate void OnAction(Vector2 direction);
+
+    private AnimationTree animationTree;
+    private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning = false;
+    private Vector2 facingDirection = Vector2.One;
+
+    public override void _Ready()
+    {
+        base._Ready();
+        animationTree = GetNode<AnimationTree>("AnimationTree");
+        animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+    }
 
     public override void _PhysicsProcess(float delta)
     {
@@ -18,9 +31,19 @@ public class Player : KinematicBody2D
             Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left"),
             Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up")
         );
-        var direction = input.Normalized();
-        var movement = (isRunning ? runningSpeed : speed) * direction;
+        var velocity = input.Normalized();
 
+        if (velocity == Vector2.Zero)
+        {
+            animationStateMachine.Travel("Idle");
+            return;
+        }
+
+        animationStateMachine.Travel("Walk");
+        animationTree.Set("parameters/Walk/blend_position", velocity);
+        animationTree.Set("parameters/Idle/blend_position", velocity);
+
+        var movement = (isRunning ? runningSpeed : speed) * velocity;
         if (shouldSlide)
         {
             MoveAndSlide(movement);
@@ -28,6 +51,20 @@ public class Player : KinematicBody2D
         else
         {
             MoveAndCollide(movement);
+        }
+
+        facingDirection = new Vector2(
+            x: Mathf.Sign(movement.x),
+            y: Mathf.Sign(movement.y)
+        );
+    }
+
+    public override void _UnhandledKeyInput(InputEventKey @event)
+    {
+        base._UnhandledKeyInput(@event);
+        if (Input.IsActionJustPressed("ui_select"))
+        {
+            EmitSignal(nameof(OnAction), facingDirection);
         }
     }
 }
