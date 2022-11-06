@@ -20,15 +20,6 @@ public class Player : KinematicBody2D
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
-    public override void _UnhandledInput(InputEvent @event)
-    {
-        base._UnhandledInput(@event);
-        if (Input.IsActionJustPressed("ui_select"))
-        {
-            EmitSignal(nameof(OnAction), facingDirection);
-        }
-    }
-
     public void ChangeDirection(Vector2 newDirection)
     {
         facingDirection = newDirection;
@@ -64,6 +55,15 @@ public class Player : KinematicBody2D
         else
         {
             MoveAndCollide(movement);
+        }
+    }
+
+    public override void _UnhandledKeyInput(InputEventKey @event)
+    {
+        base._UnhandledKeyInput(@event);
+        if (Input.IsActionJustPressed("ui_select"))
+        {
+            EmitSignal(nameof(OnAction), facingDirection);
         }
     }
 }
