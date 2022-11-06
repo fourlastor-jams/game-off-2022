@@ -7,14 +7,14 @@ public class Player : KinematicBody2D
     [Export] private bool shouldSlide = false;
 
     private AnimationTree animationTree;
-    private AnimationNodeStateMachinePlayback animationPlayback;
+    private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning = false;
 
     public override void _Ready()
     {
         base._Ready();
         animationTree = (AnimationTree)GetNode("AnimationTree");
-        animationPlayback = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+        animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -31,11 +31,11 @@ public class Player : KinematicBody2D
 
         if (velocity == Vector2.Zero)
         {
-            animationPlayback.Travel("Idle");
+            animationStateMachine.Travel("Idle");
             return;
         }
 
-        animationPlayback.Travel("Walk");
+        animationStateMachine.Travel("Walk");
         animationTree.Set("parameters/Walk/blend_position", velocity);
         animationTree.Set("parameters/Idle/blend_position", velocity);
 
