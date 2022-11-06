@@ -39,6 +39,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 4, 8, 12 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 0, -1 ) ],
+"method": "ChangeDirection"
+} ]
+}
 
 [sub_resource type="Animation" id=28]
 resource_name = "idle_left"
@@ -55,6 +69,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 2, 6, 10, 14 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( -1, 0 ) ],
+"method": "ChangeDirection"
+} ]
 }
 
 [sub_resource type="Animation" id=29]
@@ -73,6 +101,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 3, 7, 11, 15 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 1, 0 ) ],
+"method": "ChangeDirection"
+} ]
+}
 
 [sub_resource type="Animation" id=30]
 resource_name = "idle_up"
@@ -89,6 +131,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 5, 9, 13 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 0, 1 ) ],
+"method": "ChangeDirection"
+} ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -107,6 +163,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 4, 8, 12 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 0, -1 ) ],
+"method": "ChangeDirection"
+} ]
+}
 
 [sub_resource type="Animation" id=22]
 resource_name = "walk_left"
@@ -123,6 +193,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 2, 6, 10, 14 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( -1, 0 ) ],
+"method": "ChangeDirection"
+} ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -141,6 +225,20 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 3, 7, 11, 15 ]
 }
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 1, 0 ) ],
+"method": "ChangeDirection"
+} ]
+}
 
 [sub_resource type="Animation" id=24]
 resource_name = "walk_up"
@@ -157,6 +255,20 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 1, 5, 9, 13 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ Vector2( 0, 1 ) ],
+"method": "ChangeDirection"
+} ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=31]
@@ -215,7 +327,7 @@ switch_mode = 1
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 519, 107 )
 states/Walk/node = SubResource( 39 )
-states/Walk/position = Vector2( 701.5, 139.5 )
+states/Walk/position = Vector2( 700.833, 139.5 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ) ]
 start_node = "Idle"
 
@@ -236,6 +348,7 @@ texture = ExtResource( 3 )
 centered = false
 hframes = 4
 vframes = 4
+frame = 11
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 9 )
@@ -258,4 +371,4 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 27 )
 parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
-parameters/Walk/blend_position = Vector2( -0.001845, 0.922815 )
+parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
