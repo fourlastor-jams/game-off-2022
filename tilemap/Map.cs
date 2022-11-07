@@ -5,7 +5,7 @@ public class Map : Node2D
 {
     private Player player;
     private TileMap walls;
-    private bool hasKey;
+    private bool playerHasKey;
 
     private readonly Dictionary<string, int> tileIds = new Dictionary<string, int>();
 
@@ -24,26 +24,26 @@ public class Map : Node2D
         var position = PlayerMapPosition();
         if (walls.GetCellv(position) == tileIds[KeyTile])
         {
-            hasKey = true;
+            playerHasKey = true;
             walls.SetCellv(position, TileMap.InvalidCell);
         }
     }
 
     public void PlayerAction(Vector2 direction)
     {
-        var position = PlayerMapPosition() + direction;
-        var tileId = walls.GetCellv(position);
+        var playerPosition = PlayerMapPosition() + direction;
+        var tileId = walls.GetCellv(playerPosition);
         if (tileId == TileMap.InvalidCell)
         {
-            GD.Print($"No tile found at {position}");
+            GD.Print($"No tile found at {playerPosition}");
             return;
         }
         var tileName = walls.TileSet.TileGetName(tileId);
-        GD.Print($"Found '{tileName}' [{tileId}] at {position}");
-        if (tileId == tileIds[DoorTile] && hasKey)
+        GD.Print($"Found '{tileName}' [{tileId}] at {playerPosition}");
+        if (tileId == tileIds[DoorTile] && playerHasKey)
         {
-            walls.SetCellv(position, TileMap.InvalidCell);
-            hasKey = false;
+            walls.SetCellv(playerPosition, TileMap.InvalidCell);
+            playerHasKey = false;
         }
     }
 
