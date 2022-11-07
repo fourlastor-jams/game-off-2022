@@ -51,7 +51,7 @@ public class Map : Node2D
     {
         return walls.WorldToMap(walls.ToLocal(player.GlobalPosition));
     }
-    
+
     private const string KeyTile = "key";
     private const string DoorTile = "door";
 }
