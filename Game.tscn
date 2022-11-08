@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=2]
 
-[ext_resource path="res://Game.cs" type="Script" id=1]
+[ext_resource path="res://Game.gd" type="Script" id=1]
 [ext_resource path="res://audio/music/overworld2.ogg" type="AudioStream" id=2]
 
 [node name="Game" type="Node2D"]
@@ -11,5 +11,9 @@ script = ExtResource( 1 )
 stream = ExtResource( 2 )
 autoplay = true
 
-[node name="Viewport" type="Viewport" parent="."]
+[node name="ViewportContainer" type="ViewportContainer" parent="."]
+margin_right = 257.0
+margin_bottom = 144.0
+
+[node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 256, 144 )
