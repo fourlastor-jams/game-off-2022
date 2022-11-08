@@ -2,26 +2,21 @@ using Godot;
 
 public class Game : Node2D
 {
-    private Node2D node;
     private AudioStreamPlayer musicPlayer;
 
     public override void _Ready()
     {
-        // node = GetNode<Node2D>("Node");
-        // musicPlayer = GetNode<AudioStreamPlayer>("MusicPlayer");
-
-        // debug: we immediately load the map scene
-        // GetTree().ChangeScene("res://tilemap/Map.tscn");
-        // var map = ResourceLoader.load("res://tilemap/Map.tscn").instance();
-        // node.add_child(map);
+        var scene = ResourceLoader.Load<PackedScene>("res://tilemap/Map.tscn").Instance<Map>();
+        GetNode<Viewport>("ViewportContainer/Viewport").AddChild(scene);
+        musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
     {
-        // base._UnhandledKeyInput(@event);
-        // if (Input.IsActionJustPressed("toggle_audio"))
-        // {
-        // musicPlayer.Playing = !musicPlayer.Playing;
-        // }
+        base._UnhandledKeyInput(@event);
+        if (Input.IsActionJustPressed("toggle_audio"))
+        {
+            musicPlayer.Playing = !musicPlayer.Playing;
+        }
     }
 }
