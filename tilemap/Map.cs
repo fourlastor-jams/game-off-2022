@@ -5,7 +5,6 @@ public class Map : Node2D
 {
     private Player player;
     private TileMap walls;
-    private AudioStreamPlayer musicPlayer;
     private bool playerHasKey;
 
     private readonly Dictionary<string, int> tileIds = new Dictionary<string, int>();
@@ -14,7 +13,6 @@ public class Map : Node2D
     {
         player = GetNode<Player>("YSort/Player");
         walls = GetNode<TileMap>("YSort/Walls");
-        musicPlayer = GetNode<AudioStreamPlayer>("MusicPlayer");
         player.Connect("OnAction", this, nameof(PlayerAction));
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
@@ -28,15 +26,6 @@ public class Map : Node2D
         {
             playerHasKey = true;
             walls.SetCellv(position, TileMap.InvalidCell);
-        }
-    }
-
-    public override void _UnhandledKeyInput(InputEventKey @event)
-    {
-        base._UnhandledKeyInput(@event);
-        if (Input.IsActionJustPressed("toggle_audio"))
-        {
-            musicPlayer.Playing = !musicPlayer.Playing;
         }
     }
 

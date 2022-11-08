@@ -31,5 +31,3 @@ zoom = Vector2( 0.5, 0.5 )
 
 [node name="MusicPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 2 )
-autoplay = true
-bus = "Music"
