@@ -5,7 +5,7 @@
 [node name="Inventory" type="Control"]
 anchor_right = 0.301
 anchor_bottom = 0.27
-margin_right = -0.0560074
+margin_right = 0.943993
 margin_bottom = 0.119999
 
 [node name="Background" type="ColorRect" parent="."]
