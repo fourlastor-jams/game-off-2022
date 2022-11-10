@@ -1,14 +1,14 @@
 using Godot;
 
-public class Game : Node2D
+public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
+    private Control inventory;
 
     public override void _Ready()
     {
-        var scene = ResourceLoader.Load<PackedScene>("res://tilemap/Map.tscn").Instance<Map>();
-        GetNode<Viewport>("ViewportContainer/Viewport").AddChild(scene);
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
+        inventory = GetNode<Control>("UI/Inventory");
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
@@ -17,6 +17,10 @@ public class Game : Node2D
         if (Input.IsActionJustPressed("toggle_audio"))
         {
             musicPlayer.Playing = !musicPlayer.Playing;
+        }
+        else if (Input.IsActionJustPressed("toggle_inventory"))
+        {
+            inventory.Visible = !inventory.Visible;
         }
     }
 }
