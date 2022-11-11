@@ -11,8 +11,8 @@ public class Map : Node2D
 
     public override void _Ready()
     {
-        player = GetNode<Player>("YSort/Player");
-        walls = GetNode<TileMap>("YSort/Walls");
+        player = GetNode<Player>("Walls/Player");
+        walls = GetNode<TileMap>("Walls");
         player.Connect("OnAction", this, nameof(PlayerAction));
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
