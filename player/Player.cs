@@ -3,8 +3,8 @@ using Godot;
 
 public class Player : KinematicBody2D
 {
-    [Export] private float speed = 150f;
-    [Export] private float runningSpeed = 250f;
+    [Export] private float speed = 100f;
+    [Export] private float runningSpeed = 130f;
     [Export] private bool shouldSlide = false;
 
     [Signal] public delegate void OnAction(Vector2 direction);
