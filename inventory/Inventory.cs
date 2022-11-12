@@ -8,7 +8,7 @@ public class Inventory : Control
     public override void _Ready()
     {
         slots = new List<InventorySlot>(8);
-        for (var i = 0; i < 8; i++)
+        for (var i = 0; i < 16; i++)
         {
             slots.Add(Slot(i));
         }
