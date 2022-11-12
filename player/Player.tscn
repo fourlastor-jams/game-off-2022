@@ -1,10 +1,11 @@
-[gd_scene load_steps=31 format=2]
+[gd_scene load_steps=34 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.cs" type="Script" id=2]
 [ext_resource path="res://player/player-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://audio/sounds/walk1.ogg" type="AudioStream" id=4]
 [ext_resource path="res://player/Sword.tscn" type="PackedScene" id=5]
+[ext_resource path="res://audio/sounds/swish2.wav" type="AudioStream" id=6]
 
 [sub_resource type="CapsuleShape2D" id=42]
 radius = 8.0
@@ -70,7 +71,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("Sword/SwordSprite:visible")
@@ -82,7 +83,19 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ true ]
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Sounds:stream")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ ExtResource( 4 ) ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -230,6 +243,20 @@ tracks/5/keys = {
 "update": 1,
 "values": [ true, false ]
 }
+tracks/6/type = "audio"
+tracks/6/path = NodePath("Sounds")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": ExtResource( 6 )
+} ],
+"times": PoolRealArray( 0 )
+}
 
 [sub_resource type="Animation" id=21]
 resource_name = "walk_down"
@@ -359,6 +386,9 @@ tracks/1/keys = {
 } ]
 }
 
+[sub_resource type="AnimationNodeAnimation" id=45]
+animation = "swing_right"
+
 [sub_resource type="AnimationNodeAnimation" id=31]
 animation = "idle_left"
 
@@ -411,13 +441,21 @@ switch_mode = 1
 [sub_resource type="AnimationNodeStateMachineTransition" id=41]
 switch_mode = 1
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+switch_mode = 2
+auto_advance = true
+
 [sub_resource type="AnimationNodeStateMachine" id=26]
+states/Attack/node = SubResource( 45 )
+states/Attack/position = Vector2( 516, 274 )
 states/Idle/node = SubResource( 25 )
-states/Idle/position = Vector2( 519, 107 )
+states/Idle/position = Vector2( 516, 103 )
 states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 700.833, 139.5 )
-transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ) ]
+transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "Idle", SubResource( 49 ) ]
 start_node = "Idle"
+end_node = "Attack"
+graph_offset = Vector2( -2, 10 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 

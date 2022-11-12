@@ -16,11 +16,12 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 48, 48 )
 
 [node name="SwordSprite" type="Sprite" parent="."]
+visible = false
 position = Vector2( 0, -14 )
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 48, 16, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2( 16, 0 )
+position = Vector2( 21, 0 )
 shape = SubResource( 43 )

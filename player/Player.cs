@@ -65,6 +65,11 @@ public class Player : KinematicBody2D
         if (Input.IsActionJustPressed("ui_select"))
         {
             EmitSignal(nameof(OnAction), facingDirection);
+
+            // Swing sword.
+            animationStateMachine.Start("Attack");
+
         }
     }
+
 }
