@@ -1,14 +1,24 @@
 using Godot;
+using Godot.Collections;
+using JetBrains.Annotations;
 
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
-    private Control inventory;
+    private Inventory inventory;
+    private Map map;
 
     public override void _Ready()
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
-        inventory = GetNode<Control>("UI/Inventory");
+        inventory = GetNode<Inventory>("UI/Inventory");
+        map = GetNode<Map>("ViewportContainer/Viewport/Map");
+        for (int i = 0; i < 7; i++)
+        {
+            inventory.AddItem(Item.Hearth, i);
+        }
+
+        map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem), new Array { 7 });
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
