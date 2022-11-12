@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Godot;
 
 public class Inventory : Control
@@ -14,9 +15,9 @@ public class Inventory : Control
         }
     }
 
-    public bool AddItem(Item item, int slot)
+    public bool AddItem(Item item)
     {
-        return slots[slot].AddItem(item);
+        return slots.Any(slot => slot.AddItem(item));
     }
 
     private InventorySlot Slot(int slot)

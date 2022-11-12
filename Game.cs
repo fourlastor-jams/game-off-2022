@@ -13,12 +13,12 @@ using JetBrains.Annotations;
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         inventory = GetNode<Inventory>("UI/Inventory");
         map = GetNode<Map>("ViewportContainer/Viewport/Map");
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 4; i++)
         {
-            inventory.AddItem(Item.Hearth, i);
+            inventory.AddItem(Item.Hearth);
         }
 
-        map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem), new Array { 15 });
+        map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
