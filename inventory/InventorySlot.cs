@@ -10,6 +10,7 @@ public class InventorySlot : Control
     public override void _Ready()
     {
         icon = GetNode<TextureRect>("MarginContainer/ItemIcon");
+        icon.Connect("gui_input", this, nameof(OnInput));
     }
 
     public bool AddItem(Item newItem)
@@ -22,5 +23,13 @@ public class InventorySlot : Control
         item = newItem;
         icon.Texture = newItem.Texture();
         return true;
+    }
+
+    public void OnInput([UsedImplicitly] InputEvent @event)
+    {
+        if (Input.IsActionJustPressed("item_click") && item != null)
+        {
+            GD.Print($"Click on item {item.Value.Name()}");
+        }
     }
 }
