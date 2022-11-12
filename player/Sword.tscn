@@ -10,14 +10,16 @@ radius = 8.06226
 
 [node name="SwishSprite" type="Sprite" parent="."]
 visible = false
-position = Vector2( 24, -1 )
+position = Vector2( 0, 4 )
 texture = ExtResource( 2 )
+flip_h = true
+flip_v = true
 region_enabled = true
-region_rect = Rect2( 0, 0, 48, 48 )
+region_rect = Rect2( 0, 48, 48, 48 )
 
 [node name="SwordSprite" type="Sprite" parent="."]
-visible = false
-position = Vector2( 0, -14 )
+position = Vector2( 16, 0 )
+rotation = 1.5708
 texture = ExtResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 48, 16, 16 )
