@@ -42,6 +42,7 @@ public class Player : KinematicBody2D
         animationStateMachine.Travel("Walk");
         animationTree.Set("parameters/Walk/blend_position", velocity);
         animationTree.Set("parameters/Idle/blend_position", velocity);
+        animationTree.Set("parameters/Attack/blend_position", velocity);
 
         var movement = (isRunning ? runningSpeed : speed) * velocity;
         if (shouldSlide)

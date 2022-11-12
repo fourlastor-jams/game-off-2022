@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=2]
+[gd_scene load_steps=41 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.cs" type="Script" id=2]
@@ -902,8 +902,28 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="AnimationNodeAnimation" id=45]
+[sub_resource type="AnimationNodeAnimation" id=55]
+animation = "swing_up"
+
+[sub_resource type="AnimationNodeAnimation" id=56]
+animation = "swing_left"
+
+[sub_resource type="AnimationNodeAnimation" id=57]
+animation = "swing_down"
+
+[sub_resource type="AnimationNodeAnimation" id=58]
 animation = "swing_right"
+
+[sub_resource type="AnimationNodeBlendSpace2D" id=53]
+blend_point_0/node = SubResource( 55 )
+blend_point_0/pos = Vector2( 0, -1 )
+blend_point_1/node = SubResource( 56 )
+blend_point_1/pos = Vector2( -1, 0 )
+blend_point_2/node = SubResource( 57 )
+blend_point_2/pos = Vector2( 0, 1 )
+blend_point_3/node = SubResource( 58 )
+blend_point_3/pos = Vector2( 1, 0 )
+blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id=31]
 animation = "idle_left"
@@ -957,21 +977,21 @@ switch_mode = 1
 [sub_resource type="AnimationNodeStateMachineTransition" id=41]
 switch_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
 switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=26]
-states/Attack/node = SubResource( 45 )
-states/Attack/position = Vector2( 516, 274 )
+states/Attack/node = SubResource( 53 )
+states/Attack/position = Vector2( 516, 257 )
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 516, 103 )
 states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 700.833, 139.5 )
-transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "Idle", SubResource( 49 ) ]
+transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "Idle", SubResource( 54 ) ]
 start_node = "Idle"
 end_node = "Attack"
-graph_offset = Vector2( -2, 10 )
+graph_offset = Vector2( -22, 40 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
@@ -992,6 +1012,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 2
 vframes = 8
+frame = 14
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
@@ -1016,6 +1037,7 @@ tree_root = SubResource( 26 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 27 )
+parameters/Attack/blend_position = Vector2( 0, -0.00313485 )
 parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
