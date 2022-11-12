@@ -1,33 +1,41 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://inventory/InventorySlot.tscn" type="PackedScene" id=1]
 [ext_resource path="res://inventory/Inventory.cs" type="Script" id=2]
+[ext_resource path="res://inventory/assets/inventory-bg.png" type="Texture" id=3]
 
 [node name="Inventory" type="Control"]
-anchor_right = 0.301
-anchor_bottom = 0.27
-margin_right = -0.0560074
-margin_bottom = 0.119999
+anchor_right = 0.156
+anchor_bottom = 0.149
+margin_right = 6.128
+margin_bottom = -0.912003
 script = ExtResource( 2 )
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="NinePatchRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.156863, 0.156863, 0.156863, 0.313726 )
+margin_right = -2.0
+margin_bottom = -1.0
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 92, 84 )
+patch_margin_left = 7
+patch_margin_top = 2
+patch_margin_right = 5
+patch_margin_bottom = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 margin_right = 77.0
 margin_bottom = 39.0
-custom_constants/margin_right = 1
-custom_constants/margin_top = 1
-custom_constants/margin_left = 1
-custom_constants/margin_bottom = 1
+custom_constants/margin_right = 5
+custom_constants/margin_top = 2
+custom_constants/margin_left = 5
+custom_constants/margin_bottom = 2
 
 [node name="InventoryGrid" type="GridContainer" parent="MarginContainer"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 76.0
-margin_bottom = 38.0
+margin_left = 5.0
+margin_top = 2.0
+margin_right = 80.0
+margin_bottom = 39.0
 custom_constants/vseparation = 1
 custom_constants/hseparation = 1
 columns = 4
