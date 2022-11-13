@@ -82,5 +82,5 @@ public class InventorySlot : Control
             Inventory.DragTo = foundSlot;
             Inventory.Swapping = true;
         }
-    } 
+    }
 }
