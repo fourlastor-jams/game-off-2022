@@ -985,17 +985,16 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=26]
 states/Attack/node = SubResource( 53 )
-states/Attack/position = Vector2( 494.667, 347 )
+states/Attack/position = Vector2( 494.667, 347.667 )
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 516, 103 )
 states/RESET/node = SubResource( 59 )
-states/RESET/position = Vector2( 367.333, 196 )
+states/RESET/position = Vector2( 368, 196 )
 states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 700.833, 139.5 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ) ]
-start_node = "Idle"
-end_node = "Attack"
-graph_offset = Vector2( 217, -95 )
+start_node = "RESET"
+graph_offset = Vector2( 160, 73 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
