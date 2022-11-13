@@ -18,6 +18,9 @@ bus = "Music"
 anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
 size = Vector2( 512, 288 )
@@ -29,6 +32,9 @@ render_target_update_mode = 3
 [node name="UI" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Inventory" parent="UI" instance=ExtResource( 2 )]
 anchor_left = 0.5
