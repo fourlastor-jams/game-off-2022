@@ -1,30 +1,80 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
+using JetBrains.Annotations;
 
 public class Inventory : Control
 {
+    private const int AnimationSteps = 24;
+
+    private GridContainer inventoryGrid;
     private List<InventorySlot> slots;
 
     // Inventory dragging.
-    public InventorySlot DragFrom;
-    public InventorySlot DragTo;
-    public bool Swapping;
+    [CanBeNull] private InventorySlot dragFrom;
+    [CanBeNull] private InventorySlot dragTo;
+    private bool swapping;
+
 
     public override void _Ready()
     {
+        inventoryGrid = GetNode<GridContainer>("MarginContainer/InventoryGrid");
         slots = new List<InventorySlot>(8);
         for (var i = 0; i < 16; i++)
         {
-            slots.Add(Slot(i));
+            var slot = Slot(i);
+            slots.Add(slot);
+            slot.Icon.Connect("gui_input", this, nameof(OnInput), new Array { slot });
         }
     }
 
+    public void OnInput([UsedImplicitly] InputEvent @event, InventorySlot sourceSlot)
+    {
+        if (sourceSlot.Item == null || swapping) return;
+
+        if (Input.IsActionJustPressed("item_click"))
+        {
+            //GD.Print($"Click on item {item.Value.Name()}");
+            dragFrom = sourceSlot;
+        }
+
+        // Snap the item to the cursor to drag it around.
+        if (Input.IsActionPressed("item_click") && dragFrom == sourceSlot)
+        {
+            var position = GetViewport().GetMousePosition() - sourceSlot.GetGlobalTransformWithCanvas().origin -
+                           new Vector2(8, 8);
+            sourceSlot.Icon.SetPosition(position);
+        }
+
+        if (dragFrom == null) return;
+
+        // Snap the item to the cursor to drag it around.
+        if (!Input.IsActionJustReleased("item_click")) return;
+
+        // Check if there's another element at this position.
+        var foundSlot = FindSlotAtPosition(sourceSlot) ?? sourceSlot;
+        // GD.Print($"Drag to item {item.Value.Name()}");
+        dragTo = foundSlot;
+        swapping = true;
+    }
+
+    private InventorySlot FindSlotAtPosition(InventorySlot sourceSlot)
+    {
+        return (
+            from InventorySlot slot in inventoryGrid.GetChildren()
+            let position = sourceSlot.RectPosition + sourceSlot.Icon.RectPosition + new Vector2(8, 8)
+            where slot.GetRect().HasPoint(position)
+            select slot
+        ).FirstOrDefault();
+    }
+
+
     public override void _Process(float delta)
     {
-        if (this.DragFrom != null && this.DragTo != null)
+        if (dragFrom != null && dragTo != null)
         {
-            this._SwapItems();
+            _SwapItems(dragFrom, dragTo);
         }
     }
 
@@ -38,40 +88,39 @@ public class Inventory : Control
         return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
     }
 
-    private async void _SwapItems()
+    private async void _SwapItems(InventorySlot origin, InventorySlot destination)
     {
         // Don't call _Process each frame until finished.
         SetProcess(false);
-        Swapping = true;
+        swapping = true;
 
-        int scale = 24;
 
         // Get velocity vectors for the 'swap' animation.
-        Vector2 vectorFrom = this.DragTo.RectPosition - (this.DragFrom.RectPosition + this.DragFrom.icon.RectPosition);
-        vectorFrom = vectorFrom / scale;
-        Vector2 vectorTo = this.DragFrom.RectPosition - (this.DragTo.RectPosition + this.DragTo.icon.RectPosition);
-        vectorTo = vectorTo / scale;
+        var vectorFrom = destination.RectPosition - (origin.RectPosition + origin.Icon.RectPosition);
+        vectorFrom /= AnimationSteps;
+        var vectorTo = origin.RectPosition - (destination.RectPosition + destination.Icon.RectPosition);
+        vectorTo /= AnimationSteps;
 
-        for (int i = 0; i < scale; ++i)
+        for (var i = 0; i < AnimationSteps; ++i)
         {
-            this.DragFrom.icon.RectPosition += vectorFrom;
-            if (this.DragFrom != this.DragTo) this.DragTo.icon.RectPosition += vectorTo;
+            origin.Icon.RectPosition += vectorFrom;
+            if (dragFrom != dragTo) destination.Icon.RectPosition += vectorTo;
 
             // Wait one frame.
             await ToSignal(GetTree(), "idle_frame");
         }
 
         // Actually swap the items at their respective positions now.
-        Item? temp = this.DragFrom.item;
-        this.DragFrom.SetItem(this.DragTo.item);
-        this.DragTo.SetItem(temp);
+        var temp = origin.Item;
+        origin.SetItem(destination.Item);
+        destination.SetItem(temp);
 
         // Reset DragFrom and DragTo.
-        this.DragFrom = null;
-        this.DragTo = null;
+        dragFrom = null;
+        dragTo = null;
 
         // Call _Process each frame from now on.
         SetProcess(true);
-        Swapping = false;
+        swapping = false;
     }
 }
