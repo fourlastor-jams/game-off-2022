@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=2 format=2]
 
 [ext_resource path="res://inventory/InventorySlot.cs" type="Script" id=1]
-[ext_resource path="res://inventory/assets/inventory-slot-bg.png" type="Texture" id=2]
 
 [node name="InventorySlot" type="Control"]
 margin_right = 18.0
@@ -10,14 +9,9 @@ rect_min_size = Vector2( 18, 18 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_horizontal_guides_": [ 18.0 ],
+"_edit_use_anchors_": false,
 "_edit_vertical_guides_": [ 18.0 ]
 }
-
-[node name="Background" type="TextureRect" parent="."]
-margin_right = 18.0
-margin_bottom = 18.0
-rect_min_size = Vector2( 18, 18 )
-texture = ExtResource( 2 )
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 anchor_right = 1.0
@@ -28,9 +22,15 @@ custom_constants/margin_right = 1
 custom_constants/margin_top = 2
 custom_constants/margin_left = 1
 custom_constants/margin_bottom = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="ItemIcon" type="TextureRect" parent="MarginContainer"]
 margin_left = 1.0
 margin_top = 2.0
 margin_right = 19.0
 margin_bottom = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

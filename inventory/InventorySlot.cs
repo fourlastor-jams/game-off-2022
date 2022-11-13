@@ -3,33 +3,33 @@ using JetBrains.Annotations;
 
 public class InventorySlot : Control
 {
-    [CanBeNull] private Item? item;
+    [CanBeNull] public Item? Item { get; private set; }
+    public TextureRect Icon { get; private set; }
 
-    private TextureRect icon;
+    private readonly Vector2 offset = new Vector2(1, 2);
 
     public override void _Ready()
     {
-        icon = GetNode<TextureRect>("MarginContainer/ItemIcon");
-        icon.Connect("gui_input", this, nameof(OnInput));
+        Icon = GetNode<TextureRect>("MarginContainer/ItemIcon");
     }
 
     public bool AddItem(Item newItem)
     {
-        if (item != null)
+        if (Item != null)
         {
             return false;
         }
 
-        item = newItem;
-        icon.Texture = newItem.Texture();
+        SetItem(newItem);
+
         return true;
     }
 
-    public void OnInput([UsedImplicitly] InputEvent @event)
+    public void SetItem(Item? newItem)
     {
-        if (Input.IsActionJustPressed("item_click") && item != null)
-        {
-            GD.Print($"Click on item {item.Value.Name()}");
-        }
+        Item = newItem;
+        if (newItem.HasValue) Icon.Texture = newItem.Value.Texture();
+        else Icon.Texture = null; // TODO: I don't think this is a memory leak but I'm not positive.
+        Icon.RectPosition = offset;
     }
 }

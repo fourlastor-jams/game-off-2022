@@ -4,7 +4,7 @@ using Godot;
 public enum Item
 {
     Key,
-    Hearth
+    Heart
 }
 
 
@@ -29,7 +29,7 @@ public static class ItemExtension
         {
             case Item.Key:
                 return key();
-            case Item.Hearth:
+            case Item.Heart:
                 return heart();
             default:
                 throw new Exception($"Missing name for {item}");

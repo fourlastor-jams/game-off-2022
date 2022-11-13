@@ -22,7 +22,11 @@ public class Game : Node
         map = GetNode<Map>("ViewportContainer/Viewport/Map");
         for (int i = 0; i < 4; i++)
         {
-            inventory.AddItem(Item.Hearth);
+            inventory.AddItem(Item.Heart);
+        }
+        for (int i = 0; i < 4; i++)
+        {
+            inventory.AddItem(Item.Key);
         }
 
         map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
