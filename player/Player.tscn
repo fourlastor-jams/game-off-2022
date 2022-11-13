@@ -14,7 +14,7 @@ height = 0.0
 [sub_resource type="Animation" id=19]
 length = 0.001
 tracks/0/type = "value"
-tracks/0/path = NodePath("Character:frame")
+tracks/0/path = NodePath("Sword/SwordSprite:visible")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -23,7 +23,7 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ 0 ]
+"values": [ false ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Sword/SwordSprite:position")
@@ -74,7 +74,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sword/SwordSprite:visible")
+tracks/5/path = NodePath("Sounds:stream")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -83,10 +83,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ ExtResource( 4 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sounds:stream")
+tracks/6/path = NodePath("Sword/SwishSprite:position")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -95,7 +95,7 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ ExtResource( 4 ) ]
+"values": [ Vector2( 24, -1 ) ]
 }
 tracks/7/type = "value"
 tracks/7/path = NodePath("Sword/SwishSprite:flip_h")
@@ -110,7 +110,7 @@ tracks/7/keys = {
 "values": [ false ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Sword/SwishSprite:position")
+tracks/8/path = NodePath("Sword/SwishSprite:flip_v")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -119,27 +119,15 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 24, -1 ) ]
+"values": [ false ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sword/SwishSprite:flip_v")
+tracks/9/path = NodePath("Sword/SwishSprite:region_rect")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ false ]
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Sword/SwishSprite:region_rect")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
@@ -503,7 +491,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( -0.00054088, 0.4 ),
+"times": PoolRealArray( -0.00054088, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 14, 14 ]
@@ -539,7 +527,7 @@ tracks/3/loop_wrap = true
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/keys = {
-"times": PoolRealArray( 0, 0.025, 0.4 ),
+"times": PoolRealArray( 0, 0.05, 0.4 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ Vector2( 0, -7 ), Vector2( 2, -7 ), Vector2( 1, -7 ) ]
@@ -787,20 +775,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 0, 1 ]
 }
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "" ],
-"method": "playSound"
-} ]
-}
 
 [sub_resource type="Animation" id=22]
 resource_name = "walk_left"
@@ -818,20 +792,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 4, 5 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "" ],
-"method": "playSound"
-} ]
 }
 
 [sub_resource type="Animation" id=23]
@@ -851,20 +811,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 6, 7 ]
 }
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "" ],
-"method": "playSound"
-} ]
-}
 
 [sub_resource type="Animation" id=24]
 resource_name = "walk_up"
@@ -882,20 +828,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
 "values": [ 2, 3 ]
-}
-tracks/1/type = "method"
-tracks/1/path = NodePath(".")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"values": [ {
-"args": [ "" ],
-"method": "playSound"
-} ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=55]
@@ -985,16 +917,16 @@ auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=26]
 states/Attack/node = SubResource( 53 )
-states/Attack/position = Vector2( 494.667, 347.667 )
+states/Attack/position = Vector2( 516, 307.667 )
 states/Idle/node = SubResource( 25 )
 states/Idle/position = Vector2( 516, 103 )
 states/RESET/node = SubResource( 59 )
-states/RESET/position = Vector2( 368, 196 )
+states/RESET/position = Vector2( 369, 196 )
 states/Walk/node = SubResource( 39 )
-states/Walk/position = Vector2( 700.833, 139.5 )
+states/Walk/position = Vector2( 680.833, 196 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ) ]
 start_node = "RESET"
-graph_offset = Vector2( 160, 73 )
+graph_offset = Vector2( 39, 43 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
@@ -1015,6 +947,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 2
 vframes = 8
+frame = 14
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
@@ -1039,10 +972,9 @@ tree_root = SubResource( 26 )
 anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 27 )
-parameters/Attack/blend_position = Vector2( 0, -0.00313485 )
+parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
-bus = "Sounds"

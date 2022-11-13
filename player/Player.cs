@@ -23,7 +23,7 @@ public class Player : KinematicBody2D
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
-    public override async void _PhysicsProcess(float delta)
+    public override void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
 
@@ -38,10 +38,12 @@ public class Player : KinematicBody2D
         if (attackQueued)
         {
             attackQueued = false;
-            // Swing sword.
+            animationTree.Set("parameters/Attack/blend_position", velocity);
             animationStateMachine.Start("Attack");
-            await ToSignal(animationPlayer, "animation_finished");
+            return;
         }
+
+        if (animationStateMachine.GetCurrentNode().Equals("Attack")) return;
 
         if (velocity == Vector2.Zero)
         {
@@ -52,7 +54,6 @@ public class Player : KinematicBody2D
         animationStateMachine.Travel("Walk");
         animationTree.Set("parameters/Walk/blend_position", velocity);
         animationTree.Set("parameters/Idle/blend_position", velocity);
-        animationTree.Set("parameters/Attack/blend_position", velocity);
 
         var movement = (isRunning ? runningSpeed : speed) * velocity;
         if (shouldSlide)
