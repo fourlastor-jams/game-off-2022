@@ -71,6 +71,9 @@ fabric.properties
 # Android studio 3.1+ serialized cache file
 .idea/caches/build_file_checksums.ser
 
+# Rider markup cache file
+.idea/.idea.game-off-2022/.idea/riderMarkupCache.xml
+
 ### Godot template
 # Godot-specific ignores
 .import/
