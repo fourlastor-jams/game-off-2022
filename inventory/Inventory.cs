@@ -5,7 +5,6 @@ using Godot;
 public class Inventory : Control
 {
     private List<InventorySlot> slots;
-    GridContainer gridContainer;
 
     // Inventory dragging.
     public InventorySlot DragFrom;
