@@ -227,9 +227,10 @@ shouldSlide = true
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.313726 )
-position = Vector2( 0, 7.5 )
-scale = Vector2( 0.1875, 0.046875 )
+position = Vector2( -5, 6 )
+scale = Vector2( 0.15625, 0.0390625 )
 texture = ExtResource( 1 )
+centered = false
 
 [node name="Character" type="Sprite" parent="."]
 position = Vector2( -8, -9 )
@@ -237,6 +238,7 @@ texture = ExtResource( 3 )
 centered = false
 hframes = 4
 vframes = 4
+frame = 11
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
