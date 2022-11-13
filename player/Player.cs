@@ -1,27 +1,29 @@
-using System;
 using Godot;
 
 public class Player : KinematicBody2D
 {
     [Export] private float speed = 100f;
     [Export] private float runningSpeed = 130f;
-    [Export] private bool shouldSlide = false;
+    [Export] private bool shouldSlide;
 
     [Signal] public delegate void OnAction(Vector2 direction);
 
     private AnimationTree animationTree;
+    private AnimationPlayer animationPlayer;
     private AnimationNodeStateMachinePlayback animationStateMachine;
-    private bool isRunning = false;
+    private bool isRunning;
+    private bool attackQueued;
     private Vector2 facingDirection = Vector2.One;
 
     public override void _Ready()
     {
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
-    public override void _PhysicsProcess(float delta)
+    public override async void _PhysicsProcess(float delta)
     {
         base._PhysicsProcess(delta);
 
@@ -32,6 +34,14 @@ public class Player : KinematicBody2D
             Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up")
         );
         var velocity = input.Normalized();
+
+        if (attackQueued)
+        {
+            attackQueued = false;
+            // Swing sword.
+            animationStateMachine.Start("Attack");
+            await ToSignal(animationPlayer, "animation_finished");
+        }
 
         if (velocity == Vector2.Zero)
         {
@@ -66,11 +76,10 @@ public class Player : KinematicBody2D
         if (Input.IsActionJustPressed("ui_select"))
         {
             EmitSignal(nameof(OnAction), facingDirection);
-
-            // Swing sword.
-            animationStateMachine.Start("Attack");
-
+        }
+        else if (Input.IsActionJustPressed("attack"))
+        {
+            attackQueued = true;
         }
     }
-
 }
