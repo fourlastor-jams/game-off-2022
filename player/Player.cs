@@ -13,7 +13,7 @@ public class Player : KinematicBody2D
     private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning;
     private bool attackQueued;
-    private bool hitQueued;
+    private int hitsQueued;
     private Vector2 facingDirection = Vector2.One;
 
     public override void _Ready()
@@ -36,11 +36,15 @@ public class Player : KinematicBody2D
         );
         var velocity = input.Normalized();
 
-        if (hitQueued)
+        if (hitsQueued > 0)
         {
-            hitQueued = false;
             animationTree.Set("parameters/Hit/blend_position", velocity);
             animationStateMachine.Start("Hit");
+
+            // Deduct health.
+            GetNode<Inventory>("/root/Game/UI/Inventory").DeductHealth(hitsQueued);
+
+            hitsQueued = 0;
             return;
         }
 
@@ -95,7 +99,7 @@ public class Player : KinematicBody2D
         }
         else if (Input.IsActionJustPressed("debug_hit"))
         {
-            hitQueued = true;
+            hitsQueued = 1;
         }
     }
 }

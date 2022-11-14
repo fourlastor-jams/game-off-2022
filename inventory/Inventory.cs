@@ -88,6 +88,21 @@ public class Inventory : Control
         return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
     }
 
+    public void DeductHealth(int amount)
+    {
+        int numDeducted = 0;
+        foreach (InventorySlot slot in slots)
+        {
+            if (!slot.Item.HasValue) continue;
+
+            if (slot.Item.Value == Item.Heart)
+            {
+                slot.SetItem(null);
+                if (++numDeducted >= amount) break;
+            }
+        }
+    }
+
     private async void _SwapItems(InventorySlot origin, InventorySlot destination)
     {
         // Don't call _Process each frame until finished.
