@@ -94,7 +94,6 @@ public class Inventory : Control
         SetProcess(false);
         swapping = true;
 
-
         // Get velocity vectors for the 'swap' animation.
         var vectorFrom = destination.RectPosition - (origin.RectPosition + origin.Icon.RectPosition);
         vectorFrom /= AnimationSteps;
