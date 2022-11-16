@@ -61,7 +61,7 @@ public class Player : KinematicBody2D
             var result = MoveAndSlide(movement);
             if (result == Vector2.Zero)
             {
-                GD.Print("> COLLIDED!");
+                //
             }
         }
         else

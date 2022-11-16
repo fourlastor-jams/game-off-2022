@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Godot;
 
-enum State
+public enum State
 {
     IDLE,
     WANDER,
@@ -18,7 +18,6 @@ public class Enemy : KinematicBody2D
 
     [Export] private float speed = 80f;
 
-    private State currentState = State.IDLE;
 
     private AnimationTree animationTree;
     private AnimationNodeStateMachinePlayback animationStateMachine;
@@ -27,33 +26,47 @@ public class Enemy : KinematicBody2D
     [Export] private List<int> wanderDurations = new List<int> { 1, 1, 1, 1 };
     private int wanderDirectionIndex = 0;
     private Vector2 wanderDirection = Vector2.Zero;
-    private Timer timer;
+    private Timer wanderTimer;
+    private State currentState = State.IDLE;
+    private State previousState = State.IDLE;
 
     public override async void _Ready()
     {
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
-        timer = GetNode<Timer>("WanderTimer");
+        wanderTimer = GetNode<Timer>("WanderTimer");
         wanderDirection = wanderDirections.Capacity > 0 ? wanderDirections[0] : Vector2.Zero;
-        timer.WaitTime = wanderDurations[wanderDirectionIndex];
-        timer.OneShot = true;
+        wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
+        wanderTimer.OneShot = true;
+        // debug:
         await ToSignal(GetTree().CreateTimer(2), "timeout");
-        ChangeState();
+        ChangeState(State.WANDER);
     }
 
     public void _OnAreaEntered(Area2D other)
     {
-        GD.Print("Area " + other + " entered.");
+        GD.Print("Area " + other.Name + " entered.");
+        if (other.Name == "PlayerArea")
+        {
+            ChangeState(State.FOLLOW);
+        }
+        else
+        {
+            //
+        }
     }
 
     public void _OnAreaExited(Area2D other)
     {
-        GD.Print("Area " + other + " exited.");
+        GD.Print("Area " + other.Name + " exited.");
+        if (other.Name == "PlayerArea")
+        {
+            ChangeState(previousState);
+        }
     }
 
     public void _OnCollision()
     {
-        GD.Print("collision");
         _ChangeDirection();
         // more complex behaviour (wip):
         var count = GetSlideCount();
@@ -81,10 +94,13 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void ChangeState()
+    public void ChangeState(State newState)
     {
-        // TODO
-        currentState = State.WANDER;
+        GD.Print("Changing state from " + currentState + " to " + newState);
+        wanderTimer.Stop();
+        previousState = currentState;
+        currentState = newState;
+
         if (currentState == State.WANDER)
         {
             StartWandering();
@@ -93,7 +109,7 @@ public class Enemy : KinematicBody2D
 
     private void StartWandering()
     {
-        timer.Start();
+        wanderTimer.Start();
     }
 
     public void _OnWanderTimerTimeout()
@@ -103,16 +119,15 @@ public class Enemy : KinematicBody2D
 
     public void _ChangeDirection()
     {
-        timer.Stop();
+        wanderTimer.Stop();
         if (wanderDirectionIndex > wanderDirections.Capacity - 1)
         {
             wanderDirectionIndex = 0;
         }
         wanderDirection = wanderDirections[wanderDirectionIndex];
-        timer.WaitTime = wanderDurations[wanderDirectionIndex];
-        GD.Print("Switching to direction " + wanderDirection + " (index is " + wanderDirectionIndex + ") ");
+        wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
         wanderDirectionIndex += 1;
-        timer.Start();
+        wanderTimer.Start();
     }
 
     public override void _PhysicsProcess(float delta)
@@ -131,7 +146,6 @@ public class Enemy : KinematicBody2D
                 break;
             case State.FOLLOW:
                 velocity = new Vector2(0, 0);
-                // move_towards()
                 break;
             case State.ATTACK:
                 velocity = new Vector2(0, 0);

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=2]
+[gd_scene load_steps=44 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.cs" type="Script" id=2]
@@ -930,6 +930,9 @@ graph_offset = Vector2( 39, 43 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
+[sub_resource type="CapsuleShape2D" id=62]
+height = 4.0
+
 [node name="Player" type="KinematicBody2D"]
 script = ExtResource( 2 )
 shouldSlide = true
@@ -978,3 +981,9 @@ parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 4 )
+
+[node name="PlayerArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
+position = Vector2( 0, -5 )
+shape = SubResource( 62 )
