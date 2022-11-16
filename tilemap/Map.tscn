@@ -35,5 +35,5 @@ process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 8.0
 
-[node name="Enemy" parent="YSort" instance=ExtResource( 2 )]
+[node name="YSort@Enemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( -197, -91 )

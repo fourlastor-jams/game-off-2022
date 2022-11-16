@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=30 format=2]
 
 [ext_resource path="res://enemy/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://enemy/idle.png" type="Texture" id=2]
 [ext_resource path="res://enemy/walk.png" type="Texture" id=3]
+[ext_resource path="res://enemy/Area2D.cs" type="Script" id=4]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
@@ -459,13 +460,14 @@ animation = "walk_left"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=15]
 blend_point_0/node = SubResource( 25 )
-blend_point_0/pos = Vector2( 0, 1 )
+blend_point_0/pos = Vector2( 0, 0.9 )
 blend_point_1/node = SubResource( 26 )
 blend_point_1/pos = Vector2( 0, -0.9 )
 blend_point_2/node = SubResource( 27 )
 blend_point_2/pos = Vector2( 1, 0 )
 blend_point_3/node = SubResource( 28 )
 blend_point_3/pos = Vector2( -1, 0 )
+blend_mode = 1
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=29]
 
@@ -481,17 +483,21 @@ start_node = "Idle"
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
+[sub_resource type="CircleShape2D" id=31]
+radius = 32.0
+
 [node name="Enemy" type="KinematicBody2D"]
 script = ExtResource( 1 )
+speed = 60.0
 
 [node name="Idle" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 2 )
 centered = false
 hframes = 3
 vframes = 2
 
 [node name="Walk" type="Sprite" parent="."]
-visible = false
 texture = ExtResource( 3 )
 centered = false
 flip_h = true
@@ -519,4 +525,18 @@ anim_player = NodePath("../AnimationPlayer")
 active = true
 parameters/playback = SubResource( 17 )
 parameters/Idle/blend_position = Vector2( -0.570516, 0.710456 )
-parameters/Walk/blend_position = Vector2( -0.672727, -0.646113 )
+parameters/Walk/blend_position = Vector2( -0.527273, 0.416279 )
+
+[node name="FollowArea" type="Area2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea"]
+position = Vector2( 8, 9 )
+shape = SubResource( 31 )
+
+[node name="WanderTimer" type="Timer" parent="."]
+
+[connection signal="OnCollision" from="." to="." method="_OnCollision"]
+[connection signal="area_entered" from="FollowArea" to="." method="_OnAreaEntered"]
+[connection signal="area_exited" from="FollowArea" to="." method="_OnAreaExited"]
+[connection signal="timeout" from="WanderTimer" to="." method="_OnWanderTimerTimeout"]

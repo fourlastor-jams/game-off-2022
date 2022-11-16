@@ -57,7 +57,11 @@ public class Player : KinematicBody2D
         var movement = (isRunning ? runningSpeed : speed) * velocity;
         if (shouldSlide)
         {
-            MoveAndSlide(movement);
+            var result = MoveAndSlide(movement);
+            if (result == Vector2.Zero)
+            {
+                GD.Print("> COLLIDED!");
+            }
         }
         else
         {
