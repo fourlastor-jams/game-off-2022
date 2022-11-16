@@ -54,6 +54,7 @@ public class Enemy : KinematicBody2D
     public void _OnCollision()
     {
         GD.Print("collision");
+        _ChangeDirection();
         // more complex behaviour (wip):
         var count = GetSlideCount();
         for (int i = 0; i < count; i++)
