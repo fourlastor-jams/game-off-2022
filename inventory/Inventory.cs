@@ -143,4 +143,12 @@ public class Inventory : Control
         SetProcess(true);
         swapping = false;
     }
+
+    public void Clear()
+    {
+        foreach (var slot in slots)
+        {
+            slot.SetItem(null);
+        }
+    }
 }
