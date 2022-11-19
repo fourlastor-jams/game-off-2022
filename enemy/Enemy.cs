@@ -121,17 +121,6 @@ public class Enemy : KinematicBody2D
         _ChangeDirection();
     }
 
-    // func accelerate_towards_point(point, delta):
-    // var direction = global_position.direction_to(point)
-    // velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
-    // sprite.flip_h = velocity.x < 0
-    public void MoveTowards(Vector2 point)
-    {
-        var direction = GlobalPosition.DirectionTo(point);
-
-    }
-
-
     public void _ChangeDirection()
     {
         wanderTimer.Stop();
@@ -157,7 +146,6 @@ public class Enemy : KinematicBody2D
                 break;
             case State.WANDER:
                 velocity = wanderDirection;
-                // do we need anything else?
                 break;
             case State.FOLLOW:
                 velocity = GlobalPosition.DirectionTo(followingPosition);
