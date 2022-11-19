@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using Godot;
 
 public enum State
@@ -8,7 +6,8 @@ public enum State
     IDLE,
     WANDER,
     FOLLOW,
-    ATTACK
+    ATTACK,
+    GOTO // TODO: go to a certain position
 }
 
 public class Enemy : KinematicBody2D
