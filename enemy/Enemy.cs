@@ -30,6 +30,8 @@ public class Enemy : KinematicBody2D
     private State currentState = State.IDLE;
     private State previousState = State.IDLE;
 
+    private Vector2 followingPosition = Vector2.Zero;
+
     public override async void _Ready()
     {
         animationTree = GetNode<AnimationTree>("AnimationTree");
@@ -48,6 +50,7 @@ public class Enemy : KinematicBody2D
         GD.Print("Area " + other.Name + " entered.");
         if (other.Name == "PlayerArea")
         {
+            followingPosition = other.GlobalPosition;
             ChangeState(State.FOLLOW);
         }
         else
@@ -62,6 +65,7 @@ public class Enemy : KinematicBody2D
         if (other.Name == "PlayerArea")
         {
             ChangeState(previousState);
+            followingPosition = Vector2.Zero;
         }
     }
 
@@ -117,6 +121,17 @@ public class Enemy : KinematicBody2D
         _ChangeDirection();
     }
 
+    // func accelerate_towards_point(point, delta):
+    // var direction = global_position.direction_to(point)
+    // velocity = velocity.move_toward(direction * MAX_SPEED, ACCELERATION * delta)
+    // sprite.flip_h = velocity.x < 0
+    public void MoveTowards(Vector2 point)
+    {
+        var direction = GlobalPosition.DirectionTo(point);
+
+    }
+
+
     public void _ChangeDirection()
     {
         wanderTimer.Stop();
@@ -145,7 +160,7 @@ public class Enemy : KinematicBody2D
                 // do we need anything else?
                 break;
             case State.FOLLOW:
-                velocity = new Vector2(0, 0);
+                velocity = GlobalPosition.DirectionTo(followingPosition);
                 break;
             case State.ATTACK:
                 velocity = new Vector2(0, 0);
@@ -154,12 +169,6 @@ public class Enemy : KinematicBody2D
             default:
                 break;
         }
-
-        // var input = new Vector2(
-        //     Input.GetActionStrength("ui_right") - Input.GetActionStrength("ui_left"),
-        //     Input.GetActionStrength("ui_down") - Input.GetActionStrength("ui_up")
-        // );
-        // velocity = input.Normalized();
 
         if (velocity == Vector2.Zero)
         {
