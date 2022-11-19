@@ -29,8 +29,8 @@ public class Enemy : KinematicBody2D
     private Timer wanderTimer;
     private State currentState = State.IDLE;
     private State previousState = State.IDLE;
-
     private Vector2 followingPosition = Vector2.Zero;
+    [Export] private float attackDistanceThreshold = 1f;
 
     public override async void _Ready()
     {
@@ -42,7 +42,7 @@ public class Enemy : KinematicBody2D
         wanderTimer.OneShot = true;
         // debug:
         await ToSignal(GetTree().CreateTimer(2), "timeout");
-        ChangeState(State.WANDER);
+        ChangeStateTo(State.WANDER);
     }
 
     public void _OnAreaEntered(Area2D other)
@@ -51,7 +51,7 @@ public class Enemy : KinematicBody2D
         if (other.Name == "PlayerArea")
         {
             followingPosition = other.GlobalPosition;
-            ChangeState(State.FOLLOW);
+            ChangeStateTo(State.FOLLOW);
         }
         else
         {
@@ -64,14 +64,14 @@ public class Enemy : KinematicBody2D
         GD.Print("Area " + other.Name + " exited.");
         if (other.Name == "PlayerArea")
         {
-            ChangeState(previousState);
+            ChangeStateTo(previousState); // maybe this should be changed to FOLLOW
             followingPosition = Vector2.Zero;
         }
     }
 
     public void _OnCollision()
     {
-        _ChangeDirection();
+        _ChangeWanderDirection();
         // more complex behaviour (wip):
         var count = GetSlideCount();
         for (int i = 0; i < count; i++)
@@ -98,7 +98,7 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void ChangeState(State newState)
+    public void ChangeStateTo(State newState)
     {
         GD.Print("Changing state from " + currentState + " to " + newState);
         wanderTimer.Stop();
@@ -118,10 +118,10 @@ public class Enemy : KinematicBody2D
 
     public void _OnWanderTimerTimeout()
     {
-        _ChangeDirection();
+        _ChangeWanderDirection();
     }
 
-    public void _ChangeDirection()
+    public void _ChangeWanderDirection()
     {
         wanderTimer.Stop();
         if (wanderDirectionIndex > wanderDirections.Capacity - 1)
@@ -149,10 +149,15 @@ public class Enemy : KinematicBody2D
                 break;
             case State.FOLLOW:
                 velocity = GlobalPosition.DirectionTo(followingPosition);
+                var distance = followingPosition.DistanceTo(GlobalPosition);
+                if (distance <= attackDistanceThreshold)
+                {
+                    ChangeStateTo(State.ATTACK);
+                }
                 break;
             case State.ATTACK:
                 velocity = new Vector2(0, 0);
-                //
+                // TODO attack!
                 break;
             default:
                 break;
