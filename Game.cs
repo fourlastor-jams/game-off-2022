@@ -9,6 +9,12 @@ public class Game : Node
     private Inventory inventory;
     private Map map;
 
+    public override void _EnterTree()
+    {
+        var screenSize = OS.GetScreenSize();
+        OS.WindowSize = screenSize * 0.8f;
+    }
+
     public override void _Ready()
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
