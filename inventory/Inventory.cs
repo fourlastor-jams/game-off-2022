@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
 using JetBrains.Annotations;
+using Array = Godot.Collections.Array;
 
 public class Inventory : Control
 {
@@ -15,6 +16,8 @@ public class Inventory : Control
     [CanBeNull] private InventorySlot dragFrom;
     [CanBeNull] private InventorySlot dragTo;
     private bool swapping;
+
+    [Signal] public delegate void HeartsRanOut();
 
 
     public override void _Ready()
@@ -90,16 +93,19 @@ public class Inventory : Control
 
     public void DeductHealth(int amount)
     {
-        int numDeducted = 0;
-        foreach (InventorySlot slot in slots)
-        {
-            if (!slot.Item.HasValue) continue;
+        var numDeducted = 0;
+        bool SlotsWithHeartsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == Item.Heart;
 
-            if (slot.Item.Value == Item.Heart)
-            {
-                slot.SetItem(null);
-                if (++numDeducted >= amount) break;
-            }
+        foreach (var slot in slots.Where(SlotsWithHeartsPredicate))
+        {
+            slot.SetItem(null);
+            if (++numDeducted >= amount) break;
+        }
+
+        var heartsRemaining = slots.Count(SlotsWithHeartsPredicate);
+        if (heartsRemaining == 0)
+        {
+            EmitSignal(nameof(HeartsRanOut));
         }
     }
 

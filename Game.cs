@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 using JetBrains.Annotations;
 
 [UsedImplicitly] public class Game : Node
@@ -12,8 +11,6 @@ using JetBrains.Annotations;
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         inventory = GetNode<Inventory>("UI/Inventory");
-        map = GetNode<Map>("ViewportContainer/Viewport/Map");
-        map.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
         for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Heart);
@@ -24,7 +21,18 @@ using JetBrains.Annotations;
             inventory.AddItem(Item.Key);
         }
 
+        inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(GameOver));
+
+        map = GetNode<Map>("ViewportContainer/Viewport/Map");
+        map.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
         map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
+    }
+
+    private void GameOver()
+    {
+        GD.Print("Oh no!");
+        GD.Print("Oh no!");
+        GD.Print("Oh no!");
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
