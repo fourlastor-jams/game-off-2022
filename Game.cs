@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -14,11 +13,13 @@ public class Game : Node
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         inventory = GetNode<Inventory>("UI/Inventory");
         map = GetNode<Map>("ViewportContainer/Viewport/Map");
-        for (int i = 0; i < 4; i++)
+        map.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
+        for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Heart);
         }
-        for (int i = 0; i < 4; i++)
+
+        for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Key);
         }

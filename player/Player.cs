@@ -8,8 +8,9 @@ public class Player : KinematicBody2D
 
     [Signal] public delegate void OnAction(Vector2 direction);
 
+    [Signal] public delegate void OnDeductHealth(int amount);
+
     private AnimationTree animationTree;
-    private AnimationPlayer animationPlayer;
     private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning;
     private bool attackQueued;
@@ -20,7 +21,6 @@ public class Player : KinematicBody2D
     {
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
-        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
@@ -42,8 +42,7 @@ public class Player : KinematicBody2D
             animationStateMachine.Start("Hit");
 
             // Deduct health.
-            GetNode<Inventory>("/root/Game/UI/Inventory").DeductHealth(hitsQueued);
-
+            EmitSignal(nameof(OnDeductHealth), hitsQueued);
             hitsQueued = 0;
             return;
         }
