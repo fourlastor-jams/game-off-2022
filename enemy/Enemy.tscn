@@ -1,9 +1,10 @@
-[gd_scene load_steps=30 format=2]
+[gd_scene load_steps=35 format=2]
 
 [ext_resource path="res://enemy/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://enemy/idle.png" type="Texture" id=2]
 [ext_resource path="res://enemy/walk.png" type="Texture" id=3]
 [ext_resource path="res://enemy/Area2D.cs" type="Script" id=4]
+[ext_resource path="res://enemy/punch.png" type="Texture" id=5]
 
 [sub_resource type="CapsuleShape2D" id=3]
 radius = 6.0
@@ -47,6 +48,66 @@ tracks/2/keys = {
 "update": 0,
 "values": [ 0 ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:frame")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0 ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ true ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Idle:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Walk:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Attack:flip_h")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "idle_down"
@@ -87,6 +148,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -141,6 +214,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=7]
 resource_name = "idle_right"
@@ -194,6 +279,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "idle_top"
@@ -235,6 +332,258 @@ tracks/2/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=32]
+resource_name = "punch_down"
+length = 0.6
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.2, 0.3, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 3, 6, 9 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Walk:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+
+[sub_resource type="Animation" id=34]
+resource_name = "punch_left"
+length = 0.6
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.2, 0.3, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 5, 8, 11 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Walk:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[sub_resource type="Animation" id=35]
+resource_name = "punch_right"
+length = 0.6
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.2, 0.3, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 2, 5, 8, 11 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Walk:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:flip_h")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+
+[sub_resource type="Animation" id=33]
+resource_name = "punch_top"
+length = 0.6
+loop = true
+step = 0.01
+tracks/0/type = "value"
+tracks/0/path = NodePath("Attack:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.01, 0.2, 0.3, 0.36 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 4, 7, 10 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Idle:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Walk:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, true ]
+}
 
 [sub_resource type="Animation" id=18]
 resource_name = "walk_down"
@@ -275,6 +624,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ false ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=19]
@@ -329,6 +690,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=20]
 resource_name = "walk_right"
@@ -382,6 +755,18 @@ tracks/3/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("Attack:visible")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=13]
 resource_name = "walk_top"
@@ -422,6 +807,18 @@ tracks/2/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Attack:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="AnimationNodeAnimation" id=21]
@@ -491,6 +888,7 @@ script = ExtResource( 1 )
 speed = 60.0
 
 [node name="Idle" type="Sprite" parent="."]
+visible = false
 texture = ExtResource( 2 )
 centered = false
 hframes = 3
@@ -500,9 +898,17 @@ vframes = 2
 visible = false
 texture = ExtResource( 3 )
 centered = false
-flip_h = true
 hframes = 3
 vframes = 4
+
+[node name="Attack" type="Sprite" parent="."]
+position = Vector2( -8, -8 )
+texture = ExtResource( 5 )
+centered = false
+hframes = 3
+vframes = 4
+region_enabled = true
+region_rect = Rect2( 0, 0, 96, 128 )
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 position = Vector2( 8, 9 )
@@ -514,6 +920,10 @@ anims/idle_down = SubResource( 5 )
 anims/idle_left = SubResource( 6 )
 anims/idle_right = SubResource( 7 )
 anims/idle_top = SubResource( 8 )
+anims/punch_down = SubResource( 32 )
+anims/punch_left = SubResource( 34 )
+anims/punch_right = SubResource( 35 )
+anims/punch_top = SubResource( 33 )
 anims/walk_down = SubResource( 18 )
 anims/walk_left = SubResource( 19 )
 anims/walk_right = SubResource( 20 )
@@ -529,6 +939,10 @@ parameters/Walk/blend_position = Vector2( -0.527273, 0.416279 )
 
 [node name="FollowArea" type="Area2D" parent="."]
 script = ExtResource( 4 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea"]
 position = Vector2( 8, 9 )
