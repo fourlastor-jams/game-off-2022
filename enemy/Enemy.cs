@@ -28,8 +28,8 @@ public class Enemy : KinematicBody2D
     private Timer wanderTimer;
     private State currentState = State.IDLE;
     private State previousState = State.IDLE;
-    private Vector2 followingPosition = Vector2.Zero;
-    [Export] private float attackDistanceThreshold = 1f;
+    private Area2D followingTarget = null;
+    [Export] private float attackDistanceThreshold = 2f;
 
     public override async void _Ready()
     {
@@ -49,7 +49,8 @@ public class Enemy : KinematicBody2D
         GD.Print("Area " + other.Name + " entered.");
         if (other.Name == "PlayerArea")
         {
-            followingPosition = other.GlobalPosition;
+            // TODO we need to update this position more often!
+            followingTarget = other;
             ChangeStateTo(State.FOLLOW);
         }
         else
@@ -63,8 +64,8 @@ public class Enemy : KinematicBody2D
         GD.Print("Area " + other.Name + " exited.");
         if (other.Name == "PlayerArea")
         {
-            ChangeStateTo(previousState); // maybe this should be changed to FOLLOW
-            followingPosition = Vector2.Zero;
+            ChangeStateTo(State.WANDER);
+            followingTarget = null;
         }
     }
 
@@ -141,22 +142,36 @@ public class Enemy : KinematicBody2D
         switch (currentState)
         {
             case State.IDLE:
+                animationStateMachine.Travel("Idle");
                 velocity = new Vector2(0, 0);
                 break;
             case State.WANDER:
+                animationStateMachine.Travel("Walk");
                 velocity = wanderDirection;
                 break;
             case State.FOLLOW:
-                velocity = GlobalPosition.DirectionTo(followingPosition);
-                var distance = followingPosition.DistanceTo(GlobalPosition);
-                if (distance <= attackDistanceThreshold)
+                animationStateMachine.Travel("Walk");
+                if (GetDistanceToFollowingTarget() <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
                 }
+                else
+                {
+                    var followingPosition = followingTarget.GlobalPosition;
+                    velocity = GlobalPosition.DirectionTo(followingPosition);
+                }
                 break;
             case State.ATTACK:
-                velocity = new Vector2(0, 0);
-                // TODO attack!
+                animationStateMachine.Travel("Attack");
+                velocity = Vector2.Zero;
+
+                // TODO attack! signal?
+
+                var distance = GetDistanceToFollowingTarget();
+                if (distance > attackDistanceThreshold)
+                {
+                    ChangeStateTo(State.FOLLOW);
+                }
                 break;
             default:
                 break;
@@ -164,19 +179,33 @@ public class Enemy : KinematicBody2D
 
         if (velocity == Vector2.Zero)
         {
-            animationStateMachine.Travel("Idle");
+            // animationStateMachine.Travel("Idle");
             return;
         }
 
-        animationStateMachine.Travel("Walk");
-        animationTree.Set("parameters/Walk/blend_position", velocity);
-        animationTree.Set("parameters/Idle/blend_position", velocity);
+        animationTree.Set("parameters/Walk/blend_position", velocity.Normalized());
+        animationTree.Set("parameters/Idle/blend_position", velocity.Normalized());
+        animationTree.Set("parameters/Attack/blend_position", velocity.Normalized());
 
         var movement = speed * velocity.Normalized();
         var result = MoveAndSlide(movement);
         if (result == Vector2.Zero)
         {
             EmitSignal(nameof(OnCollision));
+        }
+    }
+
+    private float GetDistanceToFollowingTarget()
+    {
+        if (followingTarget != null)
+        {
+            var followingPosition = followingTarget.GlobalPosition;
+            var distance = followingPosition.DistanceTo(GlobalPosition);
+            return distance;
+        }
+        else
+        {
+            return float.NaN;
         }
     }
 }
