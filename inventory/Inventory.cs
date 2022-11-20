@@ -90,7 +90,8 @@ public class Inventory : Control
 
     public void DeductHealth(int amount)
     {
-        int numDeducted = 0;
+        var numDeducted = 0;
+
         foreach (InventorySlot slot in slots)
         {
             if (!slot.Item.HasValue) continue;
