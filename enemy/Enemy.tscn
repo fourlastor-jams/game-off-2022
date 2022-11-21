@@ -398,6 +398,20 @@ tracks/3/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/4/type = "method"
+tracks/4/path = NodePath(".")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "OnPunchDown"
+} ]
+}
 
 [sub_resource type="Animation" id=34]
 resource_name = "punch_left"
@@ -975,7 +989,7 @@ parameters/Walk/blend_position = Vector2( -0.000491381, 0.953353 )
 [node name="FollowArea" type="Area2D" parent="."]
 script = ExtResource( 4 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="FollowArea"]
+[node name="Shape" type="CollisionShape2D" parent="FollowArea"]
 position = Vector2( -8, -7 )
 shape = SubResource( 31 )
 

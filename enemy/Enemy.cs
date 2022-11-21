@@ -12,6 +12,7 @@ public enum State
 
 public class Enemy : KinematicBody2D
 {
+    [Signal] public delegate void OnAttack(Vector2 facing);
     [Signal] public delegate void OnCollision();
     // [Signal] public delegate void OnChangeDirection();
 
@@ -40,7 +41,7 @@ public class Enemy : KinematicBody2D
         wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
         wanderTimer.OneShot = true;
         // debug:
-        await ToSignal(GetTree().CreateTimer(2), "timeout");
+        await ToSignal(GetTree().CreateTimer(1), "timeout");
         ChangeStateTo(State.WANDER);
     }
 
@@ -71,6 +72,7 @@ public class Enemy : KinematicBody2D
 
     public void _OnCollision()
     {
+        GD.Print("Collided!");
         _ChangeWanderDirection();
         // more complex behaviour (wip):
         var count = GetSlideCount();
@@ -188,11 +190,12 @@ public class Enemy : KinematicBody2D
         animationTree.Set("parameters/Attack/blend_position", velocity.Normalized());
 
         var movement = speed * velocity.Normalized();
-        var result = MoveAndSlide(movement);
-        if (result == Vector2.Zero)
-        {
-            EmitSignal(nameof(OnCollision));
-        }
+        var result = MoveAndCollide(movement.Normalized());
+        // var result = MoveAndSlide(movement);
+        // if (result == Vector2.Zero)
+        // {
+        // EmitSignal(nameof(OnCollision));
+        // }
     }
 
     private float GetDistanceToFollowingTarget()
@@ -207,5 +210,10 @@ public class Enemy : KinematicBody2D
         {
             return float.NaN;
         }
+    }
+
+    public void OnPunchDown()
+    {
+        GD.Print("> punch down");
     }
 }
