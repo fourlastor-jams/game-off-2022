@@ -920,6 +920,7 @@ radius = 32.0
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
 speed = 60.0
+attackDistanceThreshold = 5.0
 
 [node name="Idle" type="Sprite" parent="."]
 position = Vector2( -8, -9 )
