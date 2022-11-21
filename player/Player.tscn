@@ -931,6 +931,7 @@ graph_offset = Vector2( 39, 43 )
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
 [sub_resource type="CapsuleShape2D" id=62]
+radius = 7.0
 height = 4.0
 
 [node name="Player" type="KinematicBody2D"]
@@ -953,6 +954,7 @@ vframes = 8
 frame = 14
 
 [node name="Collision" type="CollisionShape2D" parent="."]
+position = Vector2( -1, -1 )
 shape = SubResource( 42 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -985,5 +987,5 @@ stream = ExtResource( 4 )
 [node name="PlayerArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
-position = Vector2( 0, -5 )
+position = Vector2( -1, -5 )
 shape = SubResource( 62 )
