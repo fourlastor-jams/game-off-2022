@@ -1015,7 +1015,7 @@ tracks/10/keys = {
 
 [sub_resource type="Animation" id=21]
 resource_name = "walk_down"
-length = 1.2
+length = 0.6
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -1025,7 +1025,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 0, 1, 2, 3, 2, 1 ]
@@ -1069,7 +1069,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=24]
 resource_name = "walk_up"
-length = 1.2
+length = 0.6
 loop = true
 step = 0.05
 tracks/0/type = "value"
@@ -1079,7 +1079,7 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1 ),
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 5, 6, 7, 8, 7, 6 ]
@@ -1209,7 +1209,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 23
+frame = 20
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
