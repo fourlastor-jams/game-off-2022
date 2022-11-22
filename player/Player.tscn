@@ -159,6 +159,18 @@ tracks/11/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("Character:frame")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 20 ]
+}
 
 [sub_resource type="Animation" id=69]
 resource_name = "hit_down"
@@ -171,10 +183,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 0.116365, 0.225034, 0.330817, 0.405817 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 8, 8 ]
+"values": [ 25, 26, 25, 26, 25 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Character:position")
@@ -193,7 +205,7 @@ tracks/2/path = NodePath("Character:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/imported = false
-tracks/2/enabled = true
+tracks/2/enabled = false
 tracks/2/keys = {
 "times": PoolRealArray( 0, 0.075, 0.125, 0.175, 0.225, 0.275, 0.325, 0.375, 0.425 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
@@ -426,18 +438,6 @@ tracks/4/keys = {
 "stream": ExtResource( 6 )
 } ],
 "times": PoolRealArray( 0 )
-}
-tracks/10/type = "value"
-tracks/10/path = NodePath("Character:frame")
-tracks/10/interp = 1
-tracks/10/loop_wrap = true
-tracks/10/imported = false
-tracks/10/enabled = true
-tracks/10/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 20 ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -1282,7 +1282,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 20
+frame = 25
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
@@ -1317,7 +1317,7 @@ parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 7 )
+stream = ExtResource( 6 )
 bus = "Sounds"
 
 [node name="CPUParticles2D" type="CPUParticles2D" parent="."]
