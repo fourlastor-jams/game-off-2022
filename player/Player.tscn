@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=46 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.cs" type="Script" id=2]
@@ -455,57 +455,6 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 20, 21, 22, 23, 24 ]
-}
-
-[sub_resource type="Animation" id=28]
-resource_name = "idle_left"
-length = 0.1
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 12 ]
-}
-
-[sub_resource type="Animation" id=29]
-resource_name = "idle_right"
-length = 0.1
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray(  ),
-"transitions": PoolRealArray(  ),
-"update": 1,
-"values": [  ]
-}
-
-[sub_resource type="Animation" id=30]
-resource_name = "idle_up"
-length = 0.1
-loop = true
-tracks/0/type = "value"
-tracks/0/path = NodePath("Character:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ 7 ]
 }
 
 [sub_resource type="Animation" id=51]
@@ -1182,28 +1131,8 @@ blend_point_3/node = SubResource( 68 )
 blend_point_3/pos = Vector2( 0, -1 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeAnimation" id=31]
-animation = "idle_left"
-
-[sub_resource type="AnimationNodeAnimation" id=32]
-animation = "idle_right"
-
-[sub_resource type="AnimationNodeAnimation" id=33]
+[sub_resource type="AnimationNodeAnimation" id=72]
 animation = "idle_down"
-
-[sub_resource type="AnimationNodeAnimation" id=34]
-animation = "idle_up"
-
-[sub_resource type="AnimationNodeBlendSpace2D" id=25]
-blend_point_0/node = SubResource( 31 )
-blend_point_0/pos = Vector2( -1, 0 )
-blend_point_1/node = SubResource( 32 )
-blend_point_1/pos = Vector2( 1, 0 )
-blend_point_2/node = SubResource( 33 )
-blend_point_2/pos = Vector2( 0, 1 )
-blend_point_3/node = SubResource( 34 )
-blend_point_3/pos = Vector2( 0, -1 )
-blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id=59]
 animation = "RESET"
@@ -1231,37 +1160,35 @@ blend_point_3/node = SubResource( 38 )
 blend_point_3/pos = Vector2( 1, 0 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=40]
-switch_mode = 1
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=41]
-switch_mode = 1
-
 [sub_resource type="AnimationNodeStateMachineTransition" id=60]
 switch_mode = 2
-auto_advance = true
-
-[sub_resource type="AnimationNodeStateMachineTransition" id=61]
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=65]
 switch_mode = 2
 auto_advance = true
 
+[sub_resource type="AnimationNodeStateMachineTransition" id=73]
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=74]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=75]
+
 [sub_resource type="AnimationNodeStateMachine" id=26]
 states/Attack/node = SubResource( 53 )
 states/Attack/position = Vector2( 354, 196 )
 states/Hit/node = SubResource( 64 )
 states/Hit/position = Vector2( 354, -4 )
-states/Idle/node = SubResource( 25 )
-states/Idle/position = Vector2( 516, 103 )
+states/Idle/node = SubResource( 72 )
+states/Idle/position = Vector2( 540, 102.25 )
 states/RESET/node = SubResource( 59 )
 states/RESET/position = Vector2( 354, 103 )
 states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 680.833, 196 )
-transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ), "Hit", "RESET", SubResource( 65 ) ]
+transitions = [ "Attack", "RESET", SubResource( 60 ), "Hit", "RESET", SubResource( 65 ), "RESET", "Idle", SubResource( 73 ), "Idle", "Walk", SubResource( 74 ), "Walk", "Idle", SubResource( 75 ) ]
 start_node = "RESET"
-graph_offset = Vector2( -69, -107 )
+graph_offset = Vector2( 10, -14 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
@@ -1282,7 +1209,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 25
+frame = 23
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
@@ -1294,9 +1221,6 @@ anims/hit_left = SubResource( 71 )
 anims/hit_right = SubResource( 70 )
 anims/hit_up = SubResource( 62 )
 anims/idle_down = SubResource( 20 )
-anims/idle_left = SubResource( 28 )
-anims/idle_right = SubResource( 29 )
-anims/idle_up = SubResource( 30 )
 anims/swing_down = SubResource( 51 )
 anims/swing_left = SubResource( 50 )
 anims/swing_right = SubResource( 44 )
@@ -1313,7 +1237,6 @@ active = true
 parameters/playback = SubResource( 27 )
 parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Hit/blend_position = Vector2( 0, 0 )
-parameters/Idle/blend_position = Vector2( 0.0322878, 0.00567532 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
