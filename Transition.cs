@@ -18,12 +18,17 @@ public class Transition : Control
         player = GetNode<AnimationPlayer>("TransitionPlayer");
     }
 
-    public async void Start(Image image)
+    public void RefreshImage(Viewport viewport)
     {
+        var image = viewport.GetTexture().GetData();
         image.FlipY();
         var newTexture = new ImageTexture();
         newTexture.CreateFromImage(image);
         texture.Texture = newTexture;
+    }
+
+    public async void Start()
+    {
         player.Play("transition_in");
         await ToSignal(player, "animation_finished");
         EmitSignal(nameof(TransitionMidPoint));

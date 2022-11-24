@@ -27,17 +27,25 @@ using JetBrains.Annotations;
     private async void Retry(GameOver gameOver)
     {
         gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
-        var img = viewport.GetTexture().GetData();
-        transition.Start(img);
+        transition.RefreshImage(viewport);
+        transition.Start();
         if (map != null)
         {
             map?.QueueFree();
             map = null;
         }
-
-        // await ToSignal(transition, nameof(Transition.TransitionMidPoint));
-        await ToSignal(transition, nameof(Transition.TransitionEnd));
+        await ToSignal(transition, nameof(Transition.TransitionMidPoint));
+        // Start the game.
         StartGame();
+        // Can't control player yet.
+        map.Player.SetPhysicsProcess(false);
+        await ToSignal(GetTree(), "idle_frame");  // Required, othewise the transition texture will be a grey screen.
+        transition.RefreshImage(viewport);
+        await ToSignal(transition, nameof(Transition.TransitionEnd));
+        // Can control player after the transition is over.
+        map.Player.SetPhysicsProcess(true);
+        // Start the music.
+        musicPlayer.Play();
     }
 
     private void StartGame()
@@ -66,6 +74,8 @@ using JetBrains.Annotations;
 
     private void OnGameOver()
     {
+        map.Player.isDead = true;
+        musicPlayer.Stop();
         var gameOver = gameOverScene.Instance<GameOver>();
         AddChild(gameOver);
         gameOver.Connect(nameof(GameOver.OnRetry), this, nameof(Retry), new Array { gameOver });

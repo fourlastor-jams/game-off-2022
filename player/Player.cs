@@ -10,7 +10,9 @@ public class Player : KinematicBody2D
 
     [Signal] public delegate void OnDeductHealth(int amount);
 
+    public bool isDead = false;
     private AnimationTree animationTree;
+    private AnimationPlayer animationPlayer;
     private AnimationNodeStateMachinePlayback animationStateMachine;
     private bool isRunning;
     private bool attackQueued;
@@ -21,6 +23,7 @@ public class Player : KinematicBody2D
     {
         base._Ready();
         animationTree = GetNode<AnimationTree>("AnimationTree");
+        animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
     }
 
@@ -48,6 +51,17 @@ public class Player : KinematicBody2D
         }
 
         if (animationStateMachine.GetCurrentNode().Equals("Hit")) return;
+
+        // I tried for a while to get this to work using signals.
+        // The AnimationTree kept randomly playing the Dead state when it
+        // wasn't supposed to.
+        if (isDead)
+        {
+            animationStateMachine.Start("Dead");
+            // No longer accept input.
+            this.SetPhysicsProcess(false);
+            return;
+        }
 
         if (attackQueued)
         {

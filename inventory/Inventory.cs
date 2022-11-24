@@ -19,7 +19,6 @@ public class Inventory : Control
 
     [Signal] public delegate void HeartsRanOut();
 
-
     public override void _Ready()
     {
         inventoryGrid = GetNode<GridContainer>("MarginContainer/InventoryGrid");
