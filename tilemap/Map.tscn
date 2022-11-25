@@ -1,11 +1,9 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://tilemap/tileset-wall.tres" type="TileSet" id=1]
-[ext_resource path="res://tilemap/Tree.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tilemap/tileset-floor.tres" type="TileSet" id=4]
 [ext_resource path="res://tilemap/Map.cs" type="Script" id=5]
-[ext_resource path="res://tilemap/Bush.tscn" type="PackedScene" id=6]
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 5 )
@@ -37,99 +35,3 @@ zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 8.0
-
-[node name="Trees" type="YSort" parent="Walls"]
-
-[node name="Tree" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 62, -44 )
-
-[node name="Sprite" parent="Walls/Trees/Tree" index="0"]
-position = Vector2( 76, -236 )
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree" index="1"]
-position = Vector2( 148, -321 )
-
-[node name="Tree2" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 37, -59 )
-
-[node name="Sprite" parent="Walls/Trees/Tree2" index="0"]
-position = Vector2( 81, -85 )
-frame = 0
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree2" index="1"]
-position = Vector2( -54, -243 )
-
-[node name="Tree3" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 0, -19 )
-
-[node name="Tree4" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 62, -44 )
-
-[node name="Sprite" parent="Walls/Trees/Tree4" index="0"]
-position = Vector2( -121, -125 )
-frame = 6
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree4" index="1"]
-position = Vector2( 75, -226 )
-
-[node name="Tree5" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 37, -59 )
-
-[node name="Sprite" parent="Walls/Trees/Tree5" index="0"]
-position = Vector2( 262, -197 )
-frame = 9
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree5" index="1"]
-position = Vector2( -168, -187 )
-
-[node name="Tree6" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 37, -59 )
-
-[node name="Sprite" parent="Walls/Trees/Tree6" index="0"]
-position = Vector2( -164, -196 )
-frame = 7
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree6" index="1"]
-position = Vector2( -97, -99 )
-
-[node name="Tree7" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 37, -59 )
-
-[node name="Sprite" parent="Walls/Trees/Tree7" index="0"]
-position = Vector2( -53, -254 )
-frame = 3
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree7" index="1"]
-position = Vector2( 262, -188 )
-
-[node name="Tree8" parent="Walls/Trees" instance=ExtResource( 2 )]
-position = Vector2( 37, -59 )
-
-[node name="Sprite" parent="Walls/Trees/Tree8" index="0"]
-position = Vector2( 173, -316 )
-frame = 6
-
-[node name="CollisionShape2D" parent="Walls/Trees/Tree8" index="1"]
-position = Vector2( 79, -74 )
-
-[node name="Bushes" type="YSort" parent="Walls"]
-
-[node name="Bush" parent="Walls/Bushes" instance=ExtResource( 6 )]
-position = Vector2( -59, -59 )
-
-[node name="Bush2" parent="Walls/Bushes" instance=ExtResource( 6 )]
-position = Vector2( -88, -233 )
-
-[node name="Sprite" parent="Walls/Bushes/Bush2" index="0"]
-frame = 12
-
-[editable path="Walls/Trees/Tree"]
-[editable path="Walls/Trees/Tree2"]
-[editable path="Walls/Trees/Tree3"]
-[editable path="Walls/Trees/Tree4"]
-[editable path="Walls/Trees/Tree5"]
-[editable path="Walls/Trees/Tree6"]
-[editable path="Walls/Trees/Tree7"]
-[editable path="Walls/Trees/Tree8"]
-[editable path="Walls/Bushes/Bush"]
-[editable path="Walls/Bushes/Bush2"]
