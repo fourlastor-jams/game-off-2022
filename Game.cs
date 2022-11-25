@@ -13,6 +13,12 @@ using JetBrains.Annotations;
     private readonly PackedScene mapScene = GD.Load<PackedScene>("res://tilemap/Map.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
 
+    public override void _EnterTree()
+    {
+        var screenSize = OS.GetScreenSize();
+        OS.WindowSize = screenSize * 0.8f;
+    }
+
     public override void _Ready()
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
