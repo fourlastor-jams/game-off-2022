@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://tilemap/tileset-wall.tres" type="TileSet" id=1]
+[ext_resource path="res://tilemap/Tree.tscn" type="PackedScene" id=2]
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tilemap/tileset-floor.tres" type="TileSet" id=4]
 [ext_resource path="res://tilemap/Map.cs" type="Script" id=5]
+[ext_resource path="res://tilemap/Bush.tscn" type="PackedScene" id=6]
 
 [node name="Map" type="Node2D"]
 script = ExtResource( 5 )
@@ -35,3 +37,9 @@ zoom = Vector2( 0.5, 0.5 )
 process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 8.0
+
+[node name="Tree" parent="Walls" instance=ExtResource( 2 )]
+position = Vector2( 23, -14 )
+
+[node name="Bush" parent="Walls" instance=ExtResource( 6 )]
+position = Vector2( -34, -3 )
