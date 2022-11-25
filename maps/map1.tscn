@@ -60,6 +60,12 @@ position = Vector2( 211, -348 )
 [node name="Sprite" parent="Walls/Bushes/Bush3" index="0"]
 frame = 4
 
+[node name="GotoNewMap" parent="." index="2"]
+sceneName = "map2"
+
+[node name="CollisionShape2D" parent="GotoNewMap" index="0"]
+position = Vector2( 44, 2 )
+
 [editable path="Walls/Trees/Tree1"]
 [editable path="Walls/Trees/Tree2"]
 [editable path="Walls/Trees/Tree3"]

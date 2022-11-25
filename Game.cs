@@ -7,7 +7,8 @@ public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
-    private Map map;
+    [CanBeNull] private Map map;
+    private Viewport viewport;
 
     public override void _EnterTree()
     {
@@ -19,6 +20,7 @@ public class Game : Node
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         inventory = GetNode<Inventory>("UI/Inventory");
+        viewport = GetNode<Viewport>("ViewportContainer/Viewport");
         map = GetNode<Map>("ViewportContainer/Viewport/Map");
         for (int i = 0; i < 4; i++)
         {
@@ -30,6 +32,17 @@ public class Game : Node
         }
 
         map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
+
+        // TODO: remove once merged
+        map.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
+    }
+
+    private void StartGame(PackedScene mapScene)
+    {
+        var newMap = mapScene.Instance<Map>();
+        viewport.AddChild(newMap);
+        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
+        map = newMap;
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
@@ -43,5 +56,18 @@ public class Game : Node
         {
             inventory.Visible = !inventory.Visible;
         }
+    }
+
+    public void GotoToNewMap(PackedScene mapScene)
+    {
+        //map.GetNode<Area2D>("GotoNewMap").Disconnect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
+        viewport.RemoveChild(map);
+        if (map != null)
+        {
+            map?.QueueFree();
+            map = null;
+        }
+        GD.Print("hi");
+        StartGame(mapScene);
     }
 }
