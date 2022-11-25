@@ -7,7 +7,12 @@ public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
-    private Map map;
+    [CanBeNull] private Map map;
+    private Viewport viewport;
+    private Transition transition;
+
+    private readonly PackedScene mapScene = GD.Load<PackedScene>("res://tilemap/Map.tscn");
+    private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
 
     public override void _EnterTree()
     {
@@ -19,17 +24,69 @@ public class Game : Node
     {
         musicPlayer = GetNode<AudioStreamPlayer>("AudioStreamPlayer");
         inventory = GetNode<Inventory>("UI/Inventory");
-        map = GetNode<Map>("ViewportContainer/Viewport/Map");
-        for (int i = 0; i < 4; i++)
+        viewport = GetNode<Viewport>("ViewportContainer/Viewport");
+        transition = GetNode<Transition>("Transition");
+
+        inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
+        StartGame();
+    }
+
+    private async void Retry(GameOver gameOver)
+    {
+        gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
+        transition.RefreshImage(viewport);
+        transition.Start();
+        if (map != null)
+        {
+            map?.QueueFree();
+            map = null;
+        }
+        await ToSignal(transition, nameof(Transition.TransitionMidPoint));
+        // Start the game.
+        StartGame();
+        // Can't control player yet.
+        map.Player.SetPhysicsProcess(false);
+        await ToSignal(GetTree(), "idle_frame");  // Required, othewise the transition texture will be a grey screen.
+        transition.RefreshImage(viewport);
+        await ToSignal(transition, nameof(Transition.TransitionEnd));
+        // Can control player after the transition is over.
+        map.Player.SetPhysicsProcess(true);
+        // Start the music.
+        musicPlayer.Play();
+    }
+
+    private void StartGame()
+    {
+        var newMap = mapScene.Instance<Map>();
+        viewport.AddChild(newMap);
+        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
+        inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
+        newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
+        map = newMap;
+        AddInitialItemsToInventory();
+    }
+
+    private void AddInitialItemsToInventory()
+    {
+        inventory.Clear();
+        for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Heart);
         }
-        for (int i = 0; i < 4; i++)
+
+        for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Key);
         }
+    }
 
-        map.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
+    private void OnGameOver()
+    {
+        map.Player.isDead = true;
+        musicPlayer.Stop();
+        var gameOver = gameOverScene.Instance<GameOver>();
+        AddChild(gameOver);
+        gameOver.Connect(nameof(GameOver.OnRetry), this, nameof(Retry), new Array { gameOver });
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)
