@@ -27,24 +27,13 @@ position = Vector2( 3, -27 )
 position = Vector2( 251, -276 )
 tree_variant = 8
 
-[node name="Bush1" parent="Walls/Bushes" index="0" instance=ExtResource( 2 )]
-position = Vector2( -59, -59 )
-
-[node name="Sprite" parent="Walls/Bushes/Bush1" index="0"]
-frame = 2
+[node name="Bush" parent="Walls/Bushes" index="0" instance=ExtResource( 2 )]
+position = Vector2( -64, -56 )
 
 [node name="Bush2" parent="Walls/Bushes" index="1" instance=ExtResource( 2 )]
-position = Vector2( -88, -233 )
-
-[node name="Sprite" parent="Walls/Bushes/Bush2" index="0"]
-frame = 12
+position = Vector2( 194, -284 )
+variant = 11
 
 [node name="Bush3" parent="Walls/Bushes" index="2" instance=ExtResource( 2 )]
-position = Vector2( 211, -348 )
-
-[node name="Sprite" parent="Walls/Bushes/Bush3" index="0"]
-frame = 4
-
-[editable path="Walls/Bushes/Bush1"]
-[editable path="Walls/Bushes/Bush2"]
-[editable path="Walls/Bushes/Bush3"]
+position = Vector2( -66, -194 )
+variant = 5
