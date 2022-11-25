@@ -19,12 +19,12 @@ export(
     "LightYellow",
     "Yellow",
     "DarkYellow"
-    ) var tree_variant = 1;
+    ) var variant = 1;
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-    $Sprite.frame = tree_variant
+    $Sprite.frame = variant
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

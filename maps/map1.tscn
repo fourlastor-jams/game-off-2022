@@ -14,18 +14,18 @@ tile_data = PoolIntArray( -3473433, 0, 4, -3473432, 0, 65537, -3473431, 0, 5, -3
 
 [node name="Tree" parent="Walls/Trees" index="0" instance=ExtResource( 3 )]
 position = Vector2( -129, -231 )
-tree_variant = 3
+variant = 3
 
 [node name="Tree2" parent="Walls/Trees" index="1" instance=ExtResource( 3 )]
 position = Vector2( 1, -304 )
-tree_variant = 10
+variant = 10
 
 [node name="Tree3" parent="Walls/Trees" index="2" instance=ExtResource( 3 )]
 position = Vector2( 3, -27 )
 
 [node name="Tree4" parent="Walls/Trees" index="3" instance=ExtResource( 3 )]
 position = Vector2( 251, -276 )
-tree_variant = 8
+variant = 8
 
 [node name="Bush" parent="Walls/Bushes" index="0" instance=ExtResource( 2 )]
 position = Vector2( -64, -56 )
