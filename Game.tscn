@@ -24,7 +24,7 @@ __meta__ = {
 }
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 256, 144 )
+size = Vector2( 1025, 576 )
 handle_input_locally = false
 render_target_update_mode = 3
 
