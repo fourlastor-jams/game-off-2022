@@ -17,8 +17,8 @@ public class Inventory : Control
     [CanBeNull] private InventorySlot dragTo;
     private bool swapping;
 
+    [Signal] public delegate void NumHearts(int amount);
     [Signal] public delegate void HeartsRanOut();
-
 
     public override void _Ready()
     {
@@ -104,6 +104,7 @@ public class Inventory : Control
         }
 
         var heartsRemaining = slots.Count(SlotsWithHeartsPredicate);
+        EmitSignal(nameof(NumHearts), heartsRemaining);
         if (heartsRemaining == 0)
         {
             EmitSignal(nameof(HeartsRanOut));
