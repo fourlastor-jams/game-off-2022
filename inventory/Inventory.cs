@@ -94,6 +94,7 @@ public class Inventory : Control
     public void DeductHealth(int amount)
     {
         var numDeducted = 0;
+
         bool SlotsWithHeartsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == Item.Heart;
 
         foreach (var slot in slots.Where(SlotsWithHeartsPredicate))
