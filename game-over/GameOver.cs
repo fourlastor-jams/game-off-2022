@@ -5,22 +5,11 @@ public class GameOver : MarginContainer
 {
     [Signal] public delegate void OnRetry();
 
-    private int timer;
-
-    public override void _Ready()
+    public override async void _Ready()
     {
         // Visual - don't show text yet.
         Visible = false;
-    }
-
-    public override void _Process(float delta)
-    {
-        // Show text after waiting 2 seconds.
-        if (timer < 180)
-        {
-            ++timer;
-            return;
-        }
+        await ToSignal(GetTree().CreateTimer(2), "timeout");
         Visible = true;
     }
 
