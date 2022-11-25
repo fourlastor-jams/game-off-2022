@@ -53,6 +53,7 @@ using JetBrains.Annotations;
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
+        inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         map = newMap;
         AddInitialItemsToInventory();
