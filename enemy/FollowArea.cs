@@ -1,7 +1,7 @@
 using System;
 using Godot;
 
-public class Area2D : Godot.Area2D
+public class FollowArea : Godot.Area2D
 {
     private Shape shape;
 

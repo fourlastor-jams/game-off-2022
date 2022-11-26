@@ -134,5 +134,6 @@ public class Player : KinematicBody2D
 
     public void OnAttacked(Vector2 fromDirection) {
         GD.Print("> attacked: " + fromDirection);
+        hitsQueued = 1;
     }
 }

@@ -7,6 +7,8 @@ public class Map : Node2D
     private TileMap walls;
     private bool playerHasKey;
 
+    // private YSort enemies;
+
     private readonly Dictionary<string, int> tileIds = new Dictionary<string, int>();
 
     [Signal] public delegate void OnItemPickedUp(Item item);
@@ -15,7 +17,16 @@ public class Map : Node2D
     {
         Player = GetNode<Player>("Walls/Player");
         walls = GetNode<TileMap>("Walls");
+
         Player.Connect("OnAction", this, nameof(PlayerAction));
+
+        var enemies = GetNode<YSort>("Walls/Enemies").GetChildren();
+        foreach (var enemy in enemies)
+        {
+            GD.Print(">>>" + enemy);
+            enemy.Connect("OnAttack", Player, nameof(PlayerAction));
+        }
+
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
     }
