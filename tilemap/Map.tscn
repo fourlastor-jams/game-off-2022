@@ -43,6 +43,8 @@ smoothing_speed = 8.0
 
 [node name="Bushes" type="YSort" parent="Walls"]
 
+[node name="Doors" type="YSort" parent="Walls"]
+
 [node name="Enemies" type="YSort" parent="Walls"]
 
 [node name="GotoNewMap" type="Area2D" parent="."]
