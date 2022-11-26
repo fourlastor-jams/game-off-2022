@@ -18,6 +18,7 @@ public class Player : KinematicBody2D
     private bool isRunning;
     private bool attackQueued;
     private int hitsQueued;
+    private bool hitAnimationQueued;
     private Vector2 facingDirection = Vector2.One;
     private AudioStreamPlayer heartbeatPlayer;
 
@@ -42,14 +43,20 @@ public class Player : KinematicBody2D
         );
         var velocity = input.Normalized();
 
+        animationTree.Set("parameters/Hit/blend_position", velocity);
         if (hitsQueued > 0)
         {
-            animationTree.Set("parameters/Hit/blend_position", velocity);
-            animationStateMachine.Start("Hit");
-
+            QueueHitAnimation();
             // Deduct health.
             EmitSignal(nameof(OnDeductHealth), hitsQueued);
             hitsQueued = 0;
+        }
+
+        if (hitAnimationQueued)
+        {
+            GD.Print("Playing hit...");
+            animationStateMachine.Start("Hit");
+            hitAnimationQueued = false;
             return;
         }
 
@@ -100,6 +107,11 @@ public class Player : KinematicBody2D
             x: Mathf.Sign(movement.x),
             y: Mathf.Sign(movement.y)
         );
+    }
+
+    public void QueueHitAnimation()
+    {
+        hitAnimationQueued = true;
     }
 
     public override void _UnhandledKeyInput(InputEventKey @event)

@@ -11,6 +11,8 @@ public class Map : Node2D
 
     [Signal] public delegate void OnItemPickedUp(Item item);
 
+    [Signal] public delegate void AttemptOpenDoor(Door door);
+
     public override void _Ready()
     {
         Player = GetNode<Player>("Walls/Player");
@@ -18,6 +20,16 @@ public class Map : Node2D
         Player.Connect("OnAction", this, nameof(PlayerAction));
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
+        var doors = new Array<Door>(GetNode<YSort>("Walls/Doors").GetChildren());
+        foreach (var door in doors)
+        {
+            door.Connect(nameof(Door.StepOnDoor), this, nameof(OnPlayerStepOnDoor), new Array() { door });
+        }
+    }
+
+    private void OnPlayerStepOnDoor(Door door)
+    {
+        EmitSignal(nameof(AttemptOpenDoor), door);
     }
 
     public override void _Process(float delta)

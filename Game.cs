@@ -5,7 +5,6 @@ using JetBrains.Annotations;
 [UsedImplicitly]
 public class Game : Node
 {
-
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
     [CanBeNull] private Map map;
@@ -42,12 +41,13 @@ public class Game : Node
             map?.QueueFree();
             map = null;
         }
+
         await ToSignal(transition, nameof(Transition.TransitionMidPoint));
         // Start the game.
         StartGame();
         // Can't control player yet.
         map.Player.SetPhysicsProcess(false);
-        await ToSignal(GetTree(), "idle_frame");  // Required, othewise the transition texture will be a grey screen.
+        await ToSignal(GetTree(), "idle_frame"); // Required, othewise the transition texture will be a grey screen.
         transition.RefreshImage(viewport);
         await ToSignal(transition, nameof(Transition.TransitionEnd));
         // Can control player after the transition is over.
@@ -71,10 +71,21 @@ public class Game : Node
         viewport.AddChild(newMap);
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
+        inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
+        newMap.Connect(nameof(Map.AttemptOpenDoor), this, nameof(AttemptOpenDoor));
         map = newMap;
         AddInitialItemsToInventory();
+    }
+
+    private void AttemptOpenDoor(Door door)
+    {
+        if (inventory.HasItem(Item.Key))
+        {
+            inventory.RemoveItem(Item.Key);
+            door.QueueFree();
+        }
     }
 
     private void AddInitialItemsToInventory()
