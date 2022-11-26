@@ -39,11 +39,11 @@ process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 8.0
 
+[node name="Enemies" type="YSort" parent="Walls"]
+
 [node name="Trees" type="YSort" parent="Walls"]
 
 [node name="Bushes" type="YSort" parent="Walls"]
-
-[node name="Enemies" type="YSort" parent="Walls"]
 
 [node name="GotoNewMap" type="Area2D" parent="."]
 position = Vector2( 0, -50 )

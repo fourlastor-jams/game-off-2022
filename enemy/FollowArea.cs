@@ -7,9 +7,9 @@ public class FollowArea : Godot.Area2D
 
     public override void _Ready()
     {
-        shape = GetNode<Shape>("Shape");
-        GD.Print(">>>>>>>");
-        GD.Print(">>> " + shape);
+        // shape = GetNode<Shape>("Shape");
+        // GD.Print(">>>>>>>");
+        // GD.Print(">>> " + shape);
     }
 
     public void _OnAreaEntered(Area2D area)

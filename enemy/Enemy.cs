@@ -21,8 +21,9 @@ public class Enemy : KinematicBody2D
     private AnimationTree animationTree;
     private AnimationNodeStateMachinePlayback animationStateMachine;
 
-    [Export] private List<Vector2> wanderDirections = new List<Vector2> { Vector2.Right, Vector2.Down, Vector2.Left, Vector2.Up };
-    [Export] private List<int> wanderDurations = new List<int> { 1, 1, 1, 1 };
+    [Export] private List<Vector2> wanderDirections; // = new List<Vector2> { Vector2.Right, Vector2.Down, Vector2.Left, Vector2.Up };
+    [Export] private List<int> wanderDurations; // = new List<int> {  };
+
     private int wanderDirectionIndex = 0;
     private Vector2 wanderDirection = Vector2.Zero;
     private Timer wanderTimer;
@@ -35,6 +36,9 @@ public class Enemy : KinematicBody2D
 
     public override async void _Ready()
     {
+        GD.Print(wanderDirections.Capacity);
+        GD.Print(wanderDurations.Capacity);
+
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
         wanderTimer = GetNode<Timer>("WanderTimer");
@@ -42,7 +46,7 @@ public class Enemy : KinematicBody2D
         wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
         wanderTimer.OneShot = true;
         // debug:
-        await ToSignal(GetTree().CreateTimer(1), "timeout");
+        // await ToSignal(GetTree().CreateTimer(1), "timeout");
         ChangeStateTo(State.WANDER);
     }
 
@@ -53,7 +57,7 @@ public class Enemy : KinematicBody2D
         {
             // TODO we need to update this position more often!
             followingTarget = other;
-            ChangeStateTo(State.FOLLOW);
+            // ChangeStateTo(State.FOLLOW);
         }
         else
         {
@@ -66,7 +70,7 @@ public class Enemy : KinematicBody2D
         GD.Print("Area " + other.Name + " exited.");
         if (other.Name == "PlayerArea")
         {
-            ChangeStateTo(State.WANDER);
+            // ChangeStateTo(State.WANDER);
             followingTarget = null;
         }
     }
@@ -220,7 +224,6 @@ public class Enemy : KinematicBody2D
 
     public void OnAttacking()
     {
-        //
         EmitSignal(nameof(OnAttack), facingDirection);
     }
 }
