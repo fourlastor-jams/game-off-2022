@@ -76,7 +76,7 @@ tracks/4/keys = {
 "values": [ false ]
 }
 tracks/5/type = "value"
-tracks/5/path = NodePath("Sounds:stream")
+tracks/5/path = NodePath("Sword/SwishSprite:position")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/imported = false
@@ -85,10 +85,10 @@ tracks/5/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ null ]
+"values": [ Vector2( 24, -1 ) ]
 }
 tracks/6/type = "value"
-tracks/6/path = NodePath("Sword/SwishSprite:position")
+tracks/6/path = NodePath("Sword/SwishSprite:flip_h")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/imported = false
@@ -97,10 +97,10 @@ tracks/6/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( 24, -1 ) ]
+"values": [ false ]
 }
 tracks/7/type = "value"
-tracks/7/path = NodePath("Sword/SwishSprite:flip_h")
+tracks/7/path = NodePath("Sword/SwishSprite:flip_v")
 tracks/7/interp = 1
 tracks/7/loop_wrap = true
 tracks/7/imported = false
@@ -112,7 +112,7 @@ tracks/7/keys = {
 "values": [ false ]
 }
 tracks/8/type = "value"
-tracks/8/path = NodePath("Sword/SwishSprite:flip_v")
+tracks/8/path = NodePath("Sword/SwishSprite:region_rect")
 tracks/8/interp = 1
 tracks/8/loop_wrap = true
 tracks/8/imported = false
@@ -121,10 +121,10 @@ tracks/8/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ false ]
+"values": [ Rect2( 0, 0, 48, 48 ) ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("Sword/SwishSprite:region_rect")
+tracks/9/path = NodePath("Character:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -132,11 +132,11 @@ tracks/9/enabled = true
 tracks/9/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ Rect2( 0, 0, 48, 48 ) ]
+"update": 1,
+"values": [ true ]
 }
 tracks/10/type = "value"
-tracks/10/path = NodePath("Character:visible")
+tracks/10/path = NodePath("CPUParticles2D:emitting")
 tracks/10/interp = 1
 tracks/10/loop_wrap = true
 tracks/10/imported = false
@@ -145,10 +145,10 @@ tracks/10/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ true ]
+"values": [ false ]
 }
 tracks/11/type = "value"
-tracks/11/path = NodePath("CPUParticles2D:emitting")
+tracks/11/path = NodePath("Character:frame")
 tracks/11/interp = 1
 tracks/11/loop_wrap = true
 tracks/11/imported = false
@@ -156,20 +156,22 @@ tracks/11/enabled = true
 tracks/11/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ false ]
+"update": 0,
+"values": [ 14 ]
 }
-tracks/12/type = "value"
-tracks/12/path = NodePath("Character:frame")
+tracks/12/type = "audio"
+tracks/12/path = NodePath("Sounds")
 tracks/12/interp = 1
 tracks/12/loop_wrap = true
 tracks/12/imported = false
 tracks/12/enabled = true
 tracks/12/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 0,
-"values": [ 14 ]
+"clips": [ {
+"end_offset": 0.0,
+"start_offset": 0.0,
+"stream": null
+} ],
+"times": PoolRealArray( 0 )
 }
 
 [sub_resource type="Animation" id=72]
@@ -1266,7 +1268,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 14
+frame = 21
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
@@ -1299,7 +1301,7 @@ parameters/Idle/blend_position = Vector2( -0.00176364, 0.00862074 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 6 )
+stream = ExtResource( 7 )
 bus = "Sounds"
 
 [node name="HeartBeat" type="AudioStreamPlayer" parent="."]
