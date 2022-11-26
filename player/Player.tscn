@@ -173,6 +173,54 @@ tracks/12/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Sword/CollisionShape2D:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 16, 0 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Sword/CollisionShape2D:rotation_degrees")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 0.0 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Sword/CollisionShape2D:visible")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=72]
 resource_name = "dead"
@@ -909,7 +957,7 @@ tracks/10/keys = {
 [sub_resource type="Animation" id=52]
 resource_name = "swing_up"
 length = 0.5
-step = 0.025
+step = 0.15
 tracks/0/type = "value"
 tracks/0/path = NodePath("Character:frame")
 tracks/0/interp = 1
@@ -929,10 +977,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.5 ),
+"times": PoolRealArray( 0, 0.025, 0.05, 0.0747672, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -16, 0 ), Vector2( -11, -11 ), Vector2( 0, -14 ), Vector2( 17, -6 ), Vector2( 17, -6 ) ]
+"values": [ Vector2( -16, 0 ), Vector2( -11, -11 ), Vector2( 0, -14 ), Vector2( 17, -2 ), Vector2( 17, -2 ) ]
 }
 tracks/2/type = "value"
 tracks/2/path = NodePath("Sword/SwordSprite:rotation_degrees")
@@ -941,10 +989,10 @@ tracks/2/loop_wrap = true
 tracks/2/imported = false
 tracks/2/enabled = true
 tracks/2/keys = {
-"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.5 ),
+"times": PoolRealArray( 0, 0.025, 0.05, 0.0745343, 0.5 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ -90.0, -45.0, 0.0, 65.0, 65.0 ]
+"values": [ -90.0, -45.0, 0.0, 68.0, 68.0 ]
 }
 tracks/3/type = "value"
 tracks/3/path = NodePath("Character:position")
@@ -1043,6 +1091,54 @@ tracks/10/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Rect2( 0, 48, 48, 48 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 1.39698e-07, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Sword/CollisionShape2D:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 0.025, 0.05, 0.075, 0.350883 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -16, 0 ), Vector2( -11, -11 ), Vector2( 0, -14 ), Vector2( 17, -2 ), Vector2( 17, -2 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:rotation_degrees")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.025, 0.0509313, 0.0754657, 0.350871 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 180.0, 225.0, 270.0, 338.0, 338.0 ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("Sword/CollisionShape2D:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0, 0.350441 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -1260,6 +1356,19 @@ shouldSlide = true
 
 [node name="Sword" parent="." instance=ExtResource( 5 )]
 
+[node name="SwishSprite" parent="Sword" index="0"]
+position = Vector2( 24, -1 )
+flip_h = false
+flip_v = false
+region_rect = Rect2( 0, 0, 48, 48 )
+
+[node name="SwordSprite" parent="Sword" index="1"]
+rotation = 0.0
+
+[node name="CollisionShape2D" parent="Sword" index="2"]
+one_way_collision = true
+one_way_collision_margin = 0.0
+
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.313726 )
 position = Vector2( 0, 3 )
@@ -1297,7 +1406,6 @@ anims/walk_up = SubResource( 24 )
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource( 26 )
 anim_player = NodePath("../AnimationPlayer")
-active = true
 parameters/playback = SubResource( 27 )
 parameters/Attack/blend_position = Vector2( 0, 0 )
 parameters/Hit/blend_position = Vector2( 0, 0 )
@@ -1330,7 +1438,16 @@ hue_variation = 0.1
 hue_variation_random = 1.0
 
 [node name="PlayerArea" type="Area2D" parent="."]
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerArea"]
 position = Vector2( 0, -5 )
 shape = SubResource( 74 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[editable path="Sword"]

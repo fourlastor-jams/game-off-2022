@@ -15,6 +15,7 @@ public class Player : KinematicBody2D
     private AnimationTree animationTree;
     private AnimationPlayer animationPlayer;
     private AnimationNodeStateMachinePlayback animationStateMachine;
+    private CollisionShape2D collisionShape;
     private bool isRunning;
     private bool attackQueued;
     private int hitsQueued;
@@ -27,7 +28,10 @@ public class Player : KinematicBody2D
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+        collisionShape = GetNode<CollisionShape2D>("Collision");
         heartbeatPlayer = GetNode<AudioStreamPlayer>("HeartBeat");
+
+        animationTree.SetActive(true);
     }
 
     public override void _PhysicsProcess(float delta)
@@ -132,7 +136,8 @@ public class Player : KinematicBody2D
             heartbeatPlayer.Stop();
     }
 
-    public void OnAttacked(Vector2 fromDirection) {
+    public void OnAttacked(Vector2 fromDirection)
+    {
         GD.Print("> attacked: " + fromDirection);
         hitsQueued = 1;
     }

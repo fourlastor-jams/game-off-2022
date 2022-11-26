@@ -36,9 +36,6 @@ public class Enemy : KinematicBody2D
 
     public override async void _Ready()
     {
-        GD.Print(wanderDirections.Capacity);
-        GD.Print(wanderDurations.Capacity);
-
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
         wanderTimer = GetNode<Timer>("WanderTimer");
@@ -47,7 +44,7 @@ public class Enemy : KinematicBody2D
         wanderTimer.OneShot = true;
         // debug:
         // await ToSignal(GetTree().CreateTimer(1), "timeout");
-        ChangeStateTo(State.WANDER);
+        // ChangeStateTo(State.WANDER);
     }
 
     public void _OnAreaEntered(Area2D other)
@@ -78,7 +75,9 @@ public class Enemy : KinematicBody2D
     public void _OnCollision()
     {
         GD.Print("Collided!");
+
         _ChangeWanderDirection();
+
         // more complex behaviour (wip):
         var count = GetSlideCount();
         for (int i = 0; i < count; i++)
@@ -197,10 +196,10 @@ public class Enemy : KinematicBody2D
 
         var movement = speed * velocity.Normalized();
         var result = MoveAndSlide(movement);
-        // if (result == Vector2.Zero)
-        // {
-        // EmitSignal(nameof(OnCollision));
-        // }
+        if (result == Vector2.Zero)
+        {
+            EmitSignal(nameof(OnCollision));
+        }
 
         facingDirection = new Vector2(
             x: Mathf.Sign(movement.x),
