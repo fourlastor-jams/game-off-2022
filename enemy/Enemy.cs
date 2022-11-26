@@ -16,7 +16,7 @@ public class Enemy : KinematicBody2D
     [Signal] public delegate void OnCollision();
     // [Signal] public delegate void OnChangeDirection();
 
-    [Export] private float speed = 80f;
+    [Export] private float speed;
 
 
     private AnimationTree animationTree;
@@ -141,6 +141,8 @@ public class Enemy : KinematicBody2D
         base._PhysicsProcess(delta);
 
         Vector2 velocity = new Vector2(0, 0);
+        var distanceToTarget = Mathf.Floor(GetDistanceToFollowingTarget());
+
         switch (currentState)
         {
             case State.IDLE:
@@ -153,8 +155,7 @@ public class Enemy : KinematicBody2D
                 break;
             case State.FOLLOW:
                 animationStateMachine.Travel("Walk");
-                // GD.Print(GetDistanceToFollowingTarget());
-                if (GetDistanceToFollowingTarget() <= attackDistanceThreshold)
+                if (distanceToTarget <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
                 }
@@ -170,8 +171,7 @@ public class Enemy : KinematicBody2D
 
                 // TODO attack! signal?
 
-                var distance = GetDistanceToFollowingTarget();
-                if (distance > attackDistanceThreshold)
+                if (distanceToTarget > attackDistanceThreshold)
                 {
                     ChangeStateTo(State.FOLLOW);
                 }
@@ -212,8 +212,8 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void OnPunchDown()
+    public void OnAttacking()
     {
-        GD.Print("> punch down");
+        //
     }
 }

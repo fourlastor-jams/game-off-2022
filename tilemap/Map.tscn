@@ -5,7 +5,6 @@
 [ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://tilemap/tileset-floor.tres" type="TileSet" id=4]
 [ext_resource path="res://tilemap/Map.cs" type="Script" id=5]
-[ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 19, 10 )
@@ -44,12 +43,11 @@ smoothing_speed = 8.0
 
 [node name="Bushes" type="YSort" parent="Walls"]
 
+[node name="Enemies" type="YSort" parent="Walls"]
+
 [node name="GotoNewMap" type="Area2D" parent="."]
 position = Vector2( 0, -50 )
 script = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GotoNewMap"]
 shape = SubResource( 1 )
-
-[node name="YSort@Enemy" parent="." instance=ExtResource( 6 )]
-position = Vector2( -203, -86 )
