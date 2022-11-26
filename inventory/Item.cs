@@ -4,7 +4,9 @@ using Godot;
 public enum Item
 {
     Key,
-    Heart
+    Heart,
+    Rupee,
+    Door
 }
 
 
@@ -14,7 +16,18 @@ public static class ItemExtension
     {
         return item.OnItem(
             key: () => "Key",
-            heart: () => "Heart"
+            heart: () => "Heart",
+            rupee: () => "Rupee",
+            door: () => "Door"
+        );
+    }
+    public static bool HasGravity(this Item item)
+    {
+        return item.OnItem(
+            key: () => true,
+            heart: () => true,
+            rupee: () => true,
+            door: () => false
         );
     }
 
@@ -23,7 +36,7 @@ public static class ItemExtension
         return GD.Load<Texture>($"inventory/items/{item.Name()}.tres");
     }
 
-    private static T OnItem<T>(this Item item, Func<T> key, Func<T> heart)
+    private static T OnItem<T>(this Item item, Func<T> key, Func<T> heart, Func<T> rupee, Func<T> door)
     {
         switch (item)
         {
@@ -31,6 +44,10 @@ public static class ItemExtension
                 return key();
             case Item.Heart:
                 return heart();
+            case Item.Rupee:
+                return rupee();
+            case Item.Door:
+                return door();
             default:
                 throw new Exception($"Missing name for {item}");
         }

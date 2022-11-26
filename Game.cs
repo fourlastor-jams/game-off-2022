@@ -74,18 +74,30 @@ public class Game : Node
         inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
-        newMap.Connect(nameof(Map.AttemptOpenDoor), this, nameof(AttemptOpenDoor));
+        newMap.Connect(nameof(Map.AttemptPickupItem), this, nameof(AttemptPickupItem));
         map = newMap;
         AddInitialItemsToInventory();
     }
 
-    private void AttemptOpenDoor(Door door)
+    private void AttemptPickupItem(MapItem mapItem)
     {
-        if (inventory.HasItem(Item.Key))
+        switch(mapItem.item)
         {
-            inventory.RemoveItem(Item.Key);
-            door.QueueFree();
+            // Don't add doors to inventory, use a key.
+            case Item.Door:
+                if (inventory.HasItem(Item.Key))
+                {
+                    inventory.RemoveItem(Item.Key);
+                }
+                break;
+            // Pick up everything else.
+            case Item.Heart:
+            case Item.Key:
+            case Item.Rupee:
+                inventory.AddItem(mapItem.item);
+                break;
         }
+        mapItem.QueueFree();
     }
 
     private void AddInitialItemsToInventory()

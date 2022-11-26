@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://tilemap/MapItem/MapItem.tscn" type="PackedScene" id=1]
+
+[node name="Rupee" instance=ExtResource( 1 )]
+position = Vector2( 1, 0 )
+item = 2
+
+[node name="CollisionShape2D" parent="Area2D" index="0"]
+position = Vector2( 0, -0.5 )
+
+[node name="Sprite" parent="." index="2"]
+frame = 10
