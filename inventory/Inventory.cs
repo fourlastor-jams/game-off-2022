@@ -17,7 +17,7 @@ public class Inventory : Control
     private bool swapping;
 
     [Signal] public delegate void NumHearts(int amount);
-
+    [Signal] public delegate void HeartLostFromPickup();
     [Signal] public delegate void HeartsRanOut();
 
     public override void _Ready()
@@ -81,9 +81,13 @@ public class Inventory : Control
         }
     }
 
-    public bool AddItem(Item item)
+    public void AddItem(Item item)
     {
-        return slots.Any(slot => slot.AddItem(item));
+        var noHealthDeductionRequired = slots.Any(slot => slot.AddItem(item));
+        if (noHealthDeductionRequired) return;
+        DeductHealth(1);
+        AddItem(item);
+        EmitSignal(nameof(HeartLostFromPickup));
     }
 
     private InventorySlot Slot(int slot)

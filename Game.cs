@@ -70,6 +70,7 @@ public class Game : Node
         viewport.AddChild(newMap);
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
+        inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
         newMap.Connect(nameof(Map.AttemptOpenDoor), this, nameof(AttemptOpenDoor));
