@@ -19,6 +19,8 @@ public class Inventory : Control
 
     [Signal] public delegate void NumHearts(int amount);
 
+    [Signal] public delegate void HeartLostFromPickup();
+
     [Signal] public delegate void HeartsRanOut();
 
     public override void _Ready()
@@ -88,6 +90,7 @@ public class Inventory : Control
         if (noHealthDeductionRequired) return;
         DeductHealth(1);
         AddItem(item);
+        EmitSignal(nameof(HeartLostFromPickup));
     }
 
     private InventorySlot Slot(int slot)
