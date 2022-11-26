@@ -69,4 +69,6 @@ public class Map : Node2D
 
     private const string KeyTile = "key";
     private const string DoorTile = "door";
+    private const string RupeeTile = "rupee";
+    private const string HeartTile = "heart";
 }

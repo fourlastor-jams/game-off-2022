@@ -66,6 +66,7 @@ public class Game : Node
 
     private void StartGame()
     {
+        viewport.RemoveChild(map);
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
