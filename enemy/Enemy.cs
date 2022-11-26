@@ -153,6 +153,7 @@ public class Enemy : KinematicBody2D
                 break;
             case State.FOLLOW:
                 animationStateMachine.Travel("Walk");
+                // GD.Print(GetDistanceToFollowingTarget());
                 if (GetDistanceToFollowingTarget() <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
@@ -190,8 +191,7 @@ public class Enemy : KinematicBody2D
         animationTree.Set("parameters/Attack/blend_position", velocity.Normalized());
 
         var movement = speed * velocity.Normalized();
-        var result = MoveAndCollide(movement.Normalized());
-        // var result = MoveAndSlide(movement);
+        var result = MoveAndSlide(movement);
         // if (result == Vector2.Zero)
         // {
         // EmitSignal(nameof(OnCollision));
