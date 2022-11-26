@@ -5,13 +5,14 @@ using JetBrains.Annotations;
 [UsedImplicitly]
 public class Game : Node
 {
+
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
     [CanBeNull] private Map map;
     private Viewport viewport;
     private Transition transition;
 
-    private readonly PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
+    private PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
 
     public override void _EnterTree()
@@ -31,9 +32,9 @@ public class Game : Node
         StartGame();
     }
 
-    private async void Retry(GameOver gameOver)
+    private async void TransitionToMap(PackedScene mapScene)
     {
-        gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
+        this.mapScene = mapScene;
         transition.RefreshImage(viewport);
         transition.Start();
         if (map != null)
@@ -51,6 +52,14 @@ public class Game : Node
         await ToSignal(transition, nameof(Transition.TransitionEnd));
         // Can control player after the transition is over.
         map.Player.SetPhysicsProcess(true);
+    }
+
+    private void Retry(GameOver gameOver)
+    {
+        gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
+
+        TransitionToMap(mapScene);
+
         // Start the music.
         musicPlayer.Play();
     }
@@ -62,6 +71,7 @@ public class Game : Node
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
+        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
         map = newMap;
         AddInitialItemsToInventory();
     }
@@ -100,5 +110,10 @@ public class Game : Node
         {
             inventory.Visible = !inventory.Visible;
         }
+    }
+
+    public void GotoToNewMap(PackedScene mapScene)
+    {
+        TransitionToMap(mapScene);
     }
 }
