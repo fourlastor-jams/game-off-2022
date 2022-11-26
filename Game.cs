@@ -11,7 +11,7 @@ public class Game : Node
     private Viewport viewport;
     private Transition transition;
 
-    private readonly PackedScene mapScene = GD.Load<PackedScene>("res://tilemap/Map.tscn");
+    private readonly PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
 
     public override void _EnterTree()
