@@ -57,6 +57,8 @@ position = Vector2( -74, -258 )
 position = Vector2( 297, -405 )
 sceneName = "map2"
 
+[connection signal="OnAttack" from="Walls/Enemies/Enemy" to="Walls/Player" method="OnAttacked"]
+
 [editable path="Walls/Trees/Tree2"]
 [editable path="Walls/Trees/Tree3"]
 [editable path="Walls/Trees/Tree4"]

@@ -131,4 +131,8 @@ public class Player : KinematicBody2D
         else
             heartbeatPlayer.Stop();
     }
+
+    public void OnAttacked(Vector2 fromDirection) {
+        GD.Print("> attacked: " + fromDirection);
+    }
 }

@@ -18,7 +18,6 @@ public class Enemy : KinematicBody2D
 
     [Export] private float speed;
 
-
     private AnimationTree animationTree;
     private AnimationNodeStateMachinePlayback animationStateMachine;
 
@@ -31,6 +30,8 @@ public class Enemy : KinematicBody2D
     private State previousState = State.IDLE;
     private Area2D followingTarget = null;
     [Export] private float attackDistanceThreshold = 2f;
+
+    private Vector2 facingDirection = Vector2.Zero;
 
     public override async void _Ready()
     {
@@ -196,6 +197,11 @@ public class Enemy : KinematicBody2D
         // {
         // EmitSignal(nameof(OnCollision));
         // }
+
+        facingDirection = new Vector2(
+            x: Mathf.Sign(movement.x),
+            y: Mathf.Sign(movement.y)
+        );
     }
 
     private float GetDistanceToFollowingTarget()
@@ -215,5 +221,6 @@ public class Enemy : KinematicBody2D
     public void OnAttacking()
     {
         //
+        EmitSignal(nameof(OnAttack), facingDirection);
     }
 }
