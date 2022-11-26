@@ -172,7 +172,7 @@ radius = 32.0
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
 speed = 50.0
-attackDistanceThreshold = 12.0
+attackDistanceThreshold = 13.0
 
 [node name="Mouse" type="Sprite" parent="."]
 texture = ExtResource( 6 )
