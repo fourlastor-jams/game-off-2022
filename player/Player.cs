@@ -8,6 +8,10 @@ public class Player : KinematicBody2D
 
     [Signal] public delegate void OnAction(Vector2 direction);
 
+    [Signal] public delegate void OnDeductHealth(int amount);
+
+    public bool isDead = false;
+    private int health;
     private AnimationTree animationTree;
     private AnimationPlayer animationPlayer;
     private AnimationNodeStateMachinePlayback animationStateMachine;
@@ -15,6 +19,7 @@ public class Player : KinematicBody2D
     private bool attackQueued;
     private int hitsQueued;
     private Vector2 facingDirection = Vector2.One;
+    private AudioStreamPlayer heartbeatPlayer;
 
     public override void _Ready()
     {
@@ -22,6 +27,7 @@ public class Player : KinematicBody2D
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
+        heartbeatPlayer = GetNode<AudioStreamPlayer>("HeartBeat");
     }
 
     public override void _PhysicsProcess(float delta)
@@ -42,13 +48,23 @@ public class Player : KinematicBody2D
             animationStateMachine.Start("Hit");
 
             // Deduct health.
-            GetNode<Inventory>("/root/Game/UI/Inventory").DeductHealth(hitsQueued);
-
+            EmitSignal(nameof(OnDeductHealth), hitsQueued);
             hitsQueued = 0;
             return;
         }
 
         if (animationStateMachine.GetCurrentNode().Equals("Hit")) return;
+
+        // I tried for a while to get this to work using signals.
+        // The AnimationTree kept randomly playing the Dead state when it
+        // wasn't supposed to.
+        if (isDead)
+        {
+            animationStateMachine.Start("Dead");
+            // No longer accept input.
+            this.SetPhysicsProcess(false);
+            return;
+        }
 
         if (attackQueued)
         {
@@ -101,5 +117,14 @@ public class Player : KinematicBody2D
         {
             hitsQueued = 1;
         }
+    }
+
+    public void SetHealth(int amount)
+    {
+        health = amount;
+        if (health == 1)
+            heartbeatPlayer.Play();
+        else
+            heartbeatPlayer.Stop();
     }
 }
