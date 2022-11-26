@@ -114,13 +114,6 @@ public class Game : Node
 
     public void GotoToNewMap(PackedScene mapScene)
     {
-        //map.GetNode<Area2D>("GotoNewMap").Disconnect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
-        //viewport.RemoveChild(map);
-        /*if (map != null)
-        {
-            map?.QueueFree();
-            map = null;
-        }*/
         TransitionToMap(mapScene);
     }
 }

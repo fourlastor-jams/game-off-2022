@@ -8,7 +8,6 @@ public class GotoNewMap : Area2D
 
     [Signal] public delegate void PlayerEntered(PackedScene mapScene);
 
-    // Called when the node enters the scene tree for the first time.
     public override void _Ready()
     {
         Connect("body_entered", this, "_on_GotoNewMap_area_entered");
