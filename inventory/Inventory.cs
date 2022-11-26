@@ -1,8 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
-using Godot.Collections;
 using JetBrains.Annotations;
+using Array = Godot.Collections.Array;
 
 public class Inventory : Control
 {
@@ -16,6 +17,8 @@ public class Inventory : Control
     [CanBeNull] private InventorySlot dragTo;
     private bool swapping;
 
+    [Signal] public delegate void NumHearts(int amount);
+    [Signal] public delegate void HeartsRanOut();
 
     public override void _Ready()
     {
@@ -88,6 +91,26 @@ public class Inventory : Control
         return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
     }
 
+    public void DeductHealth(int amount)
+    {
+        var numDeducted = 0;
+
+        bool SlotsWithHeartsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == Item.Heart;
+
+        foreach (var slot in slots.Where(SlotsWithHeartsPredicate))
+        {
+            slot.SetItem(null);
+            if (++numDeducted >= amount) break;
+        }
+
+        var heartsRemaining = slots.Count(SlotsWithHeartsPredicate);
+        EmitSignal(nameof(NumHearts), heartsRemaining);
+        if (heartsRemaining == 0)
+        {
+            EmitSignal(nameof(HeartsRanOut));
+        }
+    }
+
     private async void _SwapItems(InventorySlot origin, InventorySlot destination)
     {
         // Don't call _Process each frame until finished.
@@ -121,5 +144,13 @@ public class Inventory : Control
         // Call _Process each frame from now on.
         SetProcess(true);
         swapping = false;
+    }
+
+    public void Clear()
+    {
+        foreach (var slot in slots)
+        {
+            slot.SetItem(null);
+        }
     }
 }

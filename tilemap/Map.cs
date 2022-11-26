@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public class Map : Node2D
 {
-    private Player player;
+    public Player Player { get; private set; }
     private TileMap walls;
     private bool playerHasKey;
 
@@ -13,9 +13,9 @@ public class Map : Node2D
 
     public override void _Ready()
     {
-        player = GetNode<Player>("Walls/Player");
+        Player = GetNode<Player>("Walls/Player");
         walls = GetNode<TileMap>("Walls");
-        player.Connect("OnAction", this, nameof(PlayerAction));
+        Player.Connect("OnAction", this, nameof(PlayerAction));
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
     }
@@ -52,7 +52,7 @@ public class Map : Node2D
 
     private Vector2 PlayerMapPosition()
     {
-        return walls.WorldToMap(walls.ToLocal(player.GlobalPosition));
+        return walls.WorldToMap(walls.ToLocal(Player.GlobalPosition));
     }
 
     private const string KeyTile = "key";
