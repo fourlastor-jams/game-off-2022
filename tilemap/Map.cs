@@ -21,10 +21,8 @@ public class Map : Node2D
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
         var doors = new Array<Door>(GetNode<YSort>("Walls/Doors").GetChildren());
-        GD.Print($"Found {doors.Count} doors");
         foreach (var door in doors)
         {
-            GD.Print("Connecting door");
             door.Connect(nameof(Door.StepOnDoor), this, nameof(OnPlayerStepOnDoor), new Array() { door });
         }
     }
