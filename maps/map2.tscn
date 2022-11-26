@@ -21,44 +21,38 @@ position = Vector2( 43, -214 )
 [node name="Tree3" parent="Walls/Trees" index="2" instance=ExtResource( 3 )]
 position = Vector2( -131, -250 )
 
-[node name="Sprite" parent="Walls/Trees/Tree3" index="0"]
-frame = 6
-
 [node name="Tree4" parent="Walls/Trees" index="3" instance=ExtResource( 3 )]
 position = Vector2( -6, -308 )
-
-[node name="Sprite" parent="Walls/Trees/Tree4" index="0"]
-frame = 9
 
 [node name="Tree5" parent="Walls/Trees" index="4" instance=ExtResource( 3 )]
 position = Vector2( 317, -260 )
 
-[node name="Sprite" parent="Walls/Trees/Tree5" index="0"]
-frame = 13
-
 [node name="Tree6" parent="Walls/Trees" index="5" instance=ExtResource( 3 )]
 position = Vector2( 234, -354 )
-
-[node name="Sprite" parent="Walls/Trees/Tree6" index="0"]
-frame = 5
 
 [node name="Bush1" parent="Walls/Bushes" index="0" instance=ExtResource( 2 )]
 position = Vector2( -59, -59 )
 
 [node name="Sprite" parent="Walls/Bushes/Bush1" index="0"]
-frame = 2
+frame = 0
 
 [node name="Bush2" parent="Walls/Bushes" index="1" instance=ExtResource( 2 )]
 position = Vector2( -88, -233 )
 
 [node name="Sprite" parent="Walls/Bushes/Bush2" index="0"]
-frame = 12
+frame = 0
 
 [node name="Bush3" parent="Walls/Bushes" index="2" instance=ExtResource( 2 )]
 position = Vector2( 211, -348 )
 
 [node name="Sprite" parent="Walls/Bushes/Bush3" index="0"]
-frame = 4
+frame = 0
+
+[node name="GotoNewMap" parent="." index="2"]
+sceneName = "map1"
+
+[node name="CollisionShape2D" parent="GotoNewMap" index="0"]
+position = Vector2( 0, -72 )
 
 [editable path="Walls/Trees/Tree1"]
 [editable path="Walls/Trees/Tree2"]
