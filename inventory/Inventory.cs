@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
@@ -18,6 +17,7 @@ public class Inventory : Control
     private bool swapping;
 
     [Signal] public delegate void NumHearts(int amount);
+
     [Signal] public delegate void HeartsRanOut();
 
     public override void _Ready()
@@ -152,5 +152,15 @@ public class Inventory : Control
         {
             slot.SetItem(null);
         }
+    }
+
+    public bool HasItem(Item item)
+    {
+        return slots.Any(it => it.Item == item);
+    }
+
+    public void RemoveItem(Item item)
+    {
+        slots.First(it => it.Item == item).SetItem(null);
     }
 }
