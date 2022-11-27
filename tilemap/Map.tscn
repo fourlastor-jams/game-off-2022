@@ -1,0 +1,55 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://tilemap/tileset-wall.tres" type="TileSet" id=1]
+[ext_resource path="res://tilemap/GotoNewMap.cs" type="Script" id=2]
+[ext_resource path="res://player/Player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://tilemap/tileset-floor.tres" type="TileSet" id=4]
+[ext_resource path="res://tilemap/Map.cs" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 19, 10 )
+
+[node name="Map" type="Node2D"]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
+
+[node name="Floor" type="TileMap" parent="."]
+tile_set = ExtResource( 4 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+format = 1
+
+[node name="Walls" type="TileMap" parent="."]
+tile_set = ExtResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_custom_transform = Transform2D( 0, 0, 0, 0, 0, 0 )
+cell_tile_origin = 2
+cell_y_sort = true
+format = 1
+tile_data = PoolIntArray( -3473433, 0, 4, -3473432, 0, 65537, -3473431, 0, 5, -3473430, 0, 5, -3473429, 0, 65538, -3473428, 0, 6, -3473422, 0, 4, -3473421, 0, 6, -3407897, 0, 65540, -3407896, 0, 0, -3407895, 0, 1, -3407894, 0, 131077, -3407893, 0, 3, -3407892, 0, 65542, -3407886, 0, 65540, -3407885, 0, 65542, -3342361, 0, 65540, -3342360, 0, 65542, -3342357, 0, 65540, -3342356, 0, 65542, -3342350, 0, 65540, -3342349, 0, 65542, -3276825, 0, 65540, -3276824, 0, 65542, -3276821, 0, 65540, -3276820, 0, 65542, -3276814, 0, 65540, -3276813, 0, 65542, -3211289, 0, 65540, -3211288, 0, 65542, -3211285, 0, 65540, -3211284, 0, 65542, -3211278, 0, 65540, -3211277, 0, 65542, -3145753, 0, 65540, -3145752, 0, 65542, -3145749, 0, 65540, -3145748, 0, 65542, -3145742, 0, 65540, -3145741, 0, 65542, -3080217, 0, 65540, -3080216, 0, 65542, -3080213, 0, 65540, -3080212, 0, 65536, -3080211, 0, 65538, -3080210, 0, 65537, -3080209, 0, 5, -3080208, 0, 5, -3080207, 0, 65537, -3080206, 0, 65539, -3080205, 0, 65542, -3014681, 0, 65540, -3014680, 0, 65542, -3014677, 0, 131076, -3014676, 0, 131077, -3014675, 0, 1, -3014674, 0, 3, -3014673, 0, 0, -3014672, 0, 1, -3014671, 0, 131077, -3014670, 0, 1, -3014669, 0, 131078, -2949145, 0, 65540, -2949144, 0, 65542, -2949138, 0, 65540, -2949137, 0, 65542, -2883609, 0, 65540, -2883608, 0, 65542, -2883602, 0, 65540, -2883601, 0, 65542, -2818073, 0, 65540, -2818072, 0, 65542, -2818066, 0, 65540, -2818065, 0, 65542, -2752537, 0, 65540, -2752536, 0, 65542, -2752530, 0, 65540, -2752529, 0, 65542, -2687001, 0, 65540, -2687000, 0, 65536, -2686999, 0, 65538, -2686998, 0, 65538, -2686997, 0, 65537, -2686996, 0, 5, -2686995, 0, 65538, -2686994, 0, 65539, -2686993, 0, 65536, -2686992, 0, 65537, -2686991, 0, 65537, -2686990, 0, 65538, -2686989, 0, 6, -2621465, 0, 131076, -2621464, 0, 2, -2621463, 0, 2, -2621462, 0, 1, -2621461, 0, 131077, -2621460, 0, 1, -2621459, 0, 1, -2621458, 0, 131077, -2621457, 0, 131077, -2621456, 0, 1, -2621455, 0, 1, -2621454, 0, 131077, -2621453, 0, 131078 )
+
+[node name="Player" parent="Walls" instance=ExtResource( 3 )]
+
+[node name="Camera2D" type="Camera2D" parent="Walls/Player"]
+current = true
+zoom = Vector2( 0.5, 0.5 )
+process_mode = 0
+smoothing_enabled = true
+smoothing_speed = 8.0
+
+[node name="Trees" type="YSort" parent="Walls"]
+
+[node name="Bushes" type="YSort" parent="Walls"]
+
+[node name="Doors" type="YSort" parent="Walls"]
+
+[node name="Enemies" type="YSort" parent="Walls"]
+
+[node name="GotoNewMap" type="Area2D" parent="."]
+position = Vector2( 0, -50 )
+script = ExtResource( 2 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="GotoNewMap"]
+shape = SubResource( 1 )
