@@ -9,6 +9,8 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: eumario/godot-mono-github-actions-ci:0.2.0
     steps:
       - name: Install dotnet package
         run:  |
