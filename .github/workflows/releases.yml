@@ -42,7 +42,7 @@ jobs:
       - name: Export godot
         run: |
           dotnet restore
-          godot --verbose --export "HTML5" html.zip
+          GodotSharp --verbose --export "HTML5" html.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
