@@ -19,22 +19,22 @@ jobs:
           dotnet-version: 6.0.x
       - name: Restore dependencies
         run: dotnet restore
-      - name: Setup Godot
-        run: |
-          mkdir -p /tmp/godot
-          mkdir -p godot
-          wget -q -O /tmp/godot/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_linux_headless_64.zip
-          unzip -q /tmp/godot/godot.zip -d godot
+#       - name: Setup Godot
+#         run: |
+#           mkdir -p /tmp/godot
+#           mkdir -p godot
+#           wget -q -O /tmp/godot/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_linux_headless_64.zip
+#           unzip -q /tmp/godot/godot.zip -d godot
       - name: Download Godot templates
         run: |
           mkdir -p /tmp/godot-templates
           mkdir -p godot-templates
           wget -q -O /tmp/godot-templates/templates.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_export_templates.tpz
           unzip -q /tmp/godot-templates/templates.zip -d godot-templates
-      - name: Install Godot
-        run: |
-          mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 /usr/local/bin/godot
-          mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/GodotSharp /usr/local/bin/GodotSharp
+#       - name: Install Godot
+#         run: |
+#           mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 /usr/local/bin/godot
+#           mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/GodotSharp /usr/local/bin/GodotSharp
       - name: Install Godot templates
         run: |
           mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
@@ -42,7 +42,7 @@ jobs:
       - name: Export godot
         run: |
           dotnet restore
-          GodotSharp --verbose --export "HTML5" html.zip
+          godot --verbose --export "HTML5" html.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
