@@ -81,7 +81,7 @@ public class Game : Node
 
     private void AttemptPickupItem(MapItem mapItem)
     {
-        switch(mapItem.item)
+        switch (mapItem.item)
         {
             // Don't add doors to inventory, use a key.
             case Item.Door:
