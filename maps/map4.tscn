@@ -89,8 +89,8 @@ position = Vector2( -138, -513 )
 position = Vector2( -85, -500 )
 
 [node name="GotoNewMap" parent="." index="2"]
-position = Vector2( -286, -478 )
-sceneName = "map1"
+position = Vector2( 29, -585 )
+sceneName = "map5"
 
 [node name="CollisionShape2D" parent="GotoNewMap" index="0"]
-position = Vector2( 333, -112 )
+position = Vector2( 10, -4 )
