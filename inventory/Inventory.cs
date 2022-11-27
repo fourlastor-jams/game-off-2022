@@ -23,8 +23,9 @@ public class Inventory : Control
     public override void _Ready()
     {
         inventoryGrid = GetNode<GridContainer>("MarginContainer/InventoryGrid");
-        slots = new List<InventorySlot>(8);
-        for (var i = 0; i < 16; i++)
+        var slotsCount = inventoryGrid.GetChildCount();
+        slots = new List<InventorySlot>(slotsCount);
+        for (var i = 0; i < slotsCount; i++)
         {
             var slot = Slot(i);
             slots.Add(slot);
