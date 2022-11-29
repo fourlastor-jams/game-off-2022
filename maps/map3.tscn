@@ -71,7 +71,7 @@ position = Vector2( 167, -57 )
 position = Vector2( 190, -256 )
 
 [node name="Door" parent="Walls/MapItems" index="5" instance=ExtResource( 7 )]
-position = Vector2( 86, -280 )
+position = Vector2( 93, -280 )
 
 [node name="Enemy" parent="Walls/Enemies" index="0" instance=ExtResource( 2 )]
 position = Vector2( 141, -71 )
@@ -90,7 +90,7 @@ position = Vector2( 205, -255 )
 
 [node name="GotoNewMap" parent="." index="2"]
 position = Vector2( -286, -478 )
-sceneName = "map1"
+sceneName = "map4"
 
 [node name="CollisionShape2D" parent="GotoNewMap" index="0"]
 position = Vector2( 329.5, 195 )

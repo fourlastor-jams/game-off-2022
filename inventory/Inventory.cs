@@ -96,6 +96,12 @@ public class Inventory : Control
         return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
     }
 
+    public int GetItemCount(Item item)
+    {
+        bool SlotsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == item;
+        return slots.Count(SlotsPredicate);
+    }
+
     public void DeductHealth(int amount)
     {
         var numDeducted = 0;
@@ -114,6 +120,22 @@ public class Inventory : Control
         {
             EmitSignal(nameof(HeartsRanOut));
         }
+    }
+
+    public void TryUpgradeSlots()
+    {
+        // TODO: not working yet.
+        /*int numRupees = GetItemCount(Item.Rupee);
+        if (numRupees >= slots.Count - 4)
+        {
+
+            for (var i = 0; i < 4; i++)
+            {
+                var slot = Slot(i);
+                slots.Add(slot);
+                slot.Icon.Connect("gui_input", this, nameof(OnInput), new Array { slot });
+            }
+        }*/
     }
 
     private async void _SwapItems(InventorySlot origin, InventorySlot destination)

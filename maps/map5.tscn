@@ -71,7 +71,7 @@ position = Vector2( 26, 189 )
 position = Vector2( 392, 181 )
 
 [node name="Door" parent="Walls/MapItems" index="5" instance=ExtResource( 7 )]
-position = Vector2( 604, 40 )
+position = Vector2( 597, 40 )
 
 [node name="Enemy" parent="Walls/Enemies" index="0" instance=ExtResource( 2 )]
 position = Vector2( 194, 14 )

@@ -7,6 +7,7 @@ public class GotoNewMap : Area2D
     private PackedScene mapScene;
 
     [Signal] public delegate void PlayerEntered(PackedScene mapScene);
+    [Signal] public delegate void TryUpgradeInventory();
 
     public override void _Ready()
     {
@@ -19,6 +20,12 @@ public class GotoNewMap : Area2D
         if (node is Player)
         {
             EmitSignal(nameof(PlayerEntered), mapScene);
+
+            // If going back to the start, try to upgrade the inventory.
+            if (sceneName.Equals("map1"))
+            {
+                EmitSignal(nameof(TryUpgradeInventory));
+            }
         }
     }
 }

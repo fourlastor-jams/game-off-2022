@@ -78,6 +78,7 @@ public class Game : Node
         inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
+        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory, nameof(Inventory.TryUpgradeSlots));
         newMap.Connect(nameof(Map.AttemptPickupItem), this, nameof(AttemptPickupItem));
         map = newMap;
     }
@@ -113,10 +114,10 @@ public class Game : Node
         }
 
         // TODO: remove
-//        for (var i = 0; i < 4; i++)
-//        {
-//            inventory.AddItem(Item.Key);
-//        }
+        for (var i = 0; i < 4; i++)
+        {
+           inventory.AddItem(Item.Key);
+        }
     }
 
     private void OnGameOver()
