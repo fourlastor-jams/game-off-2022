@@ -31,6 +31,7 @@ public class Game : Node
 
         inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
         StartGame();
+        AddInitialItemsToInventory();
     }
 
     private async void TransitionToMap(PackedScene mapScene)
@@ -61,6 +62,7 @@ public class Game : Node
         gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
 
         TransitionToMap(mapScene);
+        AddInitialItemsToInventory();
 
         // Start the music.
         musicPlayer.Play();
@@ -78,7 +80,6 @@ public class Game : Node
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
         newMap.Connect(nameof(Map.AttemptPickupItem), this, nameof(AttemptPickupItem));
         map = newMap;
-        AddInitialItemsToInventory();
     }
 
     private void AttemptPickupItem(MapItem mapItem)
@@ -90,6 +91,7 @@ public class Game : Node
                 if (inventory.HasItem(Item.Key))
                 {
                     inventory.RemoveItem(Item.Key);
+                    mapItem.QueueFree();
                 }
                 break;
             // Pick up everything else.
@@ -97,9 +99,9 @@ public class Game : Node
             case Item.Key:
             case Item.Rupee:
                 inventory.AddItem(mapItem.item);
+                mapItem.QueueFree();
                 break;
         }
-        mapItem.QueueFree();
     }
 
     private void AddInitialItemsToInventory()

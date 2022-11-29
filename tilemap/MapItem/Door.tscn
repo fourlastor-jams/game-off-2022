@@ -4,10 +4,12 @@
 
 [node name="Door" instance=ExtResource( 1 )]
 position = Vector2( 1, 0 )
+mode = 1
 custom_integrator = false
 
 [node name="CollisionShape2D" parent="Area2D" index="0"]
 position = Vector2( 0, -0.5 )
 
 [node name="CollisionShape2D" parent="." index="3"]
+position = Vector2( 0, 0 )
 disabled = false
