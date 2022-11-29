@@ -172,9 +172,8 @@ radius = 32.0
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
-speed = 50.0
-wanderDirections = [ Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( -1, 0 ), Vector2( 0, -1 ) ]
-wanderDurations = [ 3, 1, 1, 1 ]
+speed = 35.0
+wanderDirections = [ Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( -1, 0 ), Vector2( 0, -1 ), Vector2( 1, 1 ), Vector2( 1, -1 ), Vector2( -1, -1 ), Vector2( -1, 1 ) ]
 attackDistanceThreshold = 13.0
 
 [node name="Mouse" type="Sprite" parent="."]
@@ -200,7 +199,6 @@ parameters/Idle/blend_position = Vector2( -0.00245702, 0.893743 )
 parameters/Walk/blend_position = Vector2( -0.000491381, 0.953353 )
 
 [node name="FollowArea" type="Area2D" parent="."]
-visible = false
 script = ExtResource( 4 )
 
 [node name="Shape" type="CollisionShape2D" parent="FollowArea"]

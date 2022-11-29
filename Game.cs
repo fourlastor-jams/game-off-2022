@@ -14,6 +14,8 @@ public class Game : Node
     private PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
 
+    public static System.Random random = new System.Random();
+
     public override void _EnterTree()
     {
         var screenSize = OS.GetScreenSize();

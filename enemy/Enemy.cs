@@ -21,15 +21,14 @@ public class Enemy : KinematicBody2D
     private AnimationTree animationTree;
     private AnimationNodeStateMachinePlayback animationStateMachine;
 
-    [Export] private List<Vector2> wanderDirections; // = new List<Vector2> { Vector2.Right, Vector2.Down, Vector2.Left, Vector2.Up };
-    [Export] private List<int> wanderDurations; // = new List<int> {  };
+    [Export] private List<Vector2> wanderDirections;
 
     private int wanderDirectionIndex = 0;
     private Vector2 wanderDirection = Vector2.Zero;
     private Timer wanderTimer;
     private State currentState = State.IDLE;
     private State previousState = State.IDLE;
-    private Area2D followingTarget = null;
+    private Node2D followingTarget = null;
     [Export] private float attackDistanceThreshold = 2f;
 
     private Vector2 facingDirection = Vector2.Zero;
@@ -39,18 +38,19 @@ public class Enemy : KinematicBody2D
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
         wanderTimer = GetNode<Timer>("WanderTimer");
-        wanderDirection = wanderDirections.Capacity > 0 ? wanderDirections[0] : Vector2.Zero;
-        wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
+        wanderDirectionIndex = Game.random.Next(wanderDirections.Capacity);
+        wanderDirection = wanderDirections.Capacity > 0 ? wanderDirections[wanderDirectionIndex] : Vector2.Zero;
         wanderTimer.OneShot = true;
-        // debug:
-        // await ToSignal(GetTree().CreateTimer(1), "timeout");
-        // ChangeStateTo(State.WANDER);
+        _ResetWanderTimer();
+
+        await ToSignal(GetTree().CreateTimer(1), "timeout");
+        ChangeStateTo(State.WANDER);
     }
 
-    public void _OnAreaEntered(Area2D other)
+    public void _OnAreaEntered(Node2D other)
     {
         GD.Print("Area " + other.Name + " entered.");
-        if (other.Name == "PlayerArea")
+        if (other is Player)
         {
             // TODO we need to update this position more often!
             followingTarget = other;
@@ -62,10 +62,10 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void _OnAreaExited(Area2D other)
+    public void _OnAreaExited(Node2D other)
     {
         GD.Print("Area " + other.Name + " exited.");
-        if (other.Name == "PlayerArea")
+        if (other is Player)
         {
             // ChangeStateTo(State.WANDER);
             followingTarget = null;
@@ -124,20 +124,34 @@ public class Enemy : KinematicBody2D
 
     public void _OnWanderTimerTimeout()
     {
-        _ChangeWanderDirection();
+        switch (currentState)
+        {
+            case State.IDLE:
+                ChangeStateTo(State.WANDER);
+                _ChangeWanderDirection();
+                break;
+            case State.WANDER:
+                ChangeStateTo(State.IDLE);
+                _ResetWanderTimer();
+                break;
+        }
+    }
+
+    public void _ResetWanderTimer()
+    {
+        wanderTimer.Stop();
+        float scaling = 1.4f;
+        if (currentState == State.IDLE)
+            scaling = 1.8f;
+        wanderTimer.WaitTime = (float)(Game.random.NextDouble() * scaling);
+        wanderTimer.Start();
     }
 
     public void _ChangeWanderDirection()
     {
-        wanderTimer.Stop();
-        if (wanderDirectionIndex > wanderDirections.Capacity - 1)
-        {
-            wanderDirectionIndex = 0;
-        }
+        wanderDirectionIndex = Game.random.Next(wanderDirections.Capacity);
         wanderDirection = wanderDirections[wanderDirectionIndex];
-        wanderTimer.WaitTime = wanderDurations[wanderDirectionIndex];
-        wanderDirectionIndex += 1;
-        wanderTimer.Start();
+        _ResetWanderTimer();
     }
 
     public override void _PhysicsProcess(float delta)

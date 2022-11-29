@@ -84,6 +84,7 @@ export.cfg
 
 # Mono-specific ignores
 .mono/
+mono_crash*.json
 data_*/
 
 # macOS stuff
