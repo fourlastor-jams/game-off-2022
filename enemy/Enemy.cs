@@ -15,6 +15,7 @@ public class Enemy : KinematicBody2D
 {
     [Signal] public delegate void OnAttack(Vector2 facing);
     [Signal] public delegate void OnCollision();
+    [Signal] public delegate void OnDead();
     // [Signal] public delegate void OnChangeDirection();
 
     [Export] private float speed;
@@ -27,15 +28,20 @@ public class Enemy : KinematicBody2D
     private int wanderDirectionIndex = 0;
     private Vector2 wanderDirection = Vector2.Zero;
     private Timer wanderTimer;
-    private State currentState = State.IDLE;
+    [Export] private State currentState = State.IDLE;
     private State previousState = State.IDLE;
     private Node2D followingTarget = null;
     [Export] private float attackDistanceThreshold = 2f;
+    [Export] private int health = 3;
 
     private Vector2 facingDirection = Vector2.Zero;
 
     public override async void _Ready()
     {
+
+        Hurtbox hurtbox = GetNode<Hurtbox>("Hurtbox");
+        hurtbox.Connect("OnHit", this, nameof(OnHit));
+
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
         wanderTimer = GetNode<Timer>("WanderTimer");
@@ -52,7 +58,6 @@ public class Enemy : KinematicBody2D
     {
         if (other is Player)
         {
-            GD.Print("Body " + other.Name + " entered.");
             // TODO we need to update this position more often!
             followingTarget = other;
             ChangeStateTo(State.FOLLOW);
@@ -67,7 +72,6 @@ public class Enemy : KinematicBody2D
     {
         if (other is Player)
         {
-            GD.Print("Body " + other.Name + " exited.");
             // ChangeStateTo(State.WANDER);
             followingTarget = null;
             ChangeStateTo(State.IDLE);
@@ -126,6 +130,9 @@ public class Enemy : KinematicBody2D
             case State.ATTACK:
                 animationStateMachine.Travel("Attack");
                 break;
+            case State.HURT:
+                animationStateMachine.Start("Hurt");
+                break;
         }
     }
 
@@ -181,6 +188,10 @@ public class Enemy : KinematicBody2D
                 velocity = wanderDirection;
                 break;
             case State.FOLLOW:
+                if (followingTarget == null)
+                {
+                    break;
+                }
                 if (distanceToTarget <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
@@ -241,5 +252,20 @@ public class Enemy : KinematicBody2D
     public void OnAttacking()
     {
         EmitSignal(nameof(OnAttack), facingDirection);
+    }
+
+    public void OnHit()
+    {
+        if (--health <= 0)
+        {
+            // Spawn a rupee or a key
+            EmitSignal(nameof(OnDead), this);
+            // this will require more work, not working
+            //SetPhysicsProcess(false);
+            //animationStateMachine.Start("Dead");
+            QueueFree();  // Remove if doing Dead animation/state.
+            return;
+        }
+        ChangeStateTo(State.HURT);
     }
 }

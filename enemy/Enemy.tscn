@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=2]
+[gd_scene load_steps=39 format=2]
 
 [ext_resource path="res://enemy/Enemy.cs" type="Script" id=1]
 [ext_resource path="res://hurtbox/Hurtbox.tscn" type="PackedScene" id=2]
@@ -9,9 +9,9 @@
 radius = 5.0
 height = 4.0
 
-[sub_resource type="Animation" id=47]
-resource_name = "Hurt"
-length = 1.25
+[sub_resource type="Animation" id=59]
+resource_name = "Dead"
+length = 0.7
 step = 0.05
 tracks/0/type = "value"
 tracks/0/path = NodePath("Mouse:frame")
@@ -20,10 +20,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.25, 0.55, 0.85, 1.15 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.25, 0.55, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 0, 1, 2, 3, 4 ]
+"values": [ 0, 1, 2, 3 ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Mouse:visible")
@@ -32,10 +32,64 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6, 0.65, 0.7, 0.75 ),
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 ),
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ true, false, true, false, true, false, true, false, true, false, true, false, true ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.7 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[sub_resource type="Animation" id=47]
+resource_name = "Hurt"
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Mouse:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.55, 0.85 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Mouse:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1, 0.15, 0.2, 0.25, 0.3, 0.35, 0.4, 0.45, 0.5, 0.55, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, false, true, false, true, false, true, false, true, false, true, false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:currentState")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 2 ]
 }
 
 [sub_resource type="Animation" id=4]
@@ -138,6 +192,12 @@ blend_point_3/node = SubResource( 40 )
 blend_point_3/pos = Vector2( -1, 0 )
 blend_mode = 1
 
+[sub_resource type="AnimationNodeAnimation" id=58]
+animation = "Dead"
+
+[sub_resource type="AnimationNodeAnimation" id=55]
+animation = "Hurt"
+
 [sub_resource type="AnimationNodeAnimation" id=21]
 animation = "idle"
 
@@ -186,30 +246,40 @@ blend_point_3/node = SubResource( 28 )
 blend_point_3/pos = Vector2( -1, 0 )
 blend_mode = 1
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=29]
+[sub_resource type="AnimationNodeStateMachineTransition" id=49]
+switch_mode = 2
+auto_advance = true
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=30]
+[sub_resource type="AnimationNodeStateMachineTransition" id=50]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=41]
+[sub_resource type="AnimationNodeStateMachineTransition" id=51]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=42]
+[sub_resource type="AnimationNodeStateMachineTransition" id=52]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=43]
+[sub_resource type="AnimationNodeStateMachineTransition" id=53]
 
-[sub_resource type="AnimationNodeStateMachineTransition" id=44]
+[sub_resource type="AnimationNodeStateMachineTransition" id=54]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=56]
+switch_mode = 2
+auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachine" id=16]
 states/Attack/node = SubResource( 36 )
-states/Attack/position = Vector2( 504, 235.5 )
+states/Attack/position = Vector2( 522, 235.5 )
+states/Dead/node = SubResource( 58 )
+states/Dead/position = Vector2( 705, 235.5 )
+states/Hurt/node = SubResource( 55 )
+states/Hurt/position = Vector2( 705, 86 )
 states/Idle/node = SubResource( 14 )
 states/Idle/position = Vector2( 326, 86 )
 states/RESET/node = SubResource( 48 )
 states/RESET/position = Vector2( 326, 235.5 )
 states/Walk/node = SubResource( 15 )
-states/Walk/position = Vector2( 504, 86 )
-transitions = [ "Idle", "Walk", SubResource( 29 ), "Walk", "Idle", SubResource( 30 ), "Walk", "Attack", SubResource( 41 ), "Attack", "Walk", SubResource( 42 ), "Idle", "Attack", SubResource( 43 ), "Attack", "Idle", SubResource( 44 ) ]
+states/Walk/position = Vector2( 522, 86 )
+transitions = [ "RESET", "Idle", SubResource( 49 ), "Walk", "RESET", SubResource( 50 ), "Attack", "RESET", SubResource( 51 ), "Idle", "Attack", SubResource( 52 ), "Idle", "Walk", SubResource( 53 ), "Walk", "Attack", SubResource( 54 ), "Hurt", "RESET", SubResource( 56 ) ]
 start_node = "Idle"
-graph_offset = Vector2( -88, 15 )
+graph_offset = Vector2( -65, 51 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
@@ -232,6 +302,7 @@ vframes = 2
 shape = SubResource( 3 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Dead = SubResource( 59 )
 anims/Hurt = SubResource( 47 )
 anims/RESET = SubResource( 4 )
 anims/attack = SubResource( 45 )

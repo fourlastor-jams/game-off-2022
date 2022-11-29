@@ -54,7 +54,6 @@ public class Player : KinematicBody2D
 
         if (hitAnimationQueued)
         {
-            GD.Print("Playing hit...");
             animationStateMachine.Start("Hit");
             hitAnimationQueued = false;
             return;

@@ -200,6 +200,18 @@ tracks/14/keys = {
 "update": 1,
 "values": [ true ]
 }
+tracks/15/type = "value"
+tracks/15/path = NodePath("Sword/CollisionShape2D:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 16 ) ]
+}
 
 [sub_resource type="Animation" id=72]
 resource_name = "dead"
@@ -676,7 +688,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( 0, 10 ) ]
+"values": [ Vector2( 0, 17 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
@@ -685,10 +697,10 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=50]
@@ -851,7 +863,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 0,
-"values": [ Vector2( -10, 0 ) ]
+"values": [ Vector2( -17, 0 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
@@ -860,10 +872,10 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=44]
@@ -1026,7 +1038,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( 10, 0 ) ]
+"values": [ Vector2( 17, 0 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
@@ -1035,10 +1047,10 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=52]
@@ -1201,7 +1213,7 @@ tracks/12/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Vector2( 0, -10 ) ]
+"values": [ Vector2( 0, -17 ) ]
 }
 tracks/13/type = "value"
 tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
@@ -1210,10 +1222,10 @@ tracks/13/loop_wrap = true
 tracks/13/imported = false
 tracks/13/enabled = true
 tracks/13/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
 "update": 1,
-"values": [ false ]
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=21]
@@ -1443,7 +1455,7 @@ region_enabled = true
 region_rect = Rect2( 0, 48, 16, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
-position = Vector2( 0, 10 )
+position = Vector2( 0, 16 )
 shape = SubResource( 43 )
 disabled = true
 
@@ -1458,7 +1470,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 23
+frame = 20
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )

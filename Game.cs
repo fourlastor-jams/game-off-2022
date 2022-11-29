@@ -110,10 +110,11 @@ public class Game : Node
             inventory.AddItem(Item.Heart);
         }
 
-        for (var i = 0; i < 4; i++)
-        {
-            inventory.AddItem(Item.Key);
-        }
+        // TODO: remove
+//        for (var i = 0; i < 4; i++)
+//        {
+//            inventory.AddItem(Item.Key);
+//        }
     }
 
     private void OnGameOver()
