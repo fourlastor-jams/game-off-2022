@@ -7,6 +7,7 @@ public enum State
     WANDER,
     FOLLOW,
     ATTACK,
+    HURT,
     GOTO // TODO: go to a certain position
 }
 
