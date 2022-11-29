@@ -26,7 +26,7 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id=45]
 resource_name = "attack"
-length = 0.3
+length = 0.6
 loop = true
 step = 0.01
 tracks/0/type = "value"
@@ -167,14 +167,14 @@ start_node = "Idle"
 [sub_resource type="AnimationNodeStateMachinePlayback" id=17]
 
 [sub_resource type="CircleShape2D" id=31]
-radius = 32.0
+radius = 42.0
 
 [node name="Enemy" type="KinematicBody2D"]
 position = Vector2( 0, 1 )
 script = ExtResource( 1 )
-speed = 35.0
+speed = 45.0
 wanderDirections = [ Vector2( 1, 0 ), Vector2( 0, 1 ), Vector2( -1, 0 ), Vector2( 0, -1 ), Vector2( 1, 1 ), Vector2( 1, -1 ), Vector2( -1, -1 ), Vector2( -1, 1 ) ]
-attackDistanceThreshold = 13.0
+attackDistanceThreshold = 16.0
 
 [node name="Mouse" type="Sprite" parent="."]
 texture = ExtResource( 6 )
@@ -209,6 +209,6 @@ shape = SubResource( 31 )
 [node name="Hurtbox" parent="." instance=ExtResource( 2 )]
 
 [connection signal="OnCollision" from="." to="." method="_OnCollision"]
-[connection signal="area_entered" from="FollowArea" to="." method="_OnAreaEntered"]
-[connection signal="area_exited" from="FollowArea" to="." method="_OnAreaExited"]
+[connection signal="body_entered" from="FollowArea" to="." method="_OnBodyEntered"]
+[connection signal="body_exited" from="FollowArea" to="." method="_OnBodyExited"]
 [connection signal="timeout" from="WanderTimer" to="." method="_OnWanderTimerTimeout"]

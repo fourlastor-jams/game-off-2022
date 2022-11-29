@@ -47,14 +47,14 @@ public class Enemy : KinematicBody2D
         ChangeStateTo(State.WANDER);
     }
 
-    public void _OnAreaEntered(Node2D other)
+    public void _OnBodyEntered(Node2D other)
     {
-        GD.Print("Area " + other.Name + " entered.");
         if (other is Player)
         {
+            GD.Print("Body " + other.Name + " entered.");
             // TODO we need to update this position more often!
             followingTarget = other;
-            // ChangeStateTo(State.FOLLOW);
+            ChangeStateTo(State.FOLLOW);
         }
         else
         {
@@ -62,23 +62,22 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void _OnAreaExited(Node2D other)
+    public void _OnBodyExited(Node2D other)
     {
-        GD.Print("Area " + other.Name + " exited.");
         if (other is Player)
         {
+            GD.Print("Body " + other.Name + " exited.");
             // ChangeStateTo(State.WANDER);
             followingTarget = null;
+            ChangeStateTo(State.IDLE);
         }
     }
 
     public void _OnCollision()
     {
-        GD.Print("Collided!");
-
         _ChangeWanderDirection();
 
-        // more complex behaviour (wip):
+        // More complex behaviour (wip):
         var count = GetSlideCount();
         for (int i = 0; i < count; i++)
         {
@@ -106,14 +105,26 @@ public class Enemy : KinematicBody2D
 
     public void ChangeStateTo(State newState)
     {
-        GD.Print("Changing state from " + currentState + " to " + newState);
         wanderTimer.Stop();
         previousState = currentState;
         currentState = newState;
-
-        if (currentState == State.WANDER)
+        
+        switch (currentState)
         {
-            StartWandering();
+            case State.IDLE:
+                animationStateMachine.Travel("Idle");
+                _ResetWanderTimer();
+                break;
+            case State.WANDER:
+                animationStateMachine.Travel("Walk");
+                StartWandering();
+                break;
+            case State.FOLLOW:
+                animationStateMachine.Travel("Walk");
+                break;
+            case State.ATTACK:
+                animationStateMachine.Travel("Attack");
+                break;
         }
     }
 
@@ -132,7 +143,6 @@ public class Enemy : KinematicBody2D
                 break;
             case State.WANDER:
                 ChangeStateTo(State.IDLE);
-                _ResetWanderTimer();
                 break;
         }
     }
@@ -164,15 +174,12 @@ public class Enemy : KinematicBody2D
         switch (currentState)
         {
             case State.IDLE:
-                animationStateMachine.Travel("Idle");
                 velocity = new Vector2(0, 0);
                 break;
             case State.WANDER:
-                animationStateMachine.Travel("Walk");
                 velocity = wanderDirection;
                 break;
             case State.FOLLOW:
-                animationStateMachine.Travel("Walk");
                 if (distanceToTarget <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
@@ -184,11 +191,7 @@ public class Enemy : KinematicBody2D
                 }
                 break;
             case State.ATTACK:
-                animationStateMachine.Travel("Attack");
                 velocity = Vector2.Zero;
-
-                // TODO attack! signal?
-
                 if (distanceToTarget > attackDistanceThreshold)
                 {
                     ChangeStateTo(State.FOLLOW);
@@ -200,7 +203,6 @@ public class Enemy : KinematicBody2D
 
         if (velocity == Vector2.Zero)
         {
-            // animationStateMachine.Travel("Idle");
             return;
         }
 
