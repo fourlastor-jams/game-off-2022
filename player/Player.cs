@@ -74,6 +74,8 @@ public class Player : KinematicBody2D
             return;
         }
 
+        if (animationStateMachine.GetCurrentNode().Equals("Attack")) return;
+
         if (attackQueued)
         {
             attackQueued = false;
@@ -81,8 +83,6 @@ public class Player : KinematicBody2D
             animationStateMachine.Travel("Attack");
             return;
         }
-
-        if (animationStateMachine.GetCurrentNode().Equals("Attack")) return;
 
         if (velocity == Vector2.Zero)
         {
