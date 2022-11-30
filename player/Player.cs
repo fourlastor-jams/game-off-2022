@@ -80,7 +80,7 @@ public class Player : KinematicBody2D
         {
             attackQueued = false;
             animationTree.Set("parameters/Attack/blend_position", velocity);
-            animationStateMachine.Travel("Attack");
+            animationStateMachine.Start("Attack");
             return;
         }
 
