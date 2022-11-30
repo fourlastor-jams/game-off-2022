@@ -45,7 +45,7 @@ custom_constants/vseparation = 1
 custom_constants/hseparation = 1
 columns = 4
 
-[node name="Background" parent="MarginContainer/BackgroundGrid" instance=ExtResource( 4 )]
+[node name="Background1" parent="MarginContainer/BackgroundGrid" instance=ExtResource( 4 )]
 
 [node name="Background2" parent="MarginContainer/BackgroundGrid" instance=ExtResource( 4 )]
 margin_left = 19.0
