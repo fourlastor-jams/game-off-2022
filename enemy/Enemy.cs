@@ -109,7 +109,7 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void ChangeStateTo(State newState)
+    private void ChangeStateTo(State newState)
     {
         wanderTimer.Stop();
         previousState = currentState;
@@ -139,7 +139,7 @@ public class Enemy : KinematicBody2D
 
     private void StartWandering()
     {
-        wanderTimer.Start();
+        wanderTimer.Autostart = true;
     }
 
     public void _OnWanderTimerTimeout()
@@ -156,17 +156,17 @@ public class Enemy : KinematicBody2D
         }
     }
 
-    public void _ResetWanderTimer()
+    private void _ResetWanderTimer()
     {
         wanderTimer.Stop();
         float scaling = 1.4f;
         if (currentState == State.IDLE)
             scaling = 1.8f;
         wanderTimer.WaitTime = (float)(Game.random.NextDouble() * scaling);
-        wanderTimer.Start();
+        wanderTimer.Autostart = true;
     }
 
-    public void _ChangeWanderDirection()
+    private void _ChangeWanderDirection()
     {
         wanderDirectionIndex = Game.random.Next(wanderDirections.Capacity);
         wanderDirection = wanderDirections[wanderDirectionIndex];
