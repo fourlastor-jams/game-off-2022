@@ -18,14 +18,16 @@ public class Inventory : Control
     private bool swapping;
 
     [Signal] public delegate void NumHearts(int amount);
+
     [Signal] public delegate void HeartLostFromPickup();
+
     [Signal] public delegate void HeartsRanOut();
 
     public override void _Ready()
     {
         backgroundGrid = GetNode<GridContainer>("MarginContainer/BackgroundGrid");
         inventoryGrid = GetNode<GridContainer>("MarginContainer/InventoryGrid");
-        int slotsCount = inventoryGrid.GetChildCount();
+        var slotsCount = inventoryGrid.GetChildCount();
         AddNewSlots(slotsCount);
     }
 
@@ -108,7 +110,7 @@ public class Inventory : Control
         return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
     }
 
-    public int GetItemCount(Item item)
+    private int GetItemCount(Item item)
     {
         bool SlotsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == item;
         return slots.Count(SlotsPredicate);
@@ -138,7 +140,7 @@ public class Inventory : Control
 
     public void TryUpgradeSlots()
     {
-        int numRupees = GetItemCount(Item.Rupee);
+        var numRupees = GetItemCount(Item.Rupee);
         if (numRupees >= slots.Count - 8)
         {
             // Remove slots.Count - 4 rupees
@@ -148,10 +150,10 @@ public class Inventory : Control
             backgroundGrid.Columns += 1;
             inventoryGrid.Columns += 1;
 
-            PackedScene gridScene = GD.Load<PackedScene>("res://inventory/InventorySlot.tscn");
+            var gridScene = GD.Load<PackedScene>("res://inventory/InventorySlot.tscn");
 
             // Add 4 InventorySlot nodes.
-            for (int i = 0; i < 4; ++i)
+            for (var i = 0; i < 4; ++i)
             {
                 backgroundGrid.AddChild(backgroundGrid.GetChild(0).Duplicate());
                 inventoryGrid.AddChild(gridScene.Instance());
@@ -161,8 +163,8 @@ public class Inventory : Control
             AddNewSlots(4);
 
             // Refresh the NinePatchRect size.
-            NinePatchRect background = GetNode<NinePatchRect>("Background");
-            Rect2 oldRect = background.GetRect();
+            var background = GetNode<NinePatchRect>("Background");
+            var oldRect = background.GetRect();
             background.RectSize = new Vector2(oldRect.Size.x + 19f, oldRect.Size.y);
         }
     }
