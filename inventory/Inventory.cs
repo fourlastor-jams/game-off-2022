@@ -42,7 +42,7 @@ public class Inventory : Control
         var oldSlots = slots;
         slots = new List<InventorySlot>(oldSlots.Count + slotsCount);
         slots.AddRange(oldSlots);
-        for (var i = 0; i < slotsCount; i++)
+        for (var i = oldSlots.Count; i < slotsCount; i++)
         {
             var slot = Slot(i);
             slots.Add(slot);
