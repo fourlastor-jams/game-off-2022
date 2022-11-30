@@ -16,8 +16,7 @@ public class GameOver : MarginContainer
     public override void _Input(InputEvent @event)
     {
         base._Input(@event);
-        // todo: this needs to be 'any key'
-        if (!@event.IsActionPressed("debug_hit")) return;
+        if (!@event.IsActionPressed("retry")) return;
         EmitSignal(nameof(OnRetry));
         QueueFree();
     }

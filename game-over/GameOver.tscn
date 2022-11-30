@@ -16,9 +16,6 @@ custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 margin_left = 8.0
@@ -26,5 +23,5 @@ margin_top = 16.0
 margin_right = 166.0
 margin_bottom = 47.0
 text = "Oh no! You lost.
-Press any button to retry"
+Press R to retry"
 align = 1
