@@ -43,7 +43,8 @@ public class Player : KinematicBody2D
         );
         var velocity = input.Normalized();
 
-        animationTree.Set("parameters/Hit/blend_position", velocity);
+        if (animationStateMachine.GetCurrentNode().Equals("RESET")) return;
+
         if (hitsQueued > 0)
         {
             QueueHitAnimation();
@@ -54,7 +55,8 @@ public class Player : KinematicBody2D
 
         if (hitAnimationQueued)
         {
-            animationStateMachine.Start("Hit");
+            animationTree.Set("parameters/Hit/blend_position", velocity);
+            animationStateMachine.Travel("Hit");
             hitAnimationQueued = false;
             return;
         }
@@ -66,7 +68,7 @@ public class Player : KinematicBody2D
         // wasn't supposed to.
         if (isDead)
         {
-            animationStateMachine.Start("Dead");
+            animationStateMachine.Travel("Dead");
             // No longer accept input.
             this.SetPhysicsProcess(false);
             return;
@@ -76,7 +78,7 @@ public class Player : KinematicBody2D
         {
             attackQueued = false;
             animationTree.Set("parameters/Attack/blend_position", velocity);
-            animationStateMachine.Start("Attack");
+            animationStateMachine.Travel("Attack");
             return;
         }
 
@@ -87,10 +89,6 @@ public class Player : KinematicBody2D
             animationStateMachine.Travel("Idle");
             return;
         }
-
-        animationStateMachine.Travel("Walk");
-        animationTree.Set("parameters/Walk/blend_position", velocity);
-        animationTree.Set("parameters/Idle/blend_position", velocity);
 
         var movement = (isRunning ? runningSpeed : speed) * velocity;
         if (shouldSlide)
@@ -106,6 +104,13 @@ public class Player : KinematicBody2D
             x: Mathf.Sign(movement.x),
             y: Mathf.Sign(movement.y)
         );
+
+        animationTree.Set("parameters/Walk/blend_position", velocity);
+        animationTree.Set("parameters/Idle/blend_position", velocity);
+
+        if (animationStateMachine.GetCurrentNode().Equals("Walk")) return;
+
+        animationStateMachine.Travel("Walk");
     }
 
     public void QueueHitAnimation()
