@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -73,12 +72,14 @@ public class Game : Node
         viewport.RemoveChild(map);
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
-        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem));
+        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem),
+            new Array { Item.Heart });
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
         inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
-        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory, nameof(Inventory.TryUpgradeSlots));
+        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory,
+            nameof(Inventory.TryUpgradeSlots));
         newMap.Connect(nameof(Map.AttemptPickupItem), this, nameof(AttemptPickupItem));
         map = newMap;
     }
@@ -94,6 +95,7 @@ public class Game : Node
                     inventory.RemoveItem(Item.Key);
                     mapItem.QueueFree();
                 }
+
                 break;
             // Pick up everything else.
             case Item.Heart:
@@ -116,8 +118,9 @@ public class Game : Node
         // TODO: remove
         for (var i = 0; i < 4; i++)
         {
-           inventory.AddItem(Item.Key);
+            inventory.AddItem(Item.Key);
         }
+
         // TODO: remove
         for (var i = 0; i < 8; i++)
         {

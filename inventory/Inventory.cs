@@ -98,7 +98,7 @@ public class Inventory : Control
     {
         var noHealthDeductionRequired = slots.Any(slot => slot.AddItem(item));
         if (noHealthDeductionRequired) return;
-        DeductItem(Item.Heart, 1);
+        DeductItem(1, Item.Heart);
         AddItem(item);
         EmitSignal(nameof(HeartLostFromPickup));
     }
@@ -114,7 +114,7 @@ public class Inventory : Control
         return slots.Count(SlotsPredicate);
     }
 
-    public void DeductItem(Item item, int amount)
+    public void DeductItem(int amount, Item item)
     {
         var numDeducted = 0;
         bool SlotsWithPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == item;
@@ -142,7 +142,7 @@ public class Inventory : Control
         if (numRupees >= slots.Count - 8)
         {
             // Remove slots.Count - 4 rupees
-            DeductItem(Item.Rupee, slots.Count - 8);
+            DeductItem(slots.Count - 8, Item.Rupee);
 
             // Add 1 column.
             backgroundGrid.Columns += 1;
