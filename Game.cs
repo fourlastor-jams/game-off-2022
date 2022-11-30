@@ -12,6 +12,7 @@ using JetBrains.Annotations;
 
     private PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
+    private readonly PackedScene introScene = GD.Load<PackedScene>("res://intro/Intro.tscn");
 
     public static System.Random random = new System.Random();
 
@@ -29,13 +30,29 @@ using JetBrains.Annotations;
         transition = GetNode<Transition>("Transition");
 
         inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
+        StartIntro();
+        return;
+    }
+
+    private void StartIntro()
+    {
+        var intro = introScene.Instance();
+        intro.Connect(nameof(Intro.IntroFinished), this, nameof(FirstStart));
+        viewport.AddChild(intro);
+    }
+
+    private void FirstStart()
+    {
+        var intro = viewport.GetChild(0);
+        intro.QueueFree();
+        GetNode<Control>("UI").Visible = true;
         StartGame();
         AddInitialItemsToInventory();
     }
 
-    private async void TransitionToMap(PackedScene mapScene)
+    private async void TransitionToMap(PackedScene newScene)
     {
-        this.mapScene = mapScene;
+        mapScene = newScene;
         transition.RefreshImage(viewport);
         transition.Start();
         if (map != null)
@@ -69,7 +86,7 @@ using JetBrains.Annotations;
 
     private void StartGame()
     {
-        viewport.RemoveChild(map);
+        map?.QueueFree();
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
         newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem),
