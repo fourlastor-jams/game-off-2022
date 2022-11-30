@@ -14,7 +14,9 @@ public enum State
 public class Enemy : KinematicBody2D
 {
     [Signal] public delegate void OnAttack(Vector2 facing);
+
     [Signal] public delegate void OnCollision();
+
     [Signal] public delegate void OnDead();
     // [Signal] public delegate void OnChangeDirection();
 
@@ -38,9 +40,8 @@ public class Enemy : KinematicBody2D
 
     public override async void _Ready()
     {
-
-        Hurtbox hurtbox = GetNode<Hurtbox>("Hurtbox");
-        hurtbox.Connect("OnHit", this, nameof(OnHit));
+        var hurtbox = GetNode<Hurtbox>("Hurtbox");
+        hurtbox.Connect(nameof(Hurtbox.OnHit), this, nameof(OnHit));
 
         animationTree = GetNode<AnimationTree>("AnimationTree");
         animationStateMachine = (AnimationNodeStateMachinePlayback)animationTree.Get("parameters/playback");
@@ -113,7 +114,7 @@ public class Enemy : KinematicBody2D
         wanderTimer.Stop();
         previousState = currentState;
         currentState = newState;
-        
+
         switch (currentState)
         {
             case State.IDLE:
@@ -192,6 +193,7 @@ public class Enemy : KinematicBody2D
                 {
                     break;
                 }
+
                 if (distanceToTarget <= attackDistanceThreshold)
                 {
                     ChangeStateTo(State.ATTACK);
@@ -201,6 +203,7 @@ public class Enemy : KinematicBody2D
                     var followingPosition = followingTarget.GlobalPosition;
                     velocity = GlobalPosition.DirectionTo(followingPosition);
                 }
+
                 break;
             case State.ATTACK:
                 velocity = Vector2.Zero;
@@ -208,6 +211,7 @@ public class Enemy : KinematicBody2D
                 {
                     ChangeStateTo(State.FOLLOW);
                 }
+
                 break;
             default:
                 break;
@@ -263,9 +267,10 @@ public class Enemy : KinematicBody2D
             // this will require more work, not working
             //SetPhysicsProcess(false);
             //animationStateMachine.Start("Dead");
-            QueueFree();  // Remove if doing Dead animation/state.
+            QueueFree(); // Remove if doing Dead animation/state.
             return;
         }
+
         ChangeStateTo(State.HURT);
     }
 }

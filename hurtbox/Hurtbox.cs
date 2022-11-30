@@ -1,27 +1,19 @@
-using System;
 using Godot;
 
 public class Hurtbox : Area2D
 {
+    [Signal] public delegate void OnHit();
+
     public override void _Ready()
     {
-
+        Connect("body_entered", this, nameof(OnBodyEntered));
     }
 
-    public void _OnAreaEntered(Area2D other)
+    private void OnBodyEntered(Node body)
     {
-        if (other.Name == "Sword")
+        if (body.Name == "Sword")
         {
-            GD.Print("HIT!");
+            EmitSignal(nameof(OnHit));
         }
-        else
-        {
-            //
-        }
-    }
-
-    public void _OnAreaExited(Area2D other)
-    {
-        //
     }
 }
