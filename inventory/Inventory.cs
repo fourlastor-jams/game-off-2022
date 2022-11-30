@@ -99,7 +99,7 @@ public class Inventory : Control
     public void AddItem(Item item)
     {
         var noHealthDeductionRequired = slots.Any(slot => slot.AddItem(item));
-        if (noHealthDeductionRequired) return;
+        if (noHealthDeductionRequired || item == Item.Heart) return;
         DeductItem(1, Item.Heart);
         AddItem(item);
         EmitSignal(nameof(HeartLostFromPickup));
