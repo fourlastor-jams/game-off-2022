@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://game-over/GameOver.cs" type="Script" id=1]
+[ext_resource path="res://quan.ttf" type="DynamicFontData" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+font_data = ExtResource( 2 )
 
 [node name="GameOver" type="MarginContainer"]
 anchor_left = 0.5
@@ -16,15 +20,13 @@ custom_constants/margin_top = 8
 custom_constants/margin_left = 8
 custom_constants/margin_bottom = 8
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Label" type="Label" parent="."]
 margin_left = 8.0
-margin_top = 16.0
+margin_top = 14.0
 margin_right = 166.0
-margin_bottom = 47.0
+margin_bottom = 49.0
+custom_fonts/font = SubResource( 1 )
 text = "Oh no! You lost.
-Press any button to retry"
+Press R to retry"
 align = 1

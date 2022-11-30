@@ -1,0 +1,174 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://quan.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://intro/Intro.cs" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=2]
+size = 48
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=1]
+size = 36
+font_data = ExtResource( 1 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Intro"
+length = 4.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("by:modulate")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Authors:modulate")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.5, 2.5, 3.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("by:percent_visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ 1.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("by:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Authors:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ) ]
+}
+
+[node name="Intro" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 2 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 0.946181
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Title" type="Label" parent="CenterContainer"]
+margin_left = 386.0
+margin_top = 248.0
+margin_right = 638.0
+margin_bottom = 296.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 2 )
+text = "In the Bag"
+
+[node name="by" type="Label" parent="."]
+anchor_left = 0.478
+anchor_top = 0.555847
+anchor_right = 0.522
+anchor_bottom = 0.617847
+margin_left = -0.472015
+margin_top = -0.167999
+margin_right = 0.471985
+margin_bottom = 0.119965
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "by"
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="Authors" type="GridContainer" parent="."]
+modulate = Color( 0, 0, 0, 1 )
+anchor_left = 0.243
+anchor_top = 0.670458
+anchor_right = 0.757
+anchor_bottom = 0.836486
+margin_left = 0.167984
+margin_top = -0.184006
+margin_right = -0.16803
+margin_bottom = 0.18396
+custom_constants/vseparation = 24
+custom_constants/hseparation = 24
+columns = 2
+__meta__ = {
+"_edit_use_anchors_": true
+}
+
+[node name="sandramoen" type="Label" parent="Authors"]
+margin_right = 265.0
+margin_bottom = 36.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "@sandramoen"
+
+[node name="SheerSt" type="Label" parent="Authors"]
+margin_left = 289.0
+margin_right = 526.0
+margin_bottom = 36.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "@SheerSt"
+
+[node name="takecare" type="Label" parent="Authors"]
+margin_top = 60.0
+margin_right = 265.0
+margin_bottom = 96.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "@takecare"
+
+[node name="fourlastor" type="Label" parent="Authors"]
+margin_left = 289.0
+margin_top = 60.0
+margin_right = 526.0
+margin_bottom = 96.0
+custom_colors/font_color = Color( 1, 1, 1, 1 )
+custom_fonts/font = SubResource( 1 )
+text = "@fourlastor"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Intro = SubResource( 3 )
+anims/RESET = SubResource( 4 )

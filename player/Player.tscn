@@ -1,13 +1,16 @@
-[gd_scene load_steps=54 format=2]
+[gd_scene load_steps=56 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://player/Player.cs" type="Script" id=2]
 [ext_resource path="res://player/player-Sheet.png" type="Texture" id=3]
 [ext_resource path="res://audio/sounds/dead.ogg" type="AudioStream" id=4]
-[ext_resource path="res://player/Sword.tscn" type="PackedScene" id=5]
+[ext_resource path="res://tilemap/props.png" type="Texture" id=5]
 [ext_resource path="res://audio/sounds/hit.ogg" type="AudioStream" id=6]
 [ext_resource path="res://audio/sounds/swish2.ogg" type="AudioStream" id=7]
 [ext_resource path="res://audio/sounds/heartbeat1.ogg" type="AudioStream" id=8]
+[ext_resource path="res://player/sword-swish.png" type="Texture" id=9]
+
+[sub_resource type="CircleShape2D" id=43]
 
 [sub_resource type="CapsuleShape2D" id=42]
 radius = 6.0
@@ -185,10 +188,34 @@ tracks/13/keys = {
 "update": 0,
 "values": [ true ]
 }
+tracks/14/type = "value"
+tracks/14/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("Sword/CollisionShape2D:position")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 16 ) ]
+}
 
 [sub_resource type="Animation" id=72]
 resource_name = "dead"
-length = 0.2
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Character:frame")
 tracks/0/interp = 1
@@ -214,6 +241,18 @@ tracks/1/keys = {
 "stream": ExtResource( 4 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sounds:stream_paused")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=69]
@@ -282,6 +321,18 @@ tracks/4/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=71]
 resource_name = "hit_left"
@@ -348,6 +399,18 @@ tracks/4/keys = {
 "stream": ExtResource( 6 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=70]
@@ -416,6 +479,18 @@ tracks/4/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=62]
 resource_name = "hit_up"
@@ -482,6 +557,18 @@ tracks/4/keys = {
 "stream": ExtResource( 6 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -651,6 +738,30 @@ tracks/11/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("Sword/CollisionShape2D:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 0, 17 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=50]
 resource_name = "swing_left"
@@ -797,6 +908,30 @@ tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Sword/CollisionShape2D:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( -17, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
@@ -953,6 +1088,30 @@ tracks/11/keys = {
 "update": 1,
 "values": [ false, true ]
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("Sword/CollisionShape2D:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 17, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=52]
 resource_name = "swing_up"
@@ -1099,6 +1258,30 @@ tracks/11/loop_wrap = true
 tracks/11/imported = false
 tracks/11/enabled = true
 tracks/11/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Sword/CollisionShape2D:position")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 0, -17 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("Sword/CollisionShape2D:disabled")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
 "times": PoolRealArray( 0, 0.5 ),
 "transitions": PoolRealArray( 1, 1 ),
 "update": 1,
@@ -1307,7 +1490,7 @@ states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 680.833, 196 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ), "Hit", "RESET", SubResource( 65 ) ]
 start_node = "RESET"
-graph_offset = Vector2( -142, -58 )
+graph_offset = Vector2( -56, -46 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
@@ -1315,7 +1498,26 @@ graph_offset = Vector2( -142, -58 )
 script = ExtResource( 2 )
 shouldSlide = true
 
-[node name="Sword" parent="." instance=ExtResource( 5 )]
+[node name="Sword" type="StaticBody2D" parent="."]
+
+[node name="SwishSprite" type="Sprite" parent="Sword"]
+visible = false
+position = Vector2( 24, -1 )
+texture = ExtResource( 9 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 48, 48 )
+
+[node name="SwordSprite" type="Sprite" parent="Sword"]
+visible = false
+position = Vector2( 16, 0 )
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 48, 16, 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sword"]
+position = Vector2( 0, 16 )
+shape = SubResource( 43 )
+disabled = true
 
 [node name="Shadow" type="Sprite" parent="."]
 modulate = Color( 0, 0, 0, 0.313726 )
@@ -1361,7 +1563,7 @@ parameters/Idle/blend_position = Vector2( -0.00176364, 0.00862074 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 6 )
 stream_paused = true
 bus = "Sounds"
 

@@ -6,6 +6,8 @@ public class Map : Node2D
     public Player Player { get; private set; }
     private TileMap walls;
     private bool playerHasKey;
+    private YSort enemies;
+    private YSort mapItems;
 
     private readonly Dictionary<string, int> tileIds = new Dictionary<string, int>();
 
@@ -17,11 +19,20 @@ public class Map : Node2D
     {
         Player = GetNode<Player>("Walls/Player");
         walls = GetNode<TileMap>("Walls");
+        enemies = GetNode<YSort>("Walls/Enemies");
+        mapItems = GetNode<YSort>("Walls/MapItems");
         Player.Connect("OnAction", this, nameof(PlayerAction));
+        for (int i = 0; i < enemies.GetChildCount(); i++)
+        {
+            var enemy = enemies.GetChild(i);
+            enemy.Connect("OnAttack", Player, nameof(Player.OnAttacked));
+            enemy.Connect("OnDead", this, nameof(OnEnemyDead));
+        }
+
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
         tileIds[DoorTile] = walls.TileSet.FindTileByName(DoorTile);
-        var mapItems = new Array<MapItem>(GetNode<YSort>("Walls/MapItems").GetChildren());
-        foreach (var mapItem in mapItems)
+        var items = new Array<MapItem>(mapItems.GetChildren());
+        foreach (var mapItem in items)
         {
             mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array() { mapItem });
         }
@@ -30,6 +41,21 @@ public class Map : Node2D
     private void OnPlayerStepOnItem(MapItem mapItem)
     {
         EmitSignal(nameof(AttemptPickupItem), mapItem);
+    }
+
+    private void OnEnemyDead(Enemy enemy)
+    {
+        PackedScene itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Rupee.tscn");
+        int numEnemies = enemies.GetChildCount();
+        if (numEnemies < 2)
+        {
+            itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
+        }
+        Node2D mapItem = itemScene.Instance<Node2D>();
+        mapItem.GlobalPosition = enemy.GlobalPosition;
+        mapItems.AddChild(mapItem);
+        mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array() { mapItem });
+
     }
 
     public override void _Process(float delta)

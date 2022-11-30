@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://tilemap/Map.tscn" type="PackedScene" id=1]
 [ext_resource path="res://tilemap/Bush.tscn" type="PackedScene" id=2]
 [ext_resource path="res://tilemap/Tree.tscn" type="PackedScene" id=3]
 [ext_resource path="res://enemy/Enemy.tscn" type="PackedScene" id=4]
 [ext_resource path="res://tilemap/MapItem/Rupee.tscn" type="PackedScene" id=5]
-[ext_resource path="res://tilemap/MapItem/Key.tscn" type="PackedScene" id=6]
 [ext_resource path="res://tilemap/MapItem/Heart.tscn" type="PackedScene" id=7]
 [ext_resource path="res://tilemap/MapItem/Door.tscn" type="PackedScene" id=8]
 
@@ -62,13 +61,10 @@ position = Vector2( 296, -219 )
 [node name="Rupee2" parent="Walls/MapItems" index="1" instance=ExtResource( 5 )]
 position = Vector2( 50, -291 )
 
-[node name="Key" parent="Walls/MapItems" index="2" instance=ExtResource( 6 )]
-position = Vector2( -63, -42 )
-
-[node name="Heart" parent="Walls/MapItems" index="3" instance=ExtResource( 7 )]
+[node name="Heart" parent="Walls/MapItems" index="2" instance=ExtResource( 7 )]
 position = Vector2( -157, -218 )
 
-[node name="Door" parent="Walls/MapItems" index="4" instance=ExtResource( 8 )]
+[node name="Door" parent="Walls/MapItems" index="3" instance=ExtResource( 8 )]
 position = Vector2( 200, -361 )
 
 [node name="Enemy1" parent="Walls/Enemies" index="0" instance=ExtResource( 4 )]
@@ -85,7 +81,7 @@ position = Vector2( 239, -227 )
 
 [node name="GotoNewMap" parent="." index="2"]
 position = Vector2( 199, -413 )
-sceneName = "map2"
+sceneName = "map1"
 
 [node name="CollisionShape2D" parent="GotoNewMap" index="0"]
 position = Vector2( 0, 15 )
