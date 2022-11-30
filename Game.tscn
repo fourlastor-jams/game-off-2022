@@ -19,12 +19,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 margin_right = 1.0
 stretch = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Viewport" type="Viewport" parent="ViewportContainer"]
-size = Vector2( 1025, 576 )
+size = Vector2( 256, 144 )
 handle_input_locally = false
 render_target_update_mode = 3
 
@@ -32,11 +29,9 @@ render_target_update_mode = 3
 visible = true
 
 [node name="UI" type="Control" parent="."]
+visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Inventory" parent="UI" instance=ExtResource( 2 )]
 anchor_left = 0.5

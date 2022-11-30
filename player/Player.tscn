@@ -215,7 +215,7 @@ tracks/15/keys = {
 
 [sub_resource type="Animation" id=72]
 resource_name = "dead"
-length = 0.2
+length = 0.8
 tracks/0/type = "value"
 tracks/0/path = NodePath("Character:frame")
 tracks/0/interp = 1
@@ -241,6 +241,18 @@ tracks/1/keys = {
 "stream": ExtResource( 4 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sounds:stream_paused")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=69]
@@ -309,6 +321,18 @@ tracks/4/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=71]
 resource_name = "hit_left"
@@ -375,6 +399,18 @@ tracks/4/keys = {
 "stream": ExtResource( 6 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=70]
@@ -443,6 +479,18 @@ tracks/4/keys = {
 } ],
 "times": PoolRealArray( 0 )
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
 
 [sub_resource type="Animation" id=62]
 resource_name = "hit_up"
@@ -509,6 +557,18 @@ tracks/4/keys = {
 "stream": ExtResource( 6 )
 } ],
 "times": PoolRealArray( 0 )
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Sounds:stream_paused")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
 }
 
 [sub_resource type="Animation" id=20]
@@ -1430,7 +1490,7 @@ states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 680.833, 196 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ), "Hit", "RESET", SubResource( 65 ) ]
 start_node = "RESET"
-graph_offset = Vector2( -142, -58 )
+graph_offset = Vector2( -56, -46 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
@@ -1503,7 +1563,7 @@ parameters/Idle/blend_position = Vector2( -0.00176364, 0.00862074 )
 parameters/Walk/blend_position = Vector2( -0.269696, 0.516648 )
 
 [node name="Sounds" type="AudioStreamPlayer" parent="."]
-stream = ExtResource( 4 )
+stream = ExtResource( 6 )
 stream_paused = true
 bus = "Sounds"
 

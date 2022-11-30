@@ -25,3 +25,7 @@ dotnet format game-off-2022.sln --include $FILES
 git add $FILES' > .git/hooks/pre-commit\
 chmod +x .git/hooks/pre-commit
 ```
+
+### Credits
+
+[QuanPixel](https://diaowinner.itch.io/galmuri-extended).

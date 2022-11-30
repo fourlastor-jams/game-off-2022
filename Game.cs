@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -13,6 +12,7 @@ public class Game : Node
 
     private PackedScene mapScene = GD.Load<PackedScene>("res://maps/map1.tscn");
     private readonly PackedScene gameOverScene = GD.Load<PackedScene>("res://game-over/GameOver.tscn");
+    private readonly PackedScene introScene = GD.Load<PackedScene>("res://intro/Intro.tscn");
 
     public static System.Random random = new System.Random();
 
@@ -30,13 +30,29 @@ public class Game : Node
         transition = GetNode<Transition>("Transition");
 
         inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
+        StartIntro();
+        return;
+    }
+
+    private void StartIntro()
+    {
+        var intro = introScene.Instance();
+        intro.Connect(nameof(Intro.IntroFinished), this, nameof(FirstStart));
+        viewport.AddChild(intro);
+    }
+
+    private void FirstStart()
+    {
+        var intro = viewport.GetChild(0);
+        intro.QueueFree();
+        GetNode<Control>("UI").Visible = true;
         StartGame();
         AddInitialItemsToInventory();
     }
 
-    private async void TransitionToMap(PackedScene mapScene)
+    private async void TransitionToMap(PackedScene newScene)
     {
-        this.mapScene = mapScene;
+        mapScene = newScene;
         transition.RefreshImage(viewport);
         transition.Start();
         if (map != null)
@@ -70,15 +86,17 @@ public class Game : Node
 
     private void StartGame()
     {
-        viewport.RemoveChild(map);
+        map?.QueueFree();
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
-        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
+        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem),
+            new Array { Item.Heart });
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
         inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
-        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory, nameof(Inventory.TryUpgradeSlots));
+        newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory,
+            nameof(Inventory.TryUpgradeSlots));
         newMap.Connect(nameof(Map.AttemptPickupItem), this, nameof(AttemptPickupItem));
         map = newMap;
     }
@@ -94,6 +112,7 @@ public class Game : Node
                     inventory.RemoveItem(Item.Key);
                     mapItem.QueueFree();
                 }
+
                 break;
             // Pick up everything else.
             case Item.Heart:
@@ -116,7 +135,13 @@ public class Game : Node
         // TODO: remove
         for (var i = 0; i < 4; i++)
         {
-           inventory.AddItem(Item.Key);
+            inventory.AddItem(Item.Key);
+        }
+
+        // TODO: remove
+        for (var i = 0; i < 8; i++)
+        {
+            inventory.AddItem(Item.Rupee);
         }
     }
 

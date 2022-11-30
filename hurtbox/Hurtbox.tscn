@@ -3,7 +3,6 @@
 [ext_resource path="res://hurtbox/Hurtbox.cs" type="Script" id=1]
 
 [sub_resource type="CapsuleShape2D" id=47]
-radius = 7.0
 height = 2.0
 
 [node name="Hurtbox" type="Area2D"]
@@ -12,6 +11,3 @@ script = ExtResource( 1 )
 
 [node name="Shape" type="CollisionShape2D" parent="."]
 shape = SubResource( 47 )
-
-[connection signal="area_entered" from="." to="." method="_OnAreaEntered"]
-[connection signal="area_exited" from="." to="." method="_OnAreaExited"]

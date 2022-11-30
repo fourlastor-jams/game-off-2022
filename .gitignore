@@ -89,3 +89,5 @@ data_*/
 
 # macOS stuff
 .DS_Store
+
+export/
