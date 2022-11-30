@@ -2,7 +2,8 @@ using Godot;
 using System;
 using JetBrains.Annotations;
 
-[UsedImplicitly] public class Intro : Control
+[UsedImplicitly]
+public class Intro : Control
 {
     [Signal] public delegate void IntroFinished();
 

@@ -2,7 +2,8 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly] public class Game : Node
+[UsedImplicitly]
+public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
