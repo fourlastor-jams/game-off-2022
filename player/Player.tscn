@@ -1464,8 +1464,10 @@ switch_mode = 2
 auto_advance = true
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=74]
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=75]
+switch_mode = 2
 
 [sub_resource type="AnimationNodeStateMachineTransition" id=76]
 
@@ -1487,7 +1489,7 @@ states/Walk/node = SubResource( 39 )
 states/Walk/position = Vector2( 680.833, 196 )
 transitions = [ "Idle", "Walk", SubResource( 40 ), "Walk", "Idle", SubResource( 41 ), "Attack", "RESET", SubResource( 60 ), "RESET", "Idle", SubResource( 61 ), "Hit", "RESET", SubResource( 65 ), "RESET", "Hit", SubResource( 74 ), "RESET", "Attack", SubResource( 75 ), "Idle", "RESET", SubResource( 76 ), "RESET", "Dead", SubResource( 77 ) ]
 start_node = "RESET"
-graph_offset = Vector2( -113, -15 )
+graph_offset = Vector2( -148, -38 )
 
 [sub_resource type="AnimationNodeStateMachinePlayback" id=27]
 
