@@ -48,7 +48,7 @@ public class Player : KinematicBody2D
         {
             QueueHitAnimation();
             // Deduct health.
-            EmitSignal(nameof(OnDeductHealth), hitsQueued);
+            EmitSignal(nameof(OnDeductHealth), Item.Heart, hitsQueued);
             hitsQueued = 0;
         }
 

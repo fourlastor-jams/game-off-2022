@@ -73,7 +73,7 @@ public class Game : Node
         viewport.RemoveChild(map);
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
-        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductHealth));
+        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem));
         inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
         inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
@@ -117,6 +117,11 @@ public class Game : Node
         for (var i = 0; i < 4; i++)
         {
            inventory.AddItem(Item.Key);
+        }
+        // TODO: remove
+        for (var i = 0; i < 8; i++)
+        {
+            inventory.AddItem(Item.Rupee);
         }
     }
 
