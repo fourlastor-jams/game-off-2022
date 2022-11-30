@@ -1497,7 +1497,7 @@ graph_offset = Vector2( -148, -38 )
 script = ExtResource( 2 )
 shouldSlide = true
 
-[node name="Sword" type="StaticBody2D" parent="."]
+[node name="Sword" type="Area2D" parent="."]
 
 [node name="SwishSprite" type="Sprite" parent="Sword"]
 visible = false
@@ -1529,7 +1529,7 @@ position = Vector2( 0, -7 )
 texture = ExtResource( 3 )
 hframes = 5
 vframes = 7
-frame = 24
+frame = 23
 
 [node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 42 )
