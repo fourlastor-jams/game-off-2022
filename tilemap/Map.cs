@@ -3,7 +3,7 @@ using Godot.Collections;
 
 public class Map : Node2D
 {
-    public Player Player { get; private set; }
+    public Player player { get; private set; }
     private TileMap walls;
     private bool playerHasKey;
     private YSort enemies;
@@ -17,16 +17,16 @@ public class Map : Node2D
 
     public override void _Ready()
     {
-        Player = GetNode<Player>("Walls/Player");
+        player = GetNode<Player>("Walls/Player");
         walls = GetNode<TileMap>("Walls");
         enemies = GetNode<YSort>("Walls/Enemies");
         mapItems = GetNode<YSort>("Walls/MapItems");
-        Player.Connect("OnAction", this, nameof(PlayerAction));
+        player.Connect("OnAction", this, nameof(PlayerAction));
         for (int i = 0; i < enemies.GetChildCount(); i++)
         {
             var enemy = enemies.GetChild(i);
-            enemy.Connect("OnAttack", Player, nameof(Player.OnAttacked));
-            enemy.Connect("OnDead", this, nameof(OnEnemyDead));
+            enemy.Connect(nameof(Enemy.OnAttack), player, nameof(Player.OnAttacked));
+            enemy.Connect(nameof(Enemy.OnDead), this, nameof(OnEnemyDead));
         }
 
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
@@ -51,11 +51,11 @@ public class Map : Node2D
         {
             itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
         }
+
         Node2D mapItem = itemScene.Instance<Node2D>();
         mapItem.GlobalPosition = enemy.GlobalPosition;
         mapItems.AddChild(mapItem);
         mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array() { mapItem });
-
     }
 
     public override void _Process(float delta)
@@ -90,7 +90,7 @@ public class Map : Node2D
 
     private Vector2 PlayerMapPosition()
     {
-        return walls.WorldToMap(walls.ToLocal(Player.GlobalPosition));
+        return walls.WorldToMap(walls.ToLocal(player.GlobalPosition));
     }
 
     private const string KeyTile = "key";
