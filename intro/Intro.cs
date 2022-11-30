@@ -17,4 +17,13 @@ using JetBrains.Annotations;
     {
         EmitSignal(nameof(IntroFinished));
     }
+
+    public override void _PhysicsProcess(float delta)
+    {
+        base._PhysicsProcess(delta);
+        if (Input.IsActionJustPressed("attack"))
+        {
+            EmitSignal(nameof(IntroFinished));
+        }
+    }
 }
