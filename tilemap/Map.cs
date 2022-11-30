@@ -3,6 +3,9 @@ using Godot.Collections;
 
 public class Map : Node2D
 {
+    private readonly PackedScene rupeeScene = GD.Load<PackedScene>("res://tilemap/MapItem/Rupee.tscn");
+    private readonly PackedScene keyScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
+
     public Player player { get; private set; }
     private TileMap walls;
     private bool playerHasKey;
@@ -22,7 +25,7 @@ public class Map : Node2D
         enemies = GetNode<YSort>("Walls/Enemies");
         mapItems = GetNode<YSort>("Walls/MapItems");
         player.Connect("OnAction", this, nameof(PlayerAction));
-        for (int i = 0; i < enemies.GetChildCount(); i++)
+        for (var i = 0; i < enemies.GetChildCount(); i++)
         {
             var enemy = enemies.GetChild(i);
             enemy.Connect(nameof(Enemy.OnAttack), player, nameof(Player.OnAttacked));
@@ -45,17 +48,17 @@ public class Map : Node2D
 
     private void OnEnemyDead(Enemy enemy)
     {
-        PackedScene itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Rupee.tscn");
-        int numEnemies = enemies.GetChildCount();
+        var itemScene = rupeeScene;
+        var numEnemies = enemies.GetChildCount();
         if (numEnemies < 2)
         {
-            itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
+            itemScene = keyScene;
         }
 
-        Node2D mapItem = itemScene.Instance<Node2D>();
+        var mapItem = itemScene.Instance<Node2D>();
+        mapItems.CallDeferred("add_child", mapItem);
         mapItem.GlobalPosition = enemy.GlobalPosition;
-        mapItems.AddChild(mapItem);
-        mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array() { mapItem });
+        mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array { mapItem });
     }
 
     public override void _Process(float delta)
