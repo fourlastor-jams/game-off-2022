@@ -7,6 +7,7 @@ using Array = Godot.Collections.Array;
 public class Inventory : Control
 {
     private readonly PackedScene slotPackedScene = GD.Load<PackedScene>("res://inventory/InventorySlot.tscn");
+    private readonly PackedScene backgroundScene = GD.Load<PackedScene>("res://inventory/Background.tscn");
 
     private const int AnimationSteps = 24;
 
@@ -155,7 +156,7 @@ public class Inventory : Control
             // Add 4 InventorySlot nodes.
             for (var i = 0; i < 4; ++i)
             {
-                backgroundGrid.AddChild(backgroundGrid.GetChild(0).Duplicate());
+                backgroundGrid.AddChild(backgroundScene.Instance());
                 inventoryGrid.AddChild(slotPackedScene.Instance());
             }
 
