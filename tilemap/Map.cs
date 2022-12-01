@@ -46,8 +46,12 @@ public class Map : Node2D
         EmitSignal(nameof(AttemptPickupItem), mapItem);
     }
 
-    private void OnEnemyDead(Enemy enemy)
+    /**
+     * Wait a short duration and then spawn an item.
+     */
+    private async void OnEnemyDead(Enemy enemy)
     {
+        Vector2 newPosition = enemy.GlobalPosition;  // Save this before enemy is disposed.
         var itemScene = rupeeScene;
         var numEnemies = enemies.GetChildCount();
         if (numEnemies < 2)
@@ -55,9 +59,12 @@ public class Map : Node2D
             itemScene = keyScene;
         }
 
+        // Wait for around 0.5 seconds.
+        for (int i = 0; i < 90; ++i) await ToSignal(GetTree(), "idle_frame");
+
         var mapItem = itemScene.Instance<Node2D>();
         mapItems.CallDeferred("add_child", mapItem);
-        mapItem.GlobalPosition = enemy.GlobalPosition;
+        mapItem.GlobalPosition = newPosition;
         mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array { mapItem });
     }
 
