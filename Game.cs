@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -131,18 +130,6 @@ public class Game : Node
         for (var i = 0; i < 4; i++)
         {
             inventory.AddItem(Item.Heart);
-        }
-
-        // TODO: remove
-        for (var i = 0; i < 4; i++)
-        {
-            inventory.AddItem(Item.Key);
-        }
-
-        // TODO: remove
-        for (var i = 0; i < 8; i++)
-        {
-            inventory.AddItem(Item.Rupee);
         }
     }
 
