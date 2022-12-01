@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -32,7 +31,6 @@ public class Game : Node
 
         inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
         StartIntro();
-        return;
     }
 
     private void StartIntro()
@@ -77,6 +75,7 @@ public class Game : Node
     private void Retry(GameOver gameOver)
     {
         gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
+        inventory.Reset();
 
         TransitionToMap(mapScene);
         AddInitialItemsToInventory();
