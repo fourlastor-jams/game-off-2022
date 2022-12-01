@@ -9,28 +9,45 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    container:
+      image: eumario/godot-mono-github-actions-ci:0.2.0
     steps:
       - uses: actions/checkout@v3
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: 6.0.x
-      - name: Setup Godot
-        if: steps.cache-godot.outputs.cache-hit != 'true'
+#       - name: Setup .NET
+#         uses: actions/setup-dotnet@v3
+#         with:
+#           dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore
+#       - name: Setup Godot
+#         run: |
+#           mkdir -p /tmp/godot
+#           mkdir -p godot
+#           wget -q -O /tmp/godot/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_linux_headless_64.zip
+#           unzip -q /tmp/godot/godot.zip -d godot
+      - name: Download Godot templates
         run: |
-          mkdir -p tmp
+          mkdir -p /tmp/godot-templates
+          mkdir -p godot-templates
+          wget -q -O /tmp/godot-templates/templates.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_export_templates.tpz
+          unzip -q /tmp/godot-templates/templates.zip -d godot-templates
+#       - name: Install Godot
+#         run: |
+#           mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/Godot_v3.5.1-stable_mono_linux_headless.64 /usr/local/bin/godot
+#           mv godot/Godot_v3.5.1-stable_mono_linux_headless_64/GodotSharp /usr/local/bin/GodotSharp
+      - name: Install Godot templates
+        run: |
           mkdir -p $HOME/.local/share/godot/templates/3.5.1.stable.mono
-          mkdir -p godot
-          wget -O tmp/godot.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_x11_64.zip
-          unzip tmp/godot.zip -d godot
-          wget -O tmp/templates.zip https://downloads.tuxfamily.org/godotengine/3.5.1/mono/Godot_v3.5.1-stable_mono_export_templates.tpz
-          unzip tmp/templates.zip -d tmp
-          mv -r tmp/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
+          cp -r godot-templates/templates/* $HOME/.local/share/godot/templates/3.5.1.stable.mono
       - name: Export godot
-        run: godot/Godot_v3.5.1-stable_mono_x11_64/Godot_v3.5.1-stable_mono_x11.64 --export "HTML5" html.zip
+        run: godot --verbose --export "HTML5" html.zip
       - name: Release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
         with:
           files: |
             html.zip
+      - uses: actions/upload-artifact@v3
+        with:
+          name: mono-logs
+          path: /home/runner/.local/share/godot/mono/build_logs/
