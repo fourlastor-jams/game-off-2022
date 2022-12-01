@@ -1398,16 +1398,16 @@ blend_point_3/pos = Vector2( 0, -1 )
 blend_mode = 1
 
 [sub_resource type="AnimationNodeAnimation" id=31]
-animation = "idle_left"
+animation = "idle_down"
 
 [sub_resource type="AnimationNodeAnimation" id=32]
-animation = "idle_right"
+animation = "idle_down"
 
 [sub_resource type="AnimationNodeAnimation" id=33]
 animation = "idle_down"
 
 [sub_resource type="AnimationNodeAnimation" id=34]
-animation = "idle_up"
+animation = "idle_down"
 
 [sub_resource type="AnimationNodeBlendSpace2D" id=25]
 blend_point_0/node = SubResource( 31 )
