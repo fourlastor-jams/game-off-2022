@@ -2,6 +2,10 @@
 
 Repository for our [Game Off 2022](https://itch.io/jam/game-off-2022) jam entry.
 
+The game can be played [here](https://sandramoen.itch.io/in-the-bag).
+
+![gif of gameplay](https://user-images.githubusercontent.com/4059636/205299389-d146c6b9-49b8-40d1-b1d8-0de87ee5258b.gif)
+
 ## Setup with VSCode
 
 Note: both Mono and .NET SDK links refer to Apple Silicon versions, but you should
