@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using Godot;
+using Godot.Collections;
 using JetBrains.Annotations;
-using Array = Godot.Collections.Array;
 
 public class Inventory : Control
 {
+    private readonly PackedScene slotPackedScene = GD.Load<PackedScene>("res://inventory/InventorySlot.tscn");
+    private readonly PackedScene backgroundScene = GD.Load<PackedScene>("res://inventory/Background.tscn");
+
     private const int AnimationSteps = 24;
 
     private GridContainer backgroundGrid;
     private GridContainer inventoryGrid;
-    private List<InventorySlot> slots = new List<InventorySlot>();
+    private readonly List<InventorySlot> slots = new List<InventorySlot>();
 
     // Inventory dragging.
     [CanBeNull] private InventorySlot dragFrom;
@@ -27,24 +30,12 @@ public class Inventory : Control
     {
         backgroundGrid = GetNode<GridContainer>("MarginContainer/BackgroundGrid");
         inventoryGrid = GetNode<GridContainer>("MarginContainer/InventoryGrid");
-        var slotsCount = inventoryGrid.GetChildCount();
-        AddNewSlots(slotsCount);
-    }
-
-    /**
-     * Add new slots to the inventory.
-     */
-    private void AddNewSlots(int slotsCount)
-    {
-        var oldSlots = slots;
-        slots = new List<InventorySlot>(oldSlots.Count + slotsCount);
-        slots.AddRange(oldSlots);
-        for (var i = 0; i < slotsCount; i++)
+        foreach (var slot in inventoryGrid.GetChildren().OfType<InventorySlot>())
         {
-            var slot = Slot(i);
-            slots.Add(slot);
-            slot.Icon.Connect("gui_input", this, nameof(OnInput), new Array { slot });
+            SetupSlot(slot);
         }
+
+        UpdateInventorySize();
     }
 
     public void OnInput([UsedImplicitly] InputEvent @event, InventorySlot sourceSlot)
@@ -105,11 +96,6 @@ public class Inventory : Control
         EmitSignal(nameof(HeartLostFromPickup));
     }
 
-    private InventorySlot Slot(int slot)
-    {
-        return GetNode<InventorySlot>($"MarginContainer/InventoryGrid/InventorySlot{slot + 1}");
-    }
-
     private int GetItemCount(Item item)
     {
         bool SlotsPredicate(InventorySlot slot) => slot.Item.HasValue && slot.Item.Value == item;
@@ -138,6 +124,57 @@ public class Inventory : Control
         }
     }
 
+    public void Reset()
+    {
+        slots.Clear();
+        foreach (var node in backgroundGrid.GetChildren().OfType<Node>())
+        {
+            node.QueueFree();
+        }
+
+        foreach (var node in inventoryGrid.GetChildren().OfType<Node>())
+        {
+            node.QueueFree();
+        }
+
+        const int columns = 4;
+        const int slotsToAdd = 16;
+
+        backgroundGrid.Columns = columns;
+        inventoryGrid.Columns = columns;
+
+        for (var i = 0; i < slotsToAdd; i++)
+        {
+            AddSlotToInventory();
+        }
+
+        UpdateInventorySize();
+    }
+
+    private void AddSlotToInventory()
+    {
+        backgroundGrid.AddChild(backgroundScene.Instance());
+        var slot = slotPackedScene.Instance<InventorySlot>();
+        inventoryGrid.AddChild(slot);
+        SetupSlot(slot);
+    }
+
+    private void SetupSlot(InventorySlot slot)
+    {
+        slots.Add(slot);
+        slot.Icon.Connect("gui_input", this, nameof(OnInput), new Array { slot });
+    }
+
+    private void UpdateInventorySize()
+    {
+        var columns = backgroundGrid.Columns;
+        var rows = slots.Count / columns;
+        const float cellSize = 18f;
+        const float hMargin = 14f;
+        const float vMargin = 6f;
+        RectSize = new Vector2(cellSize * columns + columns - 1 + hMargin, cellSize * rows + rows - 1 + vMargin);
+    }
+
     public void TryUpgradeSlots()
     {
         var numRupees = GetItemCount(Item.Rupee);
@@ -150,22 +187,13 @@ public class Inventory : Control
             backgroundGrid.Columns += 1;
             inventoryGrid.Columns += 1;
 
-            var gridScene = GD.Load<PackedScene>("res://inventory/InventorySlot.tscn");
-
             // Add 4 InventorySlot nodes.
             for (var i = 0; i < 4; ++i)
             {
-                backgroundGrid.AddChild(backgroundGrid.GetChild(0).Duplicate());
-                inventoryGrid.AddChild(gridScene.Instance());
+                AddSlotToInventory();
             }
 
-            // Add 4 new inventory slots.
-            AddNewSlots(4);
-
-            // Refresh the NinePatchRect size.
-            var background = GetNode<NinePatchRect>("Background");
-            var oldRect = background.GetRect();
-            background.RectSize = new Vector2(oldRect.Size.x + 19f, oldRect.Size.y);
+            UpdateInventorySize();
         }
     }
 

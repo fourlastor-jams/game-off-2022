@@ -121,7 +121,6 @@ tracks/1/keys = {
 
 [sub_resource type="Animation" id=45]
 resource_name = "attack"
-length = 0.6
 loop = true
 step = 0.01
 tracks/0/type = "value"
@@ -131,10 +130,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.08, 0.15, 0.23 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.13, 0.22, 0.3, 0.35 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
 "update": 1,
-"values": [ 5, 6, 7, 8 ]
+"values": [ 5, 6, 7, 8, 0 ]
 }
 tracks/1/type = "method"
 tracks/1/path = NodePath(".")
@@ -143,7 +142,7 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0.15 ),
+"times": PoolRealArray( 0.35 ),
 "transitions": PoolRealArray( 1 ),
 "values": [ {
 "args": [  ],

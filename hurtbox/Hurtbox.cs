@@ -6,10 +6,10 @@ public class Hurtbox : Area2D
 
     public override void _Ready()
     {
-        Connect("body_entered", this, nameof(OnBodyEntered));
+        Connect("area_entered", this, nameof(OnBodyEntered));
     }
 
-    private void OnBodyEntered(Node body)
+    private void OnBodyEntered(Area2D body)
     {
         if (body.Name == "Sword")
         {

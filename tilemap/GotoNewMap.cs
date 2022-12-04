@@ -7,15 +7,16 @@ public class GotoNewMap : Area2D
     private PackedScene mapScene;
 
     [Signal] public delegate void PlayerEntered(PackedScene mapScene);
+
     [Signal] public delegate void TryUpgradeInventory();
 
     public override void _Ready()
     {
-        Connect("body_entered", this, "_On_Body_Entered");
+        Connect("body_entered", this, nameof(OnBodyEntered));
         mapScene = GD.Load<PackedScene>("res://maps/" + sceneName + ".tscn");
     }
 
-    private void _On_Body_Entered(Node2D node)
+    private void OnBodyEntered(Node2D node)
     {
         if (node is Player)
         {

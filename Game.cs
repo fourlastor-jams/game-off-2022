@@ -2,8 +2,7 @@ using Godot;
 using Godot.Collections;
 using JetBrains.Annotations;
 
-[UsedImplicitly]
-public class Game : Node
+[UsedImplicitly] public class Game : Node
 {
     private AudioStreamPlayer musicPlayer;
     private Inventory inventory;
@@ -32,7 +31,6 @@ public class Game : Node
 
         inventory.Connect(nameof(Inventory.HeartsRanOut), this, nameof(OnGameOver));
         StartIntro();
-        return;
     }
 
     private void StartIntro()
@@ -66,17 +64,18 @@ public class Game : Node
         // Start the game.
         StartGame();
         // Can't control player yet.
-        map.Player.SetPhysicsProcess(false);
+        map.player.SetPhysicsProcess(false);
         await ToSignal(GetTree(), "idle_frame"); // Required, othewise the transition texture will be a grey screen.
         transition.RefreshImage(viewport);
         await ToSignal(transition, nameof(Transition.TransitionEnd));
         // Can control player after the transition is over.
-        map.Player.SetPhysicsProcess(true);
+        map.player.SetPhysicsProcess(true);
     }
 
     private void Retry(GameOver gameOver)
     {
         gameOver.Disconnect(nameof(GameOver.OnRetry), this, nameof(Retry));
+        inventory.Reset();
 
         TransitionToMap(mapScene);
         AddInitialItemsToInventory();
@@ -90,10 +89,10 @@ public class Game : Node
         map?.QueueFree();
         var newMap = mapScene.Instance<Map>();
         viewport.AddChild(newMap);
-        newMap.Player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem),
+        newMap.player.Connect(nameof(Player.OnDeductHealth), inventory, nameof(Inventory.DeductItem),
             new Array { Item.Heart });
-        inventory.Connect(nameof(Inventory.NumHearts), newMap.Player, nameof(Player.SetHealth));
-        inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.Player, nameof(Player.QueueHitAnimation));
+        inventory.Connect(nameof(Inventory.NumHearts), newMap.player, nameof(Player.SetHealth));
+        inventory.Connect(nameof(Inventory.HeartLostFromPickup), newMap.player, nameof(Player.QueueHitAnimation));
         newMap.Connect(nameof(Map.OnItemPickedUp), inventory, nameof(Inventory.AddItem));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.PlayerEntered), this, nameof(GotoToNewMap));
         newMap.GetNode<Area2D>("GotoNewMap").Connect(nameof(GotoNewMap.TryUpgradeInventory), inventory,
@@ -132,23 +131,11 @@ public class Game : Node
         {
             inventory.AddItem(Item.Heart);
         }
-
-        // TODO: remove
-        for (var i = 0; i < 4; i++)
-        {
-            inventory.AddItem(Item.Key);
-        }
-
-        // TODO: remove
-        for (var i = 0; i < 8; i++)
-        {
-            inventory.AddItem(Item.Rupee);
-        }
     }
 
     private void OnGameOver()
     {
-        map.Player.isDead = true;
+        map.player.isDead = true;
         musicPlayer.Stop();
         var gameOver = gameOverScene.Instance<GameOver>();
         AddChild(gameOver);

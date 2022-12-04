@@ -3,7 +3,10 @@ using Godot.Collections;
 
 public class Map : Node2D
 {
-    public Player Player { get; private set; }
+    private readonly PackedScene rupeeScene = GD.Load<PackedScene>("res://tilemap/MapItem/Rupee.tscn");
+    private readonly PackedScene keyScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
+
+    public Player player { get; private set; }
     private TileMap walls;
     private bool playerHasKey;
     private YSort enemies;
@@ -17,16 +20,16 @@ public class Map : Node2D
 
     public override void _Ready()
     {
-        Player = GetNode<Player>("Walls/Player");
+        player = GetNode<Player>("Walls/Player");
         walls = GetNode<TileMap>("Walls");
         enemies = GetNode<YSort>("Walls/Enemies");
         mapItems = GetNode<YSort>("Walls/MapItems");
-        Player.Connect("OnAction", this, nameof(PlayerAction));
-        for (int i = 0; i < enemies.GetChildCount(); i++)
+        player.Connect("OnAction", this, nameof(PlayerAction));
+        for (var i = 0; i < enemies.GetChildCount(); i++)
         {
             var enemy = enemies.GetChild(i);
-            enemy.Connect("OnAttack", Player, nameof(Player.OnAttacked));
-            enemy.Connect("OnDead", this, nameof(OnEnemyDead));
+            enemy.Connect(nameof(Enemy.OnAttack), player, nameof(Player.OnAttacked));
+            enemy.Connect(nameof(Enemy.OnDead), this, nameof(OnEnemyDead));
         }
 
         tileIds[KeyTile] = walls.TileSet.FindTileByName(KeyTile);
@@ -43,19 +46,26 @@ public class Map : Node2D
         EmitSignal(nameof(AttemptPickupItem), mapItem);
     }
 
-    private void OnEnemyDead(Enemy enemy)
+    /**
+     * Wait a short duration and then spawn an item.
+     */
+    private async void OnEnemyDead(Enemy enemy)
     {
-        PackedScene itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Rupee.tscn");
-        int numEnemies = enemies.GetChildCount();
+        Vector2 newPosition = enemy.GlobalPosition;  // Save this before enemy is disposed.
+        var itemScene = rupeeScene;
+        var numEnemies = enemies.GetChildCount();
         if (numEnemies < 2)
         {
-            itemScene = GD.Load<PackedScene>("res://tilemap/MapItem/Key.tscn");
+            itemScene = keyScene;
         }
-        Node2D mapItem = itemScene.Instance<Node2D>();
-        mapItem.GlobalPosition = enemy.GlobalPosition;
-        mapItems.AddChild(mapItem);
-        mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array() { mapItem });
 
+        // Wait for around 0.5 seconds.
+        for (int i = 0; i < 90; ++i) await ToSignal(GetTree(), "idle_frame");
+
+        var mapItem = itemScene.Instance<Node2D>();
+        mapItems.CallDeferred("add_child", mapItem);
+        mapItem.GlobalPosition = newPosition;
+        mapItem.Connect(nameof(MapItem.StepOnItem), this, nameof(OnPlayerStepOnItem), new Array { mapItem });
     }
 
     public override void _Process(float delta)
@@ -90,7 +100,7 @@ public class Map : Node2D
 
     private Vector2 PlayerMapPosition()
     {
-        return walls.WorldToMap(walls.ToLocal(Player.GlobalPosition));
+        return walls.WorldToMap(walls.ToLocal(player.GlobalPosition));
     }
 
     private const string KeyTile = "key";
